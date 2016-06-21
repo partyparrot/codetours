@@ -47,4 +47,85 @@ Then we can write an app where you can put in the URL for such a repository, and
 
 If we have time, we can add discovery and community features like a global list of code tours, voting for the best tours, and more.
 
+### Hosted by us, or by GitHub pages?
+
 One question is, should this be a library that you add to your repo and then you view the tour on the GitHub pages site, or is the viewer a standalone app that we host ourselves?
+
+Tradeoffs:
+
+- Each code tour author hosts their own on GitHub pages
+    - Free
+    - Keeps working if our service shuts down
+    - Author can hack their own viewer if they want a different UX for their own tour
+- We host a central service that displays the code tours
+    - Needs to be manually updated - we can't just ship a new UX whenever
+    - We can't easily index all existing code tours
+    - Harder to get started, since you need to set up github pages, download the library, etc
+
+Current decision: host it ourselves, but make it open source and modular so that people can host it themselves if they really want to.
+
+It seems advantageous to copy all of the GitHub data into our DB, to avoid dealing with GitHub API all the time. The content is completely read-only.
+
+We should start with public repos only, and expand to private repos if it catches on.
+
+## Design
+
+### Tour
+
+Has a name, summary, and a series of steps. Those come from a GitHub repository. The code and tour metadata can be in the same repository if both are owned by the same person.
+
+Has a viewable table of contents that shows the names of the steps.
+
+### Step
+
+Has a name, one or more code snippets, and markdown content. Has next and previous steps. Can link to arbitrary steps?
+
+- Question: Should we support more than one snippet? Benefit is that sometimes you want to show a couple things together.
+- Question: How exactly does one specify the code snippet?
+
+Markdown content should be able to have video/image embeds (how does GitHub handle this? do we need a custom video embed thingy)
+
+#### Specifying snippet
+
+1. Commit hash and line numbers - easiest to implement, most brittle, relies on PRs to update
+2. Commit hash and search terms for start/end - need to update commit manually, and you can check if it is still relevant
+3. Search terms and branch name - updates automatically, might break if search terms are not found
+4. Search terms and branch name - we follow every commit and notify when relevant lines are modified
+
+### Tour UX
+
+Need to display:
+
+1. Name of tour
+1. ToC of tour
+2. File structure of repo, and currently viewed file
+3. Links to file issues/PRs on GitHub to tour content
+3. Links to navigate to GitHub code
+4. Markdown content
+5. Links to navigate between steps
+    - Bonus: animate between steps to orient people
+
+### Definition format
+
+JSON version, simplest:
+
+```
+{
+  "name": "GitHunt example app",
+  "summary": "Some stuff here",
+  "repository": "apollostack/GitHunt",
+  "commit": "21afda8df78daf8",
+  "steps": [
+    {
+      "name": "Server index",
+      "snippet": {
+        "filename": "server/index.js",
+        "lines": [55, 67],
+      },
+      "content": "tour/server-index.md"
+    }
+  ]
+} 
+```
+
+Alternative: just specify content, and rest is in YAML front matter - then markdown would be more portable, and it would be easier to copy steps since they are just self-contained files.
