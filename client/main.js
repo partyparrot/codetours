@@ -30,7 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Snippet code={code} startLineNumber={10} />
+        <Snippet code={code} startLineNumber={10} highlightLineNumbers={[15, 16, 17, 18, 22, 23]}/>
       </div>
     );
   }
