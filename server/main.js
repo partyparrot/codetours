@@ -49,7 +49,8 @@ Meteor.methods({
 
         Pages.insert(page);
       }).catch((e) => {
-        console.log(e);
+        console.log(page);
+        console.error(e, e.stack);
       });
     });
   }
@@ -76,13 +77,14 @@ function parseMD(md) {
 
 function parseGitHubURL(url) {
   // XXX this regex fails when there is only one line selected
-  const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)#L(\d+)-L(\d+)$/;
+  const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)-L(\d+))?$/;
   const [
     str,
     user,
     repoName,
     commit,
     filePath,
+    unused,
     lineStart,
     lineEnd,
   ] = re.exec(url);
