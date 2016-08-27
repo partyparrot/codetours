@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Snippet from './Snippet';
 
-
 Meteor.startup(() => {
   ReactDOM.render((
     <App />
