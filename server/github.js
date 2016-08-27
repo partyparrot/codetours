@@ -7,8 +7,8 @@ const GITHUB_API_ROOT = 'https://api.github.com';
 
 export class GitHubConnector {
   constructor({ clientId, clientSecret } = {}) {
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
+    this.clientId = process.env.GITHUB_CLIENT_ID;
+    this.clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
     // Allow mocking request promise for tests
     this.rp = rp;

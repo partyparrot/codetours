@@ -21,12 +21,23 @@ Meteor.methods({
     const connector = new GitHubConnector();
 
     tour.pages.forEach((pagePath) => {
+      let page;
+
       connector.get(`/repos/${tour.repository}/contents/${pagePath}`).then((data) => {
         const content = new Buffer(data.content, 'base64').toString();
 
-        const page = {
+        page = {
           ...parseMD(content),
           slug: pagePath,
+        };
+
+        return connector.get(`/repos/${page.user}/${page.repoName}/contents/${page.filePath}?ref=${page.commit}`);
+      }).then((data) => {
+        const content = new Buffer(data.content, 'base64').toString();
+
+        page = {
+          ...page,
+          code: content,
         };
 
         Pages.insert(page);
