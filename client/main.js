@@ -1,8 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Snippet from './Snippet';
+
 
 Meteor.startup(() => {
   ReactDOM.render((
-    <div>Hello world 2!</div>
+    <App />
   ), document.getElementById('root'));
 });
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Snippet />
+      </div>
+    );
+  }
+}
