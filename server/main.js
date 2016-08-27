@@ -3,38 +3,46 @@ import { loadFront } from 'yaml-front-matter';
 import { GitHubConnector } from './github';
 import { Tours, Pages } from '../collections';
 
+function getFile(connector, repoFullName, path, ref) {
+  let url = `/repos/${repoFullName}/contents/${path}`;
+
+  if (ref) {
+    url += `?ref=${ref}`;
+  }
+
+  return connector.get(url).then((data) => {
+    return new Buffer(data.content, 'base64').toString();
+  });
+}
+
 Meteor.methods({
-  reset() {
-    Tours.remove({});
-    Pages.remove({});
-
-    const tour = {
-      title: 'GitHunt API',
-      repository: 'partyparrot/GitHunt-API-code-tour',
-      pages: [
-        'sample-page.md',
-      ],
-    };
-
-    Tours.insert(tour);
+  async importTour(tourRepository) {
+    Tours.remove({ repository: tourRepository });
+    Pages.remove({ routName: tourRepository });
 
     const connector = new GitHubConnector();
+
+    const content = await getFile(connector, tourRepository, '.codetour.json');
+
+    tour = JSON.parse(content);
+    tour.repository = tourRepository;
+
+    console.log(tour);
+
+    Tours.insert(tour);
 
     tour.pages.forEach((pagePath) => {
       let page;
 
-      connector.get(`/repos/${tour.repository}/contents/${pagePath}`).then((data) => {
-        const content = new Buffer(data.content, 'base64').toString();
-
+      getFile(connector, tour.repository, pagePath).then((content) => {
         page = {
           ...parseMD(content),
           tourName: tour.repository,
           slug: pagePath,
         };
 
-        return connector.get(`/repos/${page.user}/${page.repoName}/contents/${page.filePath}?ref=${page.commit}`);
-      }).then((data) => {
-        const content = new Buffer(data.content, 'base64').toString();
+        return getFile(connector, page.fullRepoName, page.filePath, page.commit);
+      }).then((content) => {
 
         page = {
           ...page,
