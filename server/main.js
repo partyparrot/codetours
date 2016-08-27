@@ -1,9 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { loadFront } from 'yaml-front-matter';
+import { GitHubConnector } from './github';
 
 Meteor.startup(() => {
   // code to run on server at startup
-  console.log(parseMD(Assets.getText('sample-page.md')));
+  const connector = new GitHubConnector();
+
+  connector.get(`/repos/partyparrot/GitHunt-API-code-tour/contents/sample-page.md`).then((data) => {
+    const content = new Buffer(data.content, 'base64').toString();
+    console.log({
+      ...parseMD(content),
+      slug: 'sample-page',
+    });
+  });
 });
 
 function parseMD(md) {
@@ -21,7 +30,6 @@ function parseMD(md) {
     title,
     codeURL: code,
     content: contentBlocks,
-    slug: 'sample-page',
     ...metadata,
   };
 }
@@ -93,8 +101,6 @@ function parseContentBlocks(content, metadata) {
 
     const slug = /id="([^"]+)"/.exec(line)[1];
     const contentWithoutAnchorTag = /<a[^>]+>(.+)<\/a>/.exec(line)[1];
-
-    console.log(contentWithoutAnchorTag);
 
     currSegment = {
       slug,
