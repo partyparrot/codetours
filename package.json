@@ -1,0 +1,14 @@
+{
+  "name": "codetours",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "meteor-node-stubs": "~0.2.0",
+    "react": "^15.3.1",
+    "react-addons-pure-render-mixin": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "react-router": "^2.7.0"
+  }
+}
