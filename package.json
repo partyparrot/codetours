@@ -5,6 +5,8 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "highlight.js": "^9.6.0",
+    "lodash": "^4.15.0",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.1",
     "react-addons-pure-render-mixin": "^15.3.1",
