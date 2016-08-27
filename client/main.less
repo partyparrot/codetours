@@ -1,0 +1,41 @@
+.code-snippet {
+  overflow-x: auto;
+  position: relative;
+  padding: 9px 3px 3px 0;
+  background: #f8f8f8;
+
+  pre {
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+
+    &.added {
+      background: #eaffea;
+    }
+  }
+
+  .line-content {
+    padding-left: 36px;
+    overflow: hidden;
+
+    .hljs-comment {
+      color: #777;
+    }
+  }
+
+  .line-numbers {
+    text-align: right;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    position: absolute;
+    width: 25px;
+
+    .line-number {
+      color: #aaa;
+      font-style: italic;
+    }
+  }
+}

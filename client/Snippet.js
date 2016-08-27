@@ -2,6 +2,7 @@ import React from "react";
 import hljs from "highlight";
 import _ from "lodash";
 
+
 class Snippet extends React.Component {
 
   constructor(props) {
@@ -9,17 +10,40 @@ class Snippet extends React.Component {
   }
 
   renderHighlightedCode() {
+
+    const codeLines = this.getCodeLines();
+    
     // TODO(angela): get language, etc from db
     const highlightedCodeLines = _.map(
-      this.props.code.split('\n'),
+      codeLines,
       (line) => hljs.highlight("javascript", line).value);
 
-
-    return highlightedCodeLines.join('\n');
+    const styledCodeLines = _.map(highlightedCodeLines, (line) => {
+      return `<span class="line-content">${line}</span>`;
+    });
+    return styledCodeLines.join('\n');
   }
+
+  getCodeLines() {
+    return this.props.code.split('\n');
+  }
+
   render() {
     return (
-      <div class="code-snippet">
+      <div className="code-snippet">
+
+        <div className="line-numbers">
+          {
+            _.map(this.getCodeLines(), (codeLine, index) => {
+              return (
+                <pre className="line-number" key={index}>
+                  {index + this.props.startLineNumber}
+                </pre>
+              );
+            })
+          }
+        </div>
+
         <pre>
           <code
             dangerouslySetInnerHTML={{__html: this.renderHighlightedCode()}}>
