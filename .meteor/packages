@@ -20,3 +20,4 @@ autopublish@1.0.7             # Publish all data to the clients (for prototyping
 static-html
 react-meteor-data
 less
+dburles:collection-helpers

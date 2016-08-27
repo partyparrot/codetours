@@ -28,6 +28,7 @@ Meteor.methods({
 
         page = {
           ...parseMD(content),
+          tourName: tour.repository,
           slug: pagePath,
         };
 
@@ -85,6 +86,7 @@ function parseGitHubURL(url) {
   return {
     user,
     repoName,
+    fullRepoName: user + '/' + repoName,
     commit,
     filePath,
     lineStart,

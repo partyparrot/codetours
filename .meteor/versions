@@ -12,6 +12,7 @@ caching-compiler@1.0.6
 caching-html-compiler@1.0.6
 callback-hook@1.0.9
 check@1.2.3
+dburles:collection-helpers@1.0.4
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.6
