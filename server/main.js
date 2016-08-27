@@ -27,8 +27,6 @@ Meteor.methods({
     tour = JSON.parse(content);
     tour.repository = tourRepository;
 
-    console.log(tour);
-
     Tours.insert(tour);
 
     tour.pages.forEach((pagePath) => {
