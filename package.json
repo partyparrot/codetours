@@ -11,6 +11,9 @@
     "react": "^15.3.1",
     "react-addons-pure-render-mixin": "^15.3.1",
     "react-dom": "^15.3.1",
-    "react-router": "^2.7.0"
+    "react-router": "^2.7.0",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1",
+    "yaml-front-matter": "^3.4.0"
   }
 }

@@ -13,7 +13,7 @@ Every GraphQL schema needs a Query type - that defines the entry point to the wh
 
 Query type is for reading data - when we want to write data, we need a Mutation type. Here you can see that the possible data writes in this app are submitRepository, vote, and submitComment.
 
-<a href="https://github.com/apollostack/GitHunt-API/blob/8549f50246b29e7f999a96ec15406c0a82713321/api/schema.js#L119" id="importing-schema"><h3>Importing schema parts</h3></a>
+<a href="https://github.com/apollostack/GitHunt-API/blob/8549f50246b29e7f999a96ec15406c0a82713321/api/schema.js#L119-L121" id="importing-schema"><h3>Importing schema parts</h3></a>
 
 Obviously, we can't put the whole schema of the API in just one file, so this one represents the core root fields. We import the rest from another file and merge them together, as seen here.
 
