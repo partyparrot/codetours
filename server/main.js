@@ -1,19 +1,41 @@
 import { Meteor } from 'meteor/meteor';
 import { loadFront } from 'yaml-front-matter';
 import { GitHubConnector } from './github';
+import { Tours, Pages } from '../collections';
 
-Meteor.startup(() => {
-  // code to run on server at startup
-  const connector = new GitHubConnector();
+Meteor.methods({
+  reset() {
+    Tours.remove({});
+    Pages.remove({});
 
-  connector.get(`/repos/partyparrot/GitHunt-API-code-tour/contents/sample-page.md`).then((data) => {
-    const content = new Buffer(data.content, 'base64').toString();
-    console.log({
-      ...parseMD(content),
-      slug: 'sample-page',
+    const tour = {
+      title: 'GitHunt API',
+      repository: 'partyparrot/GitHunt-API-code-tour',
+      pages: [
+        'sample-page.md',
+      ],
+    };
+
+    Tours.insert(tour);
+
+    const connector = new GitHubConnector();
+
+    tour.pages.forEach((pagePath) => {
+      connector.get(`/repos/${tour.repository}/contents/${pagePath}`).then((data) => {
+        const content = new Buffer(data.content, 'base64').toString();
+
+        const page = {
+          ...parseMD(content),
+          slug: pagePath,
+        };
+
+        Pages.insert(page);
+      }).catch((e) => {
+        console.log(e);
+      });
     });
-  });
-});
+  }
+})
 
 function parseMD(md) {
   const {
