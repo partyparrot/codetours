@@ -4,7 +4,7 @@ import StepContainer from './Step';
 import TourContainer from './Tour';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import RecentTours from './RecentTours';
-
+import marked from 'marked';
 
 Meteor.startup(() => {
   render((
@@ -18,6 +18,22 @@ Meteor.startup(() => {
 
 
 class Frontpage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      search: "",
+    };
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+  }
+
+  handleSearchChange(event) {
+    this.setState({
+      search: event.target.value,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -27,12 +43,13 @@ class Frontpage extends React.Component {
             <p>Get introduced to a new and exciting codebase.</p>
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
-                <div className="input-group">
-                  <input type="text" className="form-control input-lg" placeholder="Search for a repository" />
-                  <span className="input-group-btn">
-                    <button className="btn btn-success btn-lg" type="button">Go!</button>
-                  </span>
-                </div>
+                <input
+                  type="text"
+                  className="form-control input-lg"
+                  placeholder="Search for a repository"
+                  onChange={this.handleSearchChange}
+                  value={this.state.search}
+                />
               </div>
             </div>
           </div>
@@ -40,7 +57,7 @@ class Frontpage extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-8">
-              <RecentTours />
+              <RecentTours search={this.state.search}/>
             </div>
             <div className="col-sm-4">
               <h3>Create a tour</h3>
@@ -57,6 +74,14 @@ class Frontpage extends React.Component {
                 </span>
               </div>
             </div>
+          </div>
+          <div className="footer">
+            <p dangerouslySetInnerHTML={{__html: marked(`
+Made with ![Fiesta Parrot](http://cultofthepartyparrot.com/parrots/fiestaparrot.gif)
+by [Angela Zhang](https://github.com/zhangela) and
+[Sashko Stubailo](https://github.com/stubailo).
+[Contribute on GitHub.](https://github.com/partyparrot/codetours)
+            `)}} />
           </div>
         </div>
       </div>

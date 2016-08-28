@@ -6,15 +6,15 @@ class RecentTours extends React.Component {
   render() {
     return (
       <div>
-        <h3>Recently added tours</h3>
+        <h3>{ this.props.search ? "Search results" : "Recently added tours" }</h3>
         { this.props.tours.map(tour => <TourBadge tour={tour} key={tour.repository} /> ) }
       </div>
     )
   }
 }
 
-export default createContainer(() => {
+export default createContainer(({ search }) => {
   return {
-    tours: Tours.find().fetch(),
+    tours: Tours.find({ targetRepository: { $regex: new RegExp(search, 'i') } }).fetch(),
   };
 }, RecentTours);
