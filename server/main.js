@@ -122,7 +122,6 @@ function parseContentBlocks(content, metadata) {
     }
 
     // Close off current segment
-    console.log(currSegment);
     segments.push(currSegment);
 
     const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)#L(\d+)(-L(\d+))?/;
