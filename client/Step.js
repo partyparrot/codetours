@@ -109,7 +109,14 @@ class Step extends React.Component {
           <span className="glyphicon glyphicon-arrow-right"/>
         </Link>
         );
-    }
+    } else {
+        return (
+          <Link className="next-step btn btn-default" to={this.getTourLink()}>
+            Back to Tour&nbsp;
+            <span className="glyphicon glyphicon-arrow-right"/>
+          </Link>
+          );
+      }
   }
 
   getPrevStepLink() {
