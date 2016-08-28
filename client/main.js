@@ -92,7 +92,7 @@ class Frontpage extends React.Component {
             </div>
             <div className="col-sm-4">
               <h3>What's a CodeTour?</h3>
-              <p>{"A CodeTour is a way for you to introduce new developers to your codebase by giving them a guided tour."}</p>
+              <p>A CodeTour is a way for you to introduce new developers to a codebase by giving them a self-guided tour.</p>
 
               <h3>Why make a CodeTour?</h3>
               <p>You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase.</p>
