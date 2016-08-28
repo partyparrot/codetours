@@ -18,6 +18,9 @@ Meteor.startup(() => {
   ), document.getElementById('root'))
 });
 
+browserHistory.listen(() => {
+  ga('send', 'pageview', window.location.pathname);
+});
 
 class Frontpage extends React.Component {
   constructor(props) {

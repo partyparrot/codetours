@@ -24,7 +24,7 @@ class Step extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.state.slug !== newProps.step.slug) {
+    if (newProps.step && this.state.slug !== newProps.step.slug) {
       this.setState({
         slug: newProps.step.slug,
         selectedIndex: 0,
