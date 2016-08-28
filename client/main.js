@@ -89,16 +89,24 @@ class Frontpage extends React.Component {
               <h3>What's a CodeTour?</h3>
               <p>{"A CodeTour is a way for you to introduce new developers to your codebase by giving them a guided tour."}</p>
 
-              <h3>Who makes CodeTours?</h3>
-              <p>{"You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase."}</p>
-              <p>{"You are the maintainer of a large open source project, and you want to make it super easy for people to understand how it works and contribute."}</p>
-              <p>{"You are building out a GitHub portfolio, and want to be able to highlight important parts of your projects."}</p>
-
+              <h3>Why make a CodeTour?</h3>
+              <p>You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase.</p>
+              <p>You are the maintainer of a large open source project, and you want to make it super easy for people to understand how it works and contribute.</p>
+              <p>You are building out a GitHub portfolio, and want to be able to highlight important parts of your projects.</p>
+              <p>You are a good person and want to share and grow the world's knowledge by teaching other people how your favorite libraries and frameworks work.</p>
               <h3>How do I make a CodeTour?</h3>
+
+              <p>
+                <b>If this is your first time making a tour, take a few minutes to check out our <Link to="/tour/partyparrot/codetours-starter-kit">
+                  CodeTour for CodeTour
+                </Link></b> (it's meta, we know). We promise everything will make a lot more sense after taking this tour.
+              </p>
+
+              <p>If you've done it before, here's the TL;DR in case you need a reminder:</p>
               <ol>
-                <li>{"Fork the starter kit, or someone else's tour"}</li>
+                <li>Fork the starter kit, or another existing tour</li>
                 <li>Edit the config file, content, and code links</li>
-                <li>Import your code tour below:</li>
+                <li>Import your code tour here:</li>
               </ol>
               <form className="input-group" onSubmit={this.handleImportSubmit}>
                 <input type="text" name="tourRepository" className="form-control" placeholder="Your repository name here" />
