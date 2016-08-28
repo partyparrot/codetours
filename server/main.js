@@ -25,6 +25,16 @@ Meteor.publish({
   }
 });
 
+function execOrThrow(re, str) {
+  const result = re.exec(str);
+
+  if (!result) {
+    throw new Meteor.Error(`${str} didn't match required format: ${re}`);
+  }
+
+  return result;
+}
+
 Meteor.methods({
   async importTour(tourRepository) {
     if (tourRepository.indexOf('github.com') !== -1) {
@@ -33,7 +43,7 @@ Meteor.methods({
         url,
         username,
         repo,
-      ] = /github\.com\/([^/]+)\/([^/]+)/.exec(tourRepository);
+      ] = execOrThrow(/github\.com\/([^/]+)\/([^/]+)/, tourRepository);
 
       tourRepository = `${username}/${repo}`;
     }
@@ -133,7 +143,7 @@ function parseGitHubURL(url) {
     unused,
     lineStart,
     lineEnd,
-  ] = re.exec(url);
+  ] = execOrThrow(re, url);
 
   const fileUrl = url.split('#')[0];
 
@@ -182,7 +192,7 @@ function parseContentBlocks(content, metadata) {
       lineStart,
       unused,
       lineEnd,
-    ] = re.exec(line);
+    ] = execOrThrow(re, line);
 
     if (!lineEnd) {
       lineEnd = lineStart;
@@ -190,7 +200,7 @@ function parseContentBlocks(content, metadata) {
 
     const anchorId = /id="([^"]+)"/.exec(line);
     const slug = (anchorId && anchorId[1]) || `section-${segments.length + 1}`;
-    const contentWithoutAnchorTag = /<a[^>]+>(.+)<\/a>/.exec(line)[1] + '\n';
+    const contentWithoutAnchorTag = execOrThrow(/<a[^>]+>(.+)<\/a>/, line)[1] + '\n';
 
     currSegment = {
       slug,

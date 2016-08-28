@@ -101,8 +101,8 @@ class Tour extends React.Component {
                   {this.props.tour.targetRepository}</a>, written by <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>.
                 </p>
                 <p>
-                  Contribute to this CodeTour on <a href={`https://github.com/${this.getUser()}/${this.getRepoName()}`}>
-                    Github
+                  <a href={`https://github.com/${this.getUser()}/${this.getRepoName()}`}>
+                    Contribute, create a fork, or file issues on Github
                   </a>
                 </p>
               </div>
