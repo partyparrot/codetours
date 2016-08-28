@@ -98,7 +98,7 @@ class Tour extends React.Component {
 
               <div style={{fontSize: "16px", padding: "5px"}}>
                 <p>This is a tour of <a href={`https://github.com/${this.props.tour.targetRepository}`}>
-                  {this.props.tour.targetRepository}</a>, written by <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>.
+                  {this.props.tour.targetRepository}</a>, led by <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>.
                 </p>
                 <p>
                   <a href={`https://github.com/${this.getUser()}/${this.getRepoName()}`}>
