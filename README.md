@@ -25,8 +25,8 @@ Import your code tour here:
 https://www.codetours.xyz/
 
 ### How can I contribute?
-If you want to file a bug, or have a feature request, hop on over to: https://github.com/partyparrot/codetours/issues
-Pull requests welcome & appreciated! 
+- If you want to file a bug, or have a feature request, hop on over to: https://github.com/partyparrot/codetours/issues
+- Pull requests welcome & appreciated! 
 
 ## Full Design Doc: 
 
