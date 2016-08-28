@@ -81,6 +81,9 @@ class Step extends React.Component {
   }
 
   getLineNumbersForSection(section) {
+    if (! section) {
+      return [];
+    }
     return _.range(parseInt(section.lineStart, 10), parseInt(section.lineEnd, 10) + 1);
   }
 
