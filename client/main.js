@@ -54,7 +54,7 @@ class Frontpage extends React.Component {
         <div className="jumbotron text-center">
           <div className="container">
             <h1>CodeTours!</h1>
-            <p>Get introduced to a new and exciting codebase.</p>
+            <p>Introduce yourself to new exciting open source codebases.</p>
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
                 <input

@@ -21,3 +21,4 @@ react-meteor-data
 less
 dburles:collection-helpers
 check
+force-ssl
