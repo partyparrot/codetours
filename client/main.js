@@ -2,8 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import StepContainer from './Step';
 import { Router, Route, Link, browserHistory } from 'react-router';
-
-
+import RecentTours from './RecentTours';
 
 Meteor.startup(() => {
   render((
@@ -48,15 +47,11 @@ class Frontpage extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-8">
-              <h3>Recently added tours</h3>
-              <div className="tour-badge">
-                <img src="https://github.com/facebook.png"/>
-                <h4 className="target-repo">facebook/react</h4>
-              </div>
+              <RecentTours />
             </div>
             <div className="col-sm-4">
               <h3>Create a tour</h3>
-              <p>{"It's easy!"}</p>
+              <p>{"Help explain your project, or someone else's."}</p>
               <ol>
                 <li>{"Fork the starter kit, or someone else's tour"}</li>
                 <li>Edit the config file, content, and code links</li>
