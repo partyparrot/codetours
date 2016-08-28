@@ -16,10 +16,9 @@ class Section extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class="section">
         {this.renderViewCodeButton()}
         <div dangerouslySetInnerHTML={{__html: marked(this.props.section.content)}} />
-        <hr></hr>
       </div>
 
     );

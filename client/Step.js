@@ -59,8 +59,9 @@ class Step extends React.Component {
     const nextStep = this.props.tour.steps[curIndex + 1];
     if (nextStep) {
       return (
-        <Link className="next-step" to={this.getStepLink(nextStep)}>
-          Next: {this.props.step.getNextStep().getFullTitle()}
+        <Link className="next-step btn btn-default" to={this.getStepLink(nextStep)}>
+          {this.props.step.getNextStep().getFullTitle()}&nbsp;
+          <span className="glyphicon glyphicon-arrow-right"/>
         </Link>
         );
     } else {
@@ -73,8 +74,9 @@ class Step extends React.Component {
     const prevStep = this.props.tour.steps[curIndex - 1];
     if (prevStep) {
       return (
-        <Link to={this.getStepLink(prevStep)}>
-          Next: {this.props.step.getPrevStep().getFullTitle()}
+        <Link to={this.getStepLink(prevStep)} className="btn btn-default">
+          <span className="glyphicon glyphicon-arrow-left"/>&nbsp;
+          {this.props.step.getPrevStep().getFullTitle()}
         </Link>
         );
     } else {
