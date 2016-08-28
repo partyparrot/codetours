@@ -46,11 +46,11 @@ class Tour extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="container" style={{marginTop: "50px"}}>
+        <div className="container" style={{marginTop: "40px"}}>
 
-          <div className="row" style={{marginTop: "50px"}}>
+          <div className="row" style={{marginTop: "40px"}}>
             <div className="col-md-2 col-xs-2">
-              <img style={{maxWidth: "100%"}} src={`https://github.com/${this.getUser()}.png`}/>
+              <img style={{maxWidth: "80%"}} src={`https://github.com/${this.getUser()}.png`}/>
             </div>
             <div className="col-md-10 col-xs-10">
               <h1 className="target-repo">{this.getRepoName()}
@@ -62,17 +62,27 @@ class Tour extends React.Component {
 
           <div className="row" style={{marginTop: "20px"}}>
             <div className="col-md-8">
-
-              <button
-                type="button"
-                className="btn btn-success btn-lg btn-block">
-                <span style={{fontWeight: "bold"}}>Start CodeTour</span>
-              </button>
+              <Link to={this.getStepLink(this.props.tour.steps[0])} style={{textDecoration: "none"}}>
+                <button
+                  type="button"
+                  className="btn btn-success btn-lg btn-block"
+                  style={{fontWeight: "bold"}}>
+                  Start CodeTour
+                </button>
+              </Link>
               {
                 _.map(this.props.tour.steps, (slug, index) => {
                   return (
                     <div key={slug}>
-                      <Link to={this.getStepLink(slug)}>{this.getStepObject(slug).getFullTitle()}</Link>
+                      <Link to={this.getStepLink(slug)}>
+                        <div className="row" style={{marginTop: "10px"}}>
+                          <div className="col-sm-3 col-xs-3 number-circle">{index + 1}</div>
+                          <div
+                            className="col-sm-7 col-xs-7"
+                            style={{textAlign: "middle", lineHeight: "50px", fontSize: "20px", padding: "6px"}}>
+                            {this.getStepObject(slug).title}</div>
+                        </div>
+                      </Link>
                     </div>
                   );
                 })
@@ -84,7 +94,7 @@ class Tour extends React.Component {
 
               <div style={{fontSize: "16px", padding: "5px"}}>
                 <p>This is a tour of <a href={`https://github.com/${this.props.tour.targetRepository}`}>
-                  {this.props.tour.targetRepository}</a>, written by <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>
+                  {this.props.tour.targetRepository}</a>, written by <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>.
                 </p>
                 <p>
                   Contribute to this CodeTour on <a href={`https://github.com/${this.getUser()}/${this.getRepoName()}`}>
@@ -96,9 +106,6 @@ class Tour extends React.Component {
             </div>
           </div>
 
-
-
-          <Link to={this.getStepLink(this.props.tour.steps[0])}>Let's start</Link>
         </div>
       </div>
     );
