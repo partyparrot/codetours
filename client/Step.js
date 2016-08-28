@@ -12,23 +12,34 @@ class Step extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.slug = this.props.step && this.props.step.slug;
-
     this.state = {
-      highlightLineNumbers: []
+      highlightLineNumbers: [],
     };
+
+    if (this.props.step) {
+      const section = this.props.step.content[0];
+      this.state.slug = this.props.step.slug;
+      this.state.highlightLineNumbers = this.getLineNumbersForSection(section);
+    }
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.props.slug !== newProps.step.slug) {
+    if (this.state.slug !== newProps.step.slug) {
       this.onSelect(newProps.step.content[0]);
+      this.setState({
+        slug: newProps.step.slug,
+      });
     }
   }
 
   onSelect(section) {
     this.setState({
-      highlightLineNumbers: _.range(parseInt(section.lineStart, 10), parseInt(section.lineEnd, 10) + 1)
+      highlightLineNumbers: this.getLineNumbersForSection(section)
     });
+  }
+
+  getLineNumbersForSection(section) {
+    return _.range(parseInt(section.lineStart, 10), parseInt(section.lineEnd, 10) + 1);
   }
 
   getStepNumber(slug) {
