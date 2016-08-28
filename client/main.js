@@ -1,28 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
 import StepContainer from './Step';
+import TourContainer from './Tour';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import RecentTours from './RecentTours';
+
 
 Meteor.startup(() => {
   render((
     <Router history={browserHistory}>
       <Route path="/" component={Frontpage} />
-      <Route path="/tour/:user/:repoName" component={Tour} />
+      <Route path="/tour/:user/:repoName" component={TourContainer} />
       <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} />
     </Router>
   ), document.getElementById('root'))
 });
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <StepContainer />
-      </div>
-    );
-  }
-}
 
 class Frontpage extends React.Component {
   render() {
@@ -66,16 +59,6 @@ class Frontpage extends React.Component {
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
-}
-
-class Tour extends React.Component {
-  render() {
-    return (
-      <div>
-        CodeTours!
       </div>
     );
   }
