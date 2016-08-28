@@ -6,6 +6,10 @@ import TourBadge from './TourBadge';
 import _ from 'lodash';
 
 class Tour extends React.Component {
+  constructor(props) {
+    super(props);
+    this.reImportTour = this.reImportTour.bind(this);
+  }
 
   getUser() {
     return this.props.tour.repository.split('/')[0];
@@ -23,6 +27,16 @@ class Tour extends React.Component {
     return _.find(this.props.steps, {slug: slug});
   }
 
+  reImportTour() {
+    event.preventDefault();
+    const tourRepository = this.props.tour.repository;
+    Meteor.call('importTour', tourRepository, (err, res) => {
+      if (err) {
+        alert(err.reason);
+      }
+    });
+  }
+
   render() {
     if (!this.props.stepsLoaded) {
       return <div>Loading...</div>
@@ -30,6 +44,7 @@ class Tour extends React.Component {
     return (
       <div className="container">
         <TourBadge tour={this.props.tour} />
+        <button onClick={this.reImportTour}>Reload from GitHub source</button>
         <p>Created by {this.getUser()} for {this.props.tour.targetRepository} at {this.getRepoName()}</p>
         {
           _.map(this.props.tour.steps, (slug, index) => {
