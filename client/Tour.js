@@ -3,6 +3,7 @@ import { Tours } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 import TourBadge from './TourBadge';
+import _ from 'lodash';
 
 class Tour extends React.Component {
 
@@ -17,9 +18,13 @@ class Tour extends React.Component {
   getStepLink(step) {
     return `/tour/${this.props.tour.repository}/${step}`;
   }
-  
+
+  getStepTitle(slug) {
+    return _.find(this.props.steps, {slug: slug}).title;
+  }
+
   render() {
-    if (!this.props.tour) {
+    if (!this.props.tour || !this.props.steps) {
       return <div>Loading...</div>
     }
     return (
@@ -27,10 +32,10 @@ class Tour extends React.Component {
         <TourBadge tour={this.props.tour} />
         <p>Created by {this.getUser()} for {this.props.tour.targetRepository} at {this.getRepoName()}</p>
         {
-          _.map(this.props.tour.steps, (step, index) => {
+          _.map(this.props.tour.steps, (slug, index) => {
             return (
-              <div key={step}>
-                <Link to={this.getStepLink(step)}>Step {index + 1}. {step}</Link>
+              <div key={slug}>
+                <Link to={this.getStepLink(slug)}>Step {index + 1}. {this.getStepTitle(slug)}</Link>
               </div>
             );
           })
@@ -48,7 +53,10 @@ const TourContainer = createContainer(({ params }) => {
       {
         repository: repository
       }
-    )
+    ),
+    steps: Steps.find({
+      tourName: repository
+    }).fetch()
   }
 }, Tour);
 

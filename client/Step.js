@@ -23,6 +23,10 @@ class Step extends React.Component {
     });
   }
 
+  getStepNumber(slug) {
+    return _.indexOf(this.props.tour.steps, slug) + 1;
+  }
+
   getStepLink(step) {
     return `/tour/${this.props.tour.repository}/${step}`;
   }
@@ -62,6 +66,7 @@ class Step extends React.Component {
       <div>
         {this.getPrevStepLink()}
         {this.getNextStepLink()}
+        <h1>Step {this.getStepNumber(this.props.step.slug)}. {this.props.step.title}</h1>
         <div className="left">
           <div>URL: {this.props.step.codeUrl}</div>
           <div>Commit: {this.props.step.commit}</div>
