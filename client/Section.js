@@ -8,9 +8,20 @@ class Section extends React.Component {
     super(props);
   }
 
+  renderViewCodeButton() {
+    if (this.props.section.lineStart && this.props.section.lineEnd) {
+      return <button onClick={this.props.onSelect}>View Code Snippet</button>;
+    }
+  }
+
   render() {
     return (
-      <div dangerouslySetInnerHTML={{__html: marked(this.props.section.content)}} />
+      <div>
+        {this.renderViewCodeButton()}
+        <div dangerouslySetInnerHTML={{__html: marked(this.props.section.content)}} />
+        <hr></hr>
+      </div>
+
     );
 
   }

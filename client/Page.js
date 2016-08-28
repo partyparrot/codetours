@@ -11,15 +11,21 @@ class Page extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      highlightLineNumbers: []
+    };
   }
 
   onSelect(section) {
     console.log('section', section);
-    // this.setState();
+    this.setState({
+      highlightLineNumbers: _.range(parseInt(section.lineStart), parseInt(section.lineEnd) + 1)
+    });
+    console.log(this.state);
   }
 
   render() {
-
     if (!this.props.page) {
       return <div>Loading...</div>
     }
@@ -28,7 +34,11 @@ class Page extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-xs-12 col-md-8">
-            <Snippet code={this.props.page.code} startLineNumber={10} highlightLineNumbers={[15, 16, 17, 18, 22, 23]}/>
+            <div>URL: {this.props.page.codeURL}</div>
+            <div>Commit: {this.props.page.commit}</div>
+            <Snippet
+              code={this.props.page.code}
+              highlightLineNumbers={this.state.highlightLineNumbers}/>
           </div>
           <div className="col-xs-12 col-md-4">
             {

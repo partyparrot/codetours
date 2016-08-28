@@ -20,12 +20,10 @@ class Snippet extends React.Component {
 
     const styledCodeLines = _.map(highlightedCodeLines, (line, index) => {
 
-      const lineNumber = this.getAdjustedLineNumber(index);
-
       // We need the space otherwise pre tag won't render it.
       const lineContent = line || ' ';
       let additionalStyles = '';
-      if(this.shouldHighlight(lineNumber)) {
+      if(this.shouldHighlight(index)) {
         additionalStyles += 'line-highlight';
       }
       return `<pre class="line-content ${additionalStyles}"><code>${lineContent}</code></pre>`;
@@ -35,10 +33,6 @@ class Snippet extends React.Component {
 
   getCodeLines() {
     return this.props.code.split('\n');
-  }
-
-  getAdjustedLineNumber(index) {
-    return index + this.props.startLineNumber;
   }
 
   shouldHighlight(lineNumber) {
@@ -53,12 +47,11 @@ class Snippet extends React.Component {
           <div className="line-numbers">
             {
               _.map(this.getCodeLines(), (codeLine, index) => {
-                const lineNumber = this.getAdjustedLineNumber(index);
                 return (
                   <pre
-                    className={this.shouldHighlight(lineNumber) ? "line-highlight line-number": "line-number"}
-                    key={lineNumber}>
-                    {lineNumber}
+                    className={this.shouldHighlight(index) ? "line-highlight line-number": "line-number"}
+                    key={index}>
+                    {index}
                   </pre>
                 );
               })
