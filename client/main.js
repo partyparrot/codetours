@@ -113,7 +113,7 @@ class Frontpage extends React.Component {
 
               <p>If you've done it before, here's the TL;DR in case you need a reminder:</p>
               <ol>
-                <li>Fork the starter kit, or another existing tour</li>
+                <li>Fork the <a href="https://github.com/partyparrot/codetours-starter-kit">starter kit</a>, or another existing tour</li>
                 <li>Edit the config file, content, and code links</li>
                 <li>Import your code tour here:</li>
               </ol>
