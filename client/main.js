@@ -49,6 +49,10 @@ class Frontpage extends React.Component {
           <div className="row">
             <div className="col-sm-8">
               <h3>Recently added tours</h3>
+              <div className="tour-badge">
+                <img src="https://github.com/facebook.png"/>
+                <h4 className="target-repo">facebook/react</h4>
+              </div>
             </div>
             <div className="col-sm-4">
               <h3>Create a tour</h3>
