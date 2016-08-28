@@ -74,6 +74,13 @@ Meteor.methods({
 
     tour.repository = tourRepository;
 
+    const existingTour = Tours.findOne({ repository: tourRepository });
+    if (existingTour && existingTour.createdAt) {
+      tour.createdAt = existingTour.createdAt;
+    } else {
+      tour.createdAt = new Date();
+    }
+
     Tours.remove({ repository: tourRepository });
     Steps.remove({ tourName: tourRepository });
 
