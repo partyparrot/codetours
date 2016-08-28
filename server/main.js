@@ -108,6 +108,8 @@ Meteor.methods({
       }).catch((e) => {
         if (e.statusCode === 404) {
           throw new Meteor.Error('not-found', `Could not find file with path ${stepPath} in repository. Check your .codetour.json file.`);
+        } else if (e instanceof Meteor.Error) {
+          throw e;
         } else {
           console.log(e);
           throw new Meteor.Error('error', 'Error fetching data from GitHub.');
