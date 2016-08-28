@@ -47,18 +47,57 @@ class Tour extends React.Component {
       <div>
         <Navbar />
         <div className="container" style={{marginTop: "50px"}}>
-          <TourBadge tour={this.props.tour} />
-          <button onClick={this.reImportTour}>Reload from GitHub source</button>
-          <p>Created by {this.getUser()} for {this.props.tour.targetRepository} at {this.getRepoName()}</p>
-          {
-            _.map(this.props.tour.steps, (slug, index) => {
-              return (
-                <div key={slug}>
-                  <Link to={this.getStepLink(slug)}>{this.getStepObject(slug).getFullTitle()}</Link>
-                </div>
-              );
-            })
-          }
+
+          <div className="row" style={{marginTop: "50px"}}>
+            <div className="col-md-2 col-xs-2">
+              <img style={{maxWidth: "100%"}} src={`https://github.com/${this.getUser()}.png`}/>
+            </div>
+            <div className="col-md-10 col-xs-10">
+              <h1 className="target-repo">{this.getRepoName()}
+                <span className="text-muted"> by {this.getUser()}</span>
+              </h1>
+              <p style={{fontSize: "24px"}}>{this.props.tour.description}</p>
+            </div>
+          </div>
+
+          <div className="row" style={{marginTop: "20px"}}>
+            <div className="col-md-8">
+
+              <button
+                type="button"
+                className="btn btn-success btn-lg btn-block">
+                <span style={{fontWeight: "bold"}}>Start CodeTour</span>
+              </button>
+              {
+                _.map(this.props.tour.steps, (slug, index) => {
+                  return (
+                    <div key={slug}>
+                      <Link to={this.getStepLink(slug)}>{this.getStepObject(slug).getFullTitle()}</Link>
+                    </div>
+                  );
+                })
+              }
+            </div>
+
+            <div className="col-md-4"
+              style={{backgroundColor: "#f7f7f9", borderRadius: "4px", border: "1px solid #e1e1e8", padding: "5px", paddingBottom: "15px"}}>
+
+              <div style={{fontSize: "16px", padding: "5px"}}>
+                <p>This is a tour of <a href={`https://github.com/${this.props.tour.targetRepository}`}>
+                  {this.props.tour.targetRepository}</a>, written by <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>
+                </p>
+                <p>
+                  Contribute to this CodeTour on <a href={`https://github.com/${this.getUser()}/${this.getRepoName()}`}>
+                    Github
+                  </a>
+                </p>
+              </div>
+              <button className="btn btn-default" onClick={this.reImportTour}>Sync CodeTour from Github</button>
+            </div>
+          </div>
+
+
+
           <Link to={this.getStepLink(this.props.tour.steps[0])}>Let's start</Link>
         </div>
       </div>
