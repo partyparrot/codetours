@@ -21,7 +21,7 @@ class Snippet extends React.Component {
     const styledCodeLines = _.map(highlightedCodeLines, (line, index) => {
 
       // We need the space otherwise pre tag won't render it.
-      const lineContent = line || ' ';
+      const lineContent = line || '&nbsp';
       const lineNumber = index + 1;
       let additionalStyles = '';
       if(this.shouldHighlight(lineNumber)) {
@@ -40,6 +40,12 @@ class Snippet extends React.Component {
     return _.includes(this.props.highlightLineNumbers, lineNumber);
   }
 
+  componentDidMount() {
+    if (this.elToScrollTo) {
+      this.elToScrollTo.scrollIntoView({behavior: "smooth"});
+    }
+  }
+
   componentDidUpdate() {
     if (this.elToScrollTo) {
       this.elToScrollTo.scrollIntoView({behavior: "smooth"});
@@ -50,7 +56,6 @@ class Snippet extends React.Component {
     return (
       <div className="code-snippet">
         <div className="inside-scroll-container">
-
           <div className="line-numbers">
             {
               _.map(this.getCodeLines(), (codeLine, index) => {
@@ -59,7 +64,7 @@ class Snippet extends React.Component {
                   <pre
                     ref={(el) => {
                       // 3 line offset so we don't scroll to the very top
-                      if (lineNumber === _.min(this.props.highlightLineNumbers) - 3) {
+                      if (lineNumber === _.max([_.min(this.props.highlightLineNumbers) - 3, 1])) {
                         this.elToScrollTo = el;
                       }
                     }}

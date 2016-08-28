@@ -6,18 +6,23 @@ class Section extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.onClick = this.onClick.bind(this);
   }
 
-  renderViewCodeButton() {
-    if (this.props.section.lineStart && this.props.section.lineEnd) {
-      return <button onClick={this.props.onSelect}>Highlight code</button>;
+  selectable() {
+    return this.props.section.lineStart && this.props.section.lineEnd
+  }
+
+  onClick() {
+    if (this.selectable()) {
+      this.props.onSelect();
     }
   }
 
   render() {
     return (
-      <div class="section">
-        {this.renderViewCodeButton()}
+      <div className={"section" + (this.selectable() ? ' selectable' : '') + (this.props.selected ? ' selected' : '')} onClick={this.onClick}>
         <div dangerouslySetInnerHTML={{__html: marked(this.props.section.content)}} />
       </div>
 

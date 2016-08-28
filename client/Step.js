@@ -19,23 +19,27 @@ class Step extends React.Component {
     if (this.props.step) {
       const section = this.props.step.content[0];
       this.state.slug = this.props.step.slug;
-      this.state.highlightLineNumbers = this.getLineNumbersForSection(section);
+      this.state.selectedIndex = 0;
     }
   }
 
   componentWillReceiveProps(newProps) {
     if (this.state.slug !== newProps.step.slug) {
-      this.onSelect(newProps.step.content[0]);
       this.setState({
         slug: newProps.step.slug,
+        selectedIndex: 0,
       });
     }
   }
 
-  onSelect(section) {
+  onSelect(index) {
     this.setState({
-      highlightLineNumbers: this.getLineNumbersForSection(section)
+      selectedIndex: index,
     });
+  }
+
+  getLineNumbersForCurrentSection() {
+    return this.props.step && this.getLineNumbersForSection(this.props.step.content[this.state.selectedIndex]);
   }
 
   getLineNumbersForSection(section) {
@@ -64,8 +68,6 @@ class Step extends React.Component {
           <span className="glyphicon glyphicon-arrow-right"/>
         </Link>
         );
-    } else {
-      return <Link className="next-step" to={this.getTourLink()}>Back to Tour</Link>;
     }
   }
 
@@ -79,8 +81,6 @@ class Step extends React.Component {
           {this.props.step.getPrevStep().getFullTitle()}
         </Link>
         );
-    } else {
-      return <Link to={this.getTourLink()}>Back to Tour</Link>;
     }
   }
 
@@ -92,24 +92,30 @@ class Step extends React.Component {
     return (
       <div>
         <div className="left">
-          <div><a href={this.props.step.codeUrl}>{this.props.step.fullRepoName}/<strong>{this.props.step.filePath}</strong></a></div>
+          <div className="source-link"><a href={this.props.step.codeUrl}>{this.props.step.fullRepoName}/<strong>{this.props.step.filePath}</strong></a></div>
           <Snippet
             code={this.props.step.code}
-            highlightLineNumbers={this.state.highlightLineNumbers}/>
+            highlightLineNumbers={this.getLineNumbersForCurrentSection()}/>
         </div>
         <div className="right">
+          <Link to={'/'} className="tiny-logo">CodeTours</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <Link to={this.getTourLink()}>Tour of {this.props.tour.targetRepository}</Link>
           <h1 className="step-title">{this.props.step.getFullTitle()}</h1>
-          {this.getPrevStepLink()}
-          {this.getNextStepLink()}
+          <div className="step-nav">
+            {this.getPrevStepLink()}
+            {this.getNextStepLink()}
+          </div>
           {
             _.map(this.props.step.content, (section, index) => {
               return (
-                <Section key={index} section={section} onSelect={this.onSelect.bind(this, section)} />
+                <Section key={index} section={section} onSelect={this.onSelect.bind(this, index)} selected={index === this.state.selectedIndex} />
               );
             })
           }
-          {this.getPrevStepLink()}
-          {this.getNextStepLink()}
+          <div className="step-nav">
+            {this.getPrevStepLink()}
+            {this.getNextStepLink()}
+          </div>
         </div>
       </div>
     );

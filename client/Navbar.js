@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 class Navbar extends React.Component {
 
@@ -21,10 +22,10 @@ class Navbar extends React.Component {
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
           <div className="navbar-header">
-            <a className="navbar-brand" href="/">
+            <Link className="navbar-brand" to="/">
               <img rel="icon" src="/logo.png" style={logoStyle}/>
               <span style={brandNameStyle}>CodeTours</span>
-            </a>
+            </Link>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav navbar-right">
