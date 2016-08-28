@@ -190,7 +190,7 @@ function parseContentBlocks(content, metadata) {
 
     const anchorId = /id="([^"]+)"/.exec(line);
     const slug = (anchorId && anchorId[1]) || `section-${segments.length + 1}`;
-    const contentWithoutAnchorTag = /<a[^>]+>(.+)<\/a>/.exec(line)[1];
+    const contentWithoutAnchorTag = /<a[^>]+>(.+)<\/a>/.exec(line)[1] + '\n';
 
     currSegment = {
       slug,

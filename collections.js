@@ -22,7 +22,7 @@ Steps.helpers({
 
   getFullTitle() {
     const stepNum = _.indexOf(this.getTour().steps, this.slug) + 1;
-    return `Step ${stepNum}. ${this.title}`;
+    return `${stepNum}. ${this.title}`;
   },
 
   getPrevStep() {
