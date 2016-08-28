@@ -89,17 +89,16 @@ class Step extends React.Component {
 
     return (
       <div>
-        {this.getPrevStepLink()}
-        {this.getNextStepLink()}
-        <h1>{this.props.step.getFullTitle()}</h1>
         <div className="left">
-          <div>URL: {this.props.step.codeUrl}</div>
-          <div>Commit: {this.props.step.commit}</div>
+          <div><a href={this.props.step.codeUrl}>{this.props.step.fullRepoName}/<strong>{this.props.step.filePath}</strong></a></div>
           <Snippet
             code={this.props.step.code}
             highlightLineNumbers={this.state.highlightLineNumbers}/>
         </div>
         <div className="right">
+          <h1 className="step-title">{this.props.step.getFullTitle()}</h1>
+          {this.getPrevStepLink()}
+          {this.getNextStepLink()}
           {
             _.map(this.props.step.content, (section, index) => {
               return (
@@ -107,6 +106,7 @@ class Step extends React.Component {
               );
             })
           }
+          {this.getPrevStepLink()}
           {this.getNextStepLink()}
         </div>
       </div>
