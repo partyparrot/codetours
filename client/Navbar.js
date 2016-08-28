@@ -7,6 +7,7 @@ class Navbar extends React.Component {
       fontFamily: "'Pacifico', cursive",
       fontSize: "30px",
       marginLeft: "10px",
+      color: "white",
     };
 
     const logoStyle = {
