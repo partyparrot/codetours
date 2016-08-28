@@ -36,6 +36,7 @@ Meteor.methods({
       if (e.statusCode === 404) {
         throw new Meteor.Error('not-found', 'Could not find a .codetour.json file in the repository.');
       } else {
+        console.log(e);
         throw new Meteor.Error('error', 'Error fetching data from GitHub.');
       }
     }
@@ -80,6 +81,7 @@ Meteor.methods({
         if (e.statusCode === 404) {
           throw new Meteor.Error('not-found', `Could not find file with path ${stepPath} in repository. Check your .codetour.json file.`);
         } else {
+          console.log(e);
           throw new Meteor.Error('error', 'Error fetching data from GitHub.');
         }
       });
@@ -173,7 +175,8 @@ function parseContentBlocks(content, metadata) {
       lineEnd = lineStart;
     }
 
-    const slug = /id="([^"]+)"/.exec(line)[1];
+    const anchorId = /id="([^"]+)"/.exec(line);
+    const slug = (anchorId && anchorId[1]) || `section-${segments.length + 1}`;
     const contentWithoutAnchorTag = /<a[^>]+>(.+)<\/a>/.exec(line)[1];
 
     currSegment = {
