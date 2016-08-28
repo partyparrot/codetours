@@ -69,7 +69,7 @@ function parseMD(md) {
 
   return {
     title,
-    codeURL: code,
+    codeUrl: code,
     content: contentBlocks,
     ...metadata,
   };
