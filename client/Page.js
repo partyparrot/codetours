@@ -53,8 +53,14 @@ class Page extends React.Component {
 }
 
 const PageContainer = createContainer(({ params }) => {
+  const tourName = `${params.user}/${params.repoName}`;
   return {
-    page: Pages.findOne({slug: "connector.md"})
+    page: Pages.findOne(
+      {
+        tourName,
+        slug: params.pageSlug
+      }
+    )
   }
 }, Page);
 

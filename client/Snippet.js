@@ -41,7 +41,9 @@ class Snippet extends React.Component {
   }
 
   componentDidUpdate() {
-    this.elToScrollTo.scrollIntoView({behavior: "smooth"});
+    if (this.elToScrollTo) {
+      this.elToScrollTo.scrollIntoView({behavior: "smooth"});
+    }
   }
 
   render() {
