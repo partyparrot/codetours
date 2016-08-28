@@ -33,7 +33,6 @@ class Section extends React.Component {
   }
 
   render() {
-    console.log(this.props.section.content.trim(), marked(this.props.section.content.trim()));
     return (
       <div className={"section" + (this.selectable() ? ' selectable' : '') + (this.props.selected ? ' selected' : '')} onClick={this.onClick}>
         <div ref={(e) => {this.md = e}} dangerouslySetInnerHTML={{__html: marked(this.props.section.content.trim())}} />

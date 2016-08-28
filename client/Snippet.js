@@ -9,14 +9,44 @@ class Snippet extends React.Component {
     super(props);
   }
 
+  getLanguageFromFilePath() {
+    // Attempt to get language from filePath
+    let lang = _.last(this.props.filePath.split('.'));
+
+    const extToLang = {
+      js: 'javascript',
+      py: 'python',
+      ts: 'typescript',
+    };
+
+    if (_.has(extToLang, lang)) {
+      lang = extToLang[lang];
+    }
+
+    if (! _.includes(hljs.listLanguages(), lang)) {
+      lang = null;
+    }
+
+    return lang;
+  }
+
   renderHighlightedCode() {
 
     const codeLines = this.getCodeLines();
 
-    // TODO(angela): get language, etc from db
-    const highlightedCodeLines = _.map(
-      codeLines,
-      (line) => hljs.highlight("javascript", line).value);
+    const lang = this.getLanguageFromFilePath();
+
+    let highlightedCodeLines;
+
+    if (lang) {
+      highlightedCodeLines = _.map(
+        codeLines,
+        (line) => hljs.highlight(lang, line).value);
+    } else {
+      highlightedCodeLines = _.map(
+        codeLines,
+        (line) => hljs.highlightAuto(line).value);
+    }
 
     const styledCodeLines = _.map(highlightedCodeLines, (line, index) => {
 

@@ -95,6 +95,7 @@ class Step extends React.Component {
           <div className="source-link"><a href={this.props.step.codeUrl}>{this.props.step.fullRepoName}/<strong>{this.props.step.filePath}</strong></a></div>
           <Snippet
             code={this.props.step.code}
+            filePath={this.props.step.filePath}
             highlightLineNumbers={this.getLineNumbersForCurrentSection()}/>
         </div>
         <div className="right">
