@@ -28,21 +28,42 @@ class App extends React.Component {
 class Frontpage extends React.Component {
   render() {
     return (
-      <div className="jumbotron">
-        <div className="container">
-          <h1>CodeTours!</h1>
-          <p>Get introduced to a new and exciting codebase.</p>
-          <div className="row">
-            <div className="col-sm-8">
-              <div className="input-group">
-                <input type="text" className="form-control input-lg" placeholder="Search for..." />
-                <span className="input-group-btn">
-                  <button className="btn btn-success btn-lg" type="button">Go!</button>
-                </span>
+      <div>
+        <div className="jumbotron text-center">
+          <div className="container">
+            <h1>CodeTours!</h1>
+            <p>Get introduced to a new and exciting codebase.</p>
+            <div className="row">
+              <div className="col-sm-6 col-sm-offset-3">
+                <div className="input-group">
+                  <input type="text" className="form-control input-lg" placeholder="Search for a repository" />
+                  <span className="input-group-btn">
+                    <button className="btn btn-success btn-lg" type="button">Go!</button>
+                  </span>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-8">
+              <h3>Recently added tours</h3>
+            </div>
             <div className="col-sm-4">
-              <a className="btn btn-primary btn-lg" href="#" role="button">Create a tour!</a>
+              <h3>Create a tour</h3>
+              <p>{"It's easy!"}</p>
+              <ol>
+                <li>{"Fork the starter kit, or someone else's tour"}</li>
+                <li>Edit the config file, content, and code links</li>
+                <li>Import your code tour below:</li>
+              </ol>
+              <div className="input-group">
+                <input type="text" className="form-control" placeholder="Your repository name here" />
+                <span className="input-group-btn">
+                  <button className="btn btn-success" type="button">Go!</button>
+                </span>
+              </div>
             </div>
           </div>
         </div>
