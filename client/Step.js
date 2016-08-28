@@ -12,9 +12,17 @@ class Step extends React.Component {
   constructor(props) {
     super(props);
 
+    this.props.slug = this.props.step && this.props.step.slug;
+
     this.state = {
       highlightLineNumbers: []
     };
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.props.slug !== newProps.step.slug) {
+      this.onSelect(newProps.step.content[0]);
+    }
   }
 
   onSelect(section) {

@@ -13,7 +13,7 @@ Meteor.startup(() => {
     <Router history={browserHistory}>
       <Route path="/" component={Frontpage} />
       <Route path="/tour/:user/:repoName" component={TourContainer} />
-      <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} />
+      <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} addHandlerKey={true} />
     </Router>
   ), document.getElementById('root'))
 });
@@ -54,7 +54,7 @@ class Frontpage extends React.Component {
         <div className="jumbotron text-center">
           <div className="container">
             <h1>CodeTours!</h1>
-            <p>Introduce yourself to new exciting open source codebases.</p>
+            <p>Introduce yourself to new and exciting open source codebases.</p>
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
                 <input
