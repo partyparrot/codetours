@@ -127,7 +127,7 @@ class Frontpage extends React.Component {
           </div>
           <div className="footer">
             <p dangerouslySetInnerHTML={{__html: marked(`
-Made with ![Fiesta Parrot](http://cultofthepartyparrot.com/parrots/fiestaparrot.gif)
+Made with ![Fiesta Parrot](/fiestaparrot.gif)
 by [Angela Zhang](https://github.com/zhangela) and
 [Sashko Stubailo](https://github.com/stubailo).
 [Contribute on GitHub.](https://github.com/partyparrot/codetours)
