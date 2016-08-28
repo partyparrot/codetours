@@ -39,9 +39,13 @@ class Step extends React.Component {
     const curIndex = _.indexOf(this.props.tour.steps, this.props.step.slug);
     const nextStep = this.props.tour.steps[curIndex + 1];
     if (nextStep) {
-      return <Link to={this.getStepLink(nextStep)}>Next Step</Link>;
+      return (
+        <Link className="next-step" to={this.getStepLink(nextStep)}>
+          Next: {this.props.step.getNextStep().getFullTitle()}
+        </Link>
+        );
     } else {
-      return <Link to={this.getTourLink()}>Back to Tour</Link>;
+      return <Link className="next-step" to={this.getTourLink()}>Back to Tour</Link>;
     }
   }
 
@@ -49,7 +53,11 @@ class Step extends React.Component {
     const curIndex = _.indexOf(this.props.tour.steps, this.props.step.slug);
     const prevStep = this.props.tour.steps[curIndex - 1];
     if (prevStep) {
-      return <Link to={this.getStepLink(prevStep)}>Prev Step</Link>;
+      return (
+        <Link to={this.getStepLink(prevStep)}>
+          Next: {this.props.step.getPrevStep().getFullTitle()}
+        </Link>
+        );
     } else {
       return <Link to={this.getTourLink()}>Back to Tour</Link>;
     }
@@ -66,7 +74,7 @@ class Step extends React.Component {
       <div>
         {this.getPrevStepLink()}
         {this.getNextStepLink()}
-        <h1>Step {this.getStepNumber(this.props.step.slug)}. {this.props.step.title}</h1>
+        <h1>{this.props.step.getFullTitle()}</h1>
         <div className="left">
           <div>URL: {this.props.step.codeUrl}</div>
           <div>Commit: {this.props.step.commit}</div>
@@ -82,6 +90,7 @@ class Step extends React.Component {
               );
             })
           }
+          {this.getNextStepLink()}
         </div>
       </div>
     );

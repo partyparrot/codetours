@@ -13,6 +13,31 @@ Tours.helpers({
   }
 })
 
+Steps.helpers({
+  getTour() {
+    return Tours.findOne({
+      repository: this.tourName
+    });
+  },
+
+  getFullTitle() {
+    const stepNum = _.indexOf(this.getTour().steps, this.slug) + 1;
+    return `Step ${stepNum}. ${this.title}`;
+  },
+
+  getPrevStep() {
+    const tour = this.getTour();
+    const index = _.indexOf(tour.steps, this.slug);
+    return Steps.findOne({slug: tour.steps[index - 1]});
+  },
+
+  getNextStep() {
+    const tour = this.getTour();
+    const index = _.indexOf(tour.steps, this.slug);
+    return Steps.findOne({slug: tour.steps[index + 1]});
+  }
+})
+
 if (typeof window !== 'undefined') {
   window.Tours = Tours;
   window.Steps = Steps;
