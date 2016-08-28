@@ -100,6 +100,7 @@ class Step extends React.Component {
 
 const StepContainer = createContainer(({ params }) => {
   const tourName = `${params.user}/${params.repoName}`;
+  Meteor.subscribe('steps', tourName);
   return {
     step: Steps.findOne(
       {

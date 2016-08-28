@@ -15,6 +15,16 @@ function getFile(connector, repoFullName, path, ref) {
   });
 }
 
+Meteor.publish({
+  tours() {
+    // just publish all tours
+    return Tours.find();
+  },
+  steps(tourName) {
+    return Steps.find({tourName});
+  }
+});
+
 Meteor.methods({
   async importTour(tourRepository) {
     const connector = new GitHubConnector();

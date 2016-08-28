@@ -7,6 +7,8 @@ import RecentTours from './RecentTours';
 import marked from 'marked';
 
 Meteor.startup(() => {
+  Meteor.subscribe('tours');
+
   render((
     <Router history={browserHistory}>
       <Route path="/" component={Frontpage} />

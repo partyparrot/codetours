@@ -24,7 +24,7 @@ class Tour extends React.Component {
   }
 
   render() {
-    if (!this.props.tour || !this.props.steps) {
+    if (!this.props.stepsLoaded) {
       return <div>Loading...</div>
     }
     return (
@@ -48,6 +48,7 @@ class Tour extends React.Component {
 
 const TourContainer = createContainer(({ params }) => {
   const repository = `${params.user}/${params.repoName}`;
+  const handle = Meteor.subscribe('steps', repository);
   return {
     tour: Tours.findOne(
       {
@@ -56,7 +57,8 @@ const TourContainer = createContainer(({ params }) => {
     ),
     steps: Steps.find({
       tourName: repository
-    }).fetch()
+    }).fetch(),
+    stepsLoaded: handle.ready(),
   }
 }, Tour);
 
