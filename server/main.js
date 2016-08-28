@@ -17,22 +17,40 @@ function getFile(connector, repoFullName, path, ref) {
 
 Meteor.methods({
   async importTour(tourRepository) {
+    const connector = new GitHubConnector();
+
+    let content;
+    try {
+      content = await getFile(connector, tourRepository, '.codetour.json');
+    } catch (e) {
+      if (e.statusCode === 404) {
+        throw new Meteor.Error('not-found', 'Could not find a .codetour.json file in the repository.');
+      } else {
+        throw new Meteor.Error('error', 'Error fetching data from GitHub.');
+      }
+    }
+
+    tour = JSON.parse(content);
+
+    if (! Match.test(tour, {
+      targetRepository: String,
+      description: String,
+      steps: [String],
+    })) {
+      throw new Meteor.Error('invalid-config', `Found an invalid configuration option in .codetour.json.`);
+    }
+
+    tour.repository = tourRepository;
+
     Tours.remove({ repository: tourRepository });
     Steps.remove({ tourName: tourRepository });
 
-    const connector = new GitHubConnector();
-
-    const content = await getFile(connector, tourRepository, '.codetour.json');
-
-    tour = JSON.parse(content);
-    tour.repository = tourRepository;
-
     Tours.insert(tour);
 
-    tour.steps.forEach((stepPath) => {
+    await Promise.all(tour.steps.map((stepPath) => {
       let step;
 
-      getFile(connector, tour.repository, stepPath).then((content) => {
+      return getFile(connector, tour.repository, stepPath).then((content) => {
         step = {
           ...parseMD(content),
           tourName: tour.repository,
@@ -49,10 +67,13 @@ Meteor.methods({
 
         Steps.insert(step);
       }).catch((e) => {
-        console.log(step);
-        console.error(e, e.stack);
+        if (e.statusCode === 404) {
+          throw new Meteor.Error('not-found', `Could not find file with path ${stepPath} in repository. Check your .codetour.json file.`);
+        } else {
+          throw new Meteor.Error('error', 'Error fetching data from GitHub.');
+        }
       });
-    });
+    }));
   }
 })
 

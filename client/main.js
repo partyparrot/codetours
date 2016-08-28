@@ -39,7 +39,7 @@ class Frontpage extends React.Component {
     const tourRepository = event.target.tourRepository.value;
     Meteor.call('importTour', tourRepository, (err, res) => {
       if (err) {
-        alert(err.message);
+        alert(err.reason);
       } else {
         browserHistory.push(`/tour/${tourRepository}`);
       }
