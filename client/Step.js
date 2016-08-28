@@ -101,6 +101,10 @@ class Step extends React.Component {
           <Link to={'/'} className="tiny-logo">CodeTours</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
           <Link to={this.getTourLink()}>Tour of {this.props.tour.targetRepository}</Link>
           <h1 className="step-title">{this.props.step.getFullTitle()}</h1>
+          <div className="step-nav">
+            {this.getPrevStepLink()}
+            {this.getNextStepLink()}
+          </div>
           {
             _.map(this.props.step.content, (section, index) => {
               return (
