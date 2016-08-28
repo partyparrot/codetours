@@ -50,13 +50,17 @@ class Tour extends React.Component {
 
           <div className="row" style={{marginTop: "40px"}}>
             <div className="col-md-2 col-xs-2">
-              <img style={{maxWidth: "80%"}} src={`https://github.com/${this.getUser()}.png`}/>
+              <img style={{maxWidth: "80%"}} src={`https://github.com/${this.props.tour.targetRepository.split('/')[0]}.png`}/>
             </div>
             <div className="col-md-10 col-xs-10">
-              <h1 className="target-repo">{this.getRepoName()}
-                <span className="text-muted"> by {this.getUser()}</span>
+              <h1 className="target-repo">
+                <span className="text-muted" style={{fontWeight: "normal"}}>Tour of </span>
+                {this.props.tour.targetRepository}
+                <span className="text-muted" style={{fontWeight: "normal"}}>, led by&nbsp;
+                  <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>
+                </span>
               </h1>
-              <p style={{fontSize: "24px"}}>{this.props.tour.description}</p>
+              <p style={{fontSize: "20px"}}>{this.props.tour.description}</p>
             </div>
           </div>
 
@@ -102,7 +106,10 @@ class Tour extends React.Component {
                   </a>
                 </p>
               </div>
-              <button className="btn btn-default" onClick={this.reImportTour}>Sync CodeTour from Github</button>
+              <button className="btn btn-default" onClick={this.reImportTour}>
+                <span className="glyphicon glyphicon-refresh" />&nbsp;
+                Sync CodeTour from Github
+              </button>
             </div>
           </div>
 

@@ -7,7 +7,7 @@ class Navbar extends React.Component {
     const brandNameStyle = {
       fontFamily: "'Pacifico', cursive",
       fontSize: "30px",
-      marginLeft: "10px",
+      // marginLeft: "10px",
       color: "white",
     };
 
@@ -23,7 +23,7 @@ class Navbar extends React.Component {
         <div className="container">
           <div className="navbar-header">
             <Link className="navbar-brand" to="/">
-              <img rel="icon" src="/logo.png" style={logoStyle}/>
+              {/*<img rel="icon" src="/logo.png" style={logoStyle}/>*/}
               <span style={brandNameStyle}>CodeTours</span>
             </Link>
           </div>

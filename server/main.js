@@ -27,6 +27,17 @@ Meteor.publish({
 
 Meteor.methods({
   async importTour(tourRepository) {
+    if (tourRepository.indexOf('github.com') !== -1) {
+      // This is a URL, parse out repo name
+      const [
+        url,
+        username,
+        repo,
+      ] = /github\.com\/([^/]+)\/([^/]+)/.exec(tourRepository);
+
+      tourRepository = `${username}/${repo}`;
+    }
+
     const connector = new GitHubConnector();
 
     let content;
@@ -86,6 +97,8 @@ Meteor.methods({
         }
       });
     }));
+
+    return tourRepository;
   }
 })
 

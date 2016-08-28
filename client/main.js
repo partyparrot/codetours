@@ -43,20 +43,25 @@ class Frontpage extends React.Component {
       if (err) {
         alert(err.reason);
       } else {
-        browserHistory.push(`/tour/${tourRepository}`);
+        browserHistory.push(`/tour/${res}`);
       }
     });
   }
 
   render() {
     const brandNameStyle = {
-      fontFamily: "'Pacifico', cursive"
+      fontFamily: "'Pacifico', cursive",
+      textShadow: "black 0 0 5px",
     }
 
     const heroStyle = {
       backgroundImage: 'url("/background.jpeg")',
       backgroundSize: "100%",
       color: "white"
+    };
+
+    const taglineStyle = {
+      textShadow: "black 0 0 5px",
     };
 
     return (
@@ -66,7 +71,7 @@ class Frontpage extends React.Component {
             <div style={brandNameStyle}>
               <h1>CodeTours</h1>
             </div>
-            <p>Introduce yourself to new and exciting open source codebases.</p>
+            <p style={taglineStyle}>Introduce yourself to new and exciting open source codebases.</p>
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
                 <input
