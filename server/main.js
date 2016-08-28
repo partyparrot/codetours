@@ -18,7 +18,7 @@ function getFile(connector, repoFullName, path, ref) {
 Meteor.methods({
   async importTour(tourRepository) {
     Tours.remove({ repository: tourRepository });
-    Pages.remove({ routName: tourRepository });
+    Pages.remove({ tourName: tourRepository });
 
     const connector = new GitHubConnector();
 
@@ -110,8 +110,8 @@ function parseContentBlocks(content, metadata) {
 
   let currSegment = {
     slug: null,
-    lineStart: null,
-    lineEnd: null,
+    lineStart: parseInt(metadata.lineStart, 10),
+    lineEnd: parseInt(metadata.lineEnd, 10),
     content: '',
   };
 
@@ -122,6 +122,7 @@ function parseContentBlocks(content, metadata) {
     }
 
     // Close off current segment
+    console.log(currSegment);
     segments.push(currSegment);
 
     const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)#L(\d+)(-L(\d+))?/;
@@ -147,8 +148,8 @@ function parseContentBlocks(content, metadata) {
 
     currSegment = {
       slug,
-      lineStart,
-      lineEnd,
+      lineStart: parseInt(lineStart, 10) || undefined,
+      lineEnd: parseInt(lineEnd, 10) || undefined,
       content: contentWithoutAnchorTag,
     };
   });
