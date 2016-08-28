@@ -29,7 +29,7 @@ function execOrThrow(re, str) {
   const result = re.exec(str);
 
   if (!result) {
-    throw new Meteor.Error(`${str} didn't match required format: ${re}`);
+    throw new Meteor.Error('format', `${str} didn't match required format: ${re}`);
   }
 
   return result;
@@ -62,7 +62,11 @@ Meteor.methods({
       }
     }
 
-    tour = JSON.parse(content);
+    try {
+      tour = JSON.parse(content);
+    } catch (e) {
+      throw new Meteor.Error('json', '.codetour.json file is not a valid JSON file.');
+    }
 
     if (! Match.test(tour, {
       targetRepository: String,
