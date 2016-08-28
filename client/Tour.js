@@ -19,8 +19,8 @@ class Tour extends React.Component {
     return `/tour/${this.props.tour.repository}/${step}`;
   }
 
-  getStepTitle(slug) {
-    return _.find(this.props.steps, {slug: slug}).title;
+  getStepObject(slug) {
+    return _.find(this.props.steps, {slug: slug});
   }
 
   render() {
@@ -35,7 +35,7 @@ class Tour extends React.Component {
           _.map(this.props.tour.steps, (slug, index) => {
             return (
               <div key={slug}>
-                <Link to={this.getStepLink(slug)}>Step {index + 1}. {this.getStepTitle(slug)}</Link>
+                <Link to={this.getStepLink(slug)}>{this.getStepObject(slug).getFullTitle()}</Link>
               </div>
             );
           })
