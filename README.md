@@ -1,6 +1,31 @@
-# codetours
+# CodeTours
 
-Introduce developers to your code with an interactive tour
+## TL;DR: 
+
+### What's a CodeTour?
+A CodeTour is a way for you to introduce new developers to a codebase by giving them a self-guided tour. All CodeTours are vieweable and searchable at https://www.codetours.xyz/. 
+
+### Why make a CodeTour?
+You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase.
+
+You are the maintainer of a large open source project, and you want to make it super easy for people to understand how it works and contribute.
+
+You are building out a GitHub portfolio, and want to be able to highlight important parts of your projects.
+
+You are a good person and want to share and grow the world's knowledge by teaching other people how your favorite libraries and frameworks work.
+
+### How do I make a CodeTour?
+If this is your first time making a tour, take a few minutes to check out our CodeTour for CodeTour (it's meta, we know). We promise everything will make a lot more sense after taking this tour.
+If you've done it before, here's the TL;DR in case you need a reminder:
+
+Fork the starter kit, or another existing tour
+Edit the config file, content, and code links
+Import your code tour here:
+
+https://www.codetours.xyz/
+
+## Full Design Doc: 
+
 
 ### Problem statement
 
