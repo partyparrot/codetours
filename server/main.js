@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { loadFront } from 'yaml-front-matter';
 import { GitHubConnector } from './github';
-import { Tours, Pages } from '../collections';
+import { Tours, Steps } from '../collections';
 
 function getFile(connector, repoFullName, path, ref) {
   let url = `/repos/${repoFullName}/contents/${path}`;
@@ -18,7 +18,7 @@ function getFile(connector, repoFullName, path, ref) {
 Meteor.methods({
   async importTour(tourRepository) {
     Tours.remove({ repository: tourRepository });
-    Pages.remove({ tourName: tourRepository });
+    Steps.remove({ tourName: tourRepository });
 
     const connector = new GitHubConnector();
 
@@ -29,27 +29,27 @@ Meteor.methods({
 
     Tours.insert(tour);
 
-    tour.pages.forEach((pagePath) => {
-      let page;
+    tour.steps.forEach((stepPath) => {
+      let step;
 
-      getFile(connector, tour.repository, pagePath).then((content) => {
-        page = {
+      getFile(connector, tour.repository, stepPath).then((content) => {
+        step = {
           ...parseMD(content),
           tourName: tour.repository,
-          slug: pagePath,
+          slug: stepPath,
         };
 
-        return getFile(connector, page.fullRepoName, page.filePath, page.commit);
+        return getFile(connector, step.fullRepoName, step.filePath, step.commit);
       }).then((content) => {
 
-        page = {
-          ...page,
+        step = {
+          ...step,
           code: content,
         };
 
-        Pages.insert(page);
+        Steps.insert(step);
       }).catch((e) => {
-        console.log(page);
+        console.log(step);
         console.error(e, e.stack);
       });
     });

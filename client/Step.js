@@ -1,13 +1,12 @@
 import React from "react";
 import _ from "lodash";
-import { Tours, Pages } from '../collections';
+import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import Snippet from './Snippet';
 import Section from './Section';
 
-
-class Page extends React.Component {
+class Step extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,22 +23,22 @@ class Page extends React.Component {
   }
 
   render() {
-    if (!this.props.page) {
+    if (!this.props.step) {
       return <div>Loading...</div>
     }
 
     return (
       <div>
         <div className="left">
-          <div>URL: {this.props.page.codeUrl}</div>
-          <div>Commit: {this.props.page.commit}</div>
+          <div>URL: {this.props.step.codeUrl}</div>
+          <div>Commit: {this.props.step.commit}</div>
           <Snippet
-            code={this.props.page.code}
+            code={this.props.step.code}
             highlightLineNumbers={this.state.highlightLineNumbers}/>
         </div>
         <div className="right">
           {
-            _.map(this.props.page.content, (section, index) => {
+            _.map(this.props.step.content, (section, index) => {
               return (
                 <Section key={index} section={section} onSelect={this.onSelect.bind(this, section)} />
               );
@@ -52,17 +51,17 @@ class Page extends React.Component {
   }
 }
 
-const PageContainer = createContainer(({ params }) => {
+const StepContainer = createContainer(({ params }) => {
   const tourName = `${params.user}/${params.repoName}`;
   return {
-    page: Pages.findOne(
+    step: Steps.findOne(
       {
         tourName,
-        slug: params.pageSlug
+        slug: params.stepSlug
       }
     )
   }
-}, Page);
+}, Step);
 
 
-export default PageContainer;
+export default StepContainer;

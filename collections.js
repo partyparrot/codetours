@@ -1,19 +1,19 @@
 export const Tours = new Mongo.Collection('tours');
-export const Pages = new Mongo.Collection('pages');
+export const Steps = new Mongo.Collection('steps');
 import _ from 'lodash';
 
 Tours.helpers({
-  getPages() {
-    const allPages = _.keyBy(Pages.find({
+  getSteps() {
+    const allSteps = _.keyBy(Steps.find({
       tourName: this.repository,
     }).fetch(), 'slug');
 
-    // Sort the pages we got by the array
-    return this.pages.map(slug => allPages[slug]);
+    // Sort the steps we got by the array
+    return this.steps.map(slug => allSteps[slug]);
   }
 })
 
 if (typeof window !== 'undefined') {
   window.Tours = Tours;
-  window.Pages = Pages;
+  window.Steps = Steps;
 }

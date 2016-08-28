@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import PageContainer from './Page';
+import StepContainer from './Step';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
 
@@ -10,7 +10,7 @@ Meteor.startup(() => {
     <Router history={browserHistory}>
       <Route path="/" component={Frontpage} />
       <Route path="/tour/:user/:repoName" component={Tour} />
-      <Route path="/tour/:user/:repoName/:pageSlug" component={PageContainer} />
+      <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} />
     </Router>
   ), document.getElementById('root'))
 });
@@ -19,7 +19,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <PageContainer />
+        <StepContainer />
       </div>
     );
   }
