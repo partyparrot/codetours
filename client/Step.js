@@ -1,8 +1,10 @@
 import React from "react";
+import ReactDOM from 'react-dom';
+
 import _ from "lodash";
 import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import Snippet from './Snippet';
 import Section from './Section';
@@ -16,19 +18,54 @@ class Step extends React.Component {
       highlightLineNumbers: [],
     };
 
+    // this is required so that when we navigate to different step, we can
+    // reset the highlight to the right section.
     if (this.props.step) {
       const section = this.props.step.content[0];
       this.state.slug = this.props.step.slug;
       this.state.selectedIndex = 0;
     }
+
+    if (this.props.params.sectionIndex) {
+      this.state.selectedIndex = parseInt(this.props.params.sectionIndex, 10);
+    }
   }
 
   componentWillReceiveProps(newProps) {
+
+    // this is required so that when we navigate to different step, we can
+    // reset the highlight to the right section.
     if (newProps.step && this.state.slug !== newProps.step.slug) {
-      this.setState({
-        slug: newProps.step.slug,
-        selectedIndex: 0,
-      });
+
+      if (this.props.params.sectionIndex) {
+        this.setState({
+          slug: newProps.step.slug,
+          selectedIndex: parseInt(this.props.params.sectionIndex, 10),
+        });
+
+        this.needsToScroll = true;
+
+      } else {
+        this.setState({
+          slug: newProps.step.slug,
+          selectedIndex: 0,
+        });
+      }
+
+    }
+  }
+
+  componentDidMount() {
+    if (this.needsToScroll && this.highlightedSection) {
+      this.highlightedSection.scrollIntoView({behavior: "smooth"});
+      this.needsToScroll = false;
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.needsToScroll && this.highlightedSection) {
+      this.highlightedSection.scrollIntoView({behavior: "smooth"});
+      this.needsToScroll = false;
     }
   }
 
@@ -36,6 +73,7 @@ class Step extends React.Component {
     this.setState({
       selectedIndex: index,
     });
+    browserHistory.replace(`${this.getStepLink(this.props.step.slug)}/${index}`);
   }
 
   getLineNumbersForCurrentSection() {
@@ -109,7 +147,17 @@ class Step extends React.Component {
           {
             _.map(this.props.step.content, (section, index) => {
               return (
-                <Section key={index} section={section} onSelect={this.onSelect.bind(this, index)} selected={index === this.state.selectedIndex} />
+                <Section
+                  key={index}
+                  section={section}
+                  onSelect={this.onSelect.bind(this, index)}
+                  selected={index === this.state.selectedIndex}
+                  ref={(component) => {
+                    if (index === parseInt(this.props.params.sectionIndex, 10)) {
+                      this.highlightedSection = ReactDOM.findDOMNode(component);
+                    }
+                  }}
+                />
               );
             })
           }

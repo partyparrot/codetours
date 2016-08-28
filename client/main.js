@@ -14,6 +14,7 @@ Meteor.startup(() => {
       <Route path="/" component={Frontpage} />
       <Route path="/tour/:user/:repoName" component={TourContainer} />
       <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} addHandlerKey={true} />
+      <Route path="/tour/:user/:repoName/:stepSlug/:sectionIndex" component={StepContainer} />
     </Router>
   ), document.getElementById('root'))
 });
