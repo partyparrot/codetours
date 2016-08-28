@@ -17,6 +17,7 @@ class Tour extends React.Component {
   getStepLink(step) {
     return `/tour/${this.props.tour.repository}/${step}`;
   }
+  
   render() {
     if (!this.props.tour) {
       return <div>Loading...</div>

@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Link } from 'react-router';
 
 import Snippet from './Snippet';
 import Section from './Section';
@@ -22,13 +23,45 @@ class Step extends React.Component {
     });
   }
 
+  getStepLink(step) {
+    return `/tour/${this.props.tour.repository}/${step}`;
+  }
+
+  getTourLink() {
+    return `/tour/${this.props.tour.repository}`;
+  }
+
+  getNextStepLink() {
+    const curIndex = _.indexOf(this.props.tour.steps, this.props.step.slug);
+    const nextStep = this.props.tour.steps[curIndex + 1];
+    if (nextStep) {
+      return <Link to={this.getStepLink(nextStep)}>Next Step</Link>;
+    } else {
+      return <Link to={this.getTourLink()}>Back to Tour</Link>;
+    }
+  }
+
+  getPrevStepLink() {
+    const curIndex = _.indexOf(this.props.tour.steps, this.props.step.slug);
+    const prevStep = this.props.tour.steps[curIndex - 1];
+    if (prevStep) {
+      return <Link to={this.getStepLink(prevStep)}>Prev Step</Link>;
+    } else {
+      return <Link to={this.getTourLink()}>Back to Tour</Link>;
+    }
+  }
+
   render() {
+    console.log(this.props.step);
+    // debugger;
     if (!this.props.step) {
       return <div>Loading...</div>
     }
 
     return (
       <div>
+        {this.getPrevStepLink()}
+        {this.getNextStepLink()}
         <div className="left">
           <div>URL: {this.props.step.codeUrl}</div>
           <div>Commit: {this.props.step.commit}</div>
