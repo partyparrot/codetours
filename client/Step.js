@@ -59,7 +59,10 @@ const StepContainer = createContainer(({ params }) => {
         tourName,
         slug: params.stepSlug
       }
-    )
+    ),
+    tour: Tours.findOne({
+      repository: tourName
+    })
   }
 }, Step);
 

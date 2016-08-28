@@ -1,7 +1,8 @@
 import React from 'react';
 import { Tours } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
-
+import { Link } from 'react-router';
+import TourBadge from './TourBadge';
 
 class Tour extends React.Component {
 
@@ -13,20 +14,27 @@ class Tour extends React.Component {
     return this.props.tour.repository.split('/')[1];
   }
 
+  getStepLink(step) {
+    return `/tour/${this.props.tour.repository}/${step}`;
+  }
   render() {
     if (!this.props.tour) {
       return <div>Loading...</div>
     }
     return (
       <div className="container">
-        <h1>CodeTour - {this.props.tour.title}</h1>
-        <p>Created by {this.getUser()} for TARGET_REPO at {this.getRepoName()}</p>
+        <TourBadge tour={this.props.tour} />
+        <p>Created by {this.getUser()} for {this.props.tour.targetRepository} at {this.getRepoName()}</p>
         {
           _.map(this.props.tour.steps, (step, index) => {
-            return (<p key={index}>Step {index + 1}. {step}</p>);
+            return (
+              <div key={step}>
+                <Link to={this.getStepLink(step)}>Step {index + 1}. {step}</Link>
+              </div>
+            );
           })
         }
-        <a href={`/tour/${this.props.tour.repository}/${this.props.tour.steps[0]}`}>Let's start</a>
+        <Link to={this.getStepLink(this.props.tour.steps[0])}>Let's start</Link>
       </div>
     );
   }
