@@ -3,6 +3,8 @@ import { Tours } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 import TourBadge from './TourBadge';
+import Navbar from './Navbar';
+
 import _ from 'lodash';
 
 class Tour extends React.Component {
@@ -42,20 +44,23 @@ class Tour extends React.Component {
       return <div>Loading...</div>
     }
     return (
-      <div className="container">
-        <TourBadge tour={this.props.tour} />
-        <button onClick={this.reImportTour}>Reload from GitHub source</button>
-        <p>Created by {this.getUser()} for {this.props.tour.targetRepository} at {this.getRepoName()}</p>
-        {
-          _.map(this.props.tour.steps, (slug, index) => {
-            return (
-              <div key={slug}>
-                <Link to={this.getStepLink(slug)}>{this.getStepObject(slug).getFullTitle()}</Link>
-              </div>
-            );
-          })
-        }
-        <Link to={this.getStepLink(this.props.tour.steps[0])}>Let's start</Link>
+      <div>
+        <Navbar />
+        <div className="container" style={{marginTop: "50px"}}>
+          <TourBadge tour={this.props.tour} />
+          <button onClick={this.reImportTour}>Reload from GitHub source</button>
+          <p>Created by {this.getUser()} for {this.props.tour.targetRepository} at {this.getRepoName()}</p>
+          {
+            _.map(this.props.tour.steps, (slug, index) => {
+              return (
+                <div key={slug}>
+                  <Link to={this.getStepLink(slug)}>{this.getStepObject(slug).getFullTitle()}</Link>
+                </div>
+              );
+            })
+          }
+          <Link to={this.getStepLink(this.props.tour.steps[0])}>Let's start</Link>
+        </div>
       </div>
     );
   }
