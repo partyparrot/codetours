@@ -19,7 +19,7 @@ class Step extends React.Component {
 
   onSelect(section) {
     this.setState({
-      highlightLineNumbers: _.range(parseInt(section.lineStart), parseInt(section.lineEnd) + 1)
+      highlightLineNumbers: _.range(parseInt(section.lineStart, 10), parseInt(section.lineEnd, 10) + 1)
     });
   }
 
@@ -64,8 +64,6 @@ class Step extends React.Component {
   }
 
   render() {
-    console.log(this.props.step);
-    // debugger;
     if (!this.props.step) {
       return <div>Loading...</div>
     }
