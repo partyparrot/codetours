@@ -22,8 +22,9 @@ class Snippet extends React.Component {
 
       // We need the space otherwise pre tag won't render it.
       const lineContent = line || ' ';
+      const lineNumber = index + 1;
       let additionalStyles = '';
-      if(this.shouldHighlight(index)) {
+      if(this.shouldHighlight(lineNumber)) {
         additionalStyles += 'line-highlight';
       }
       return `<pre class="line-content ${additionalStyles}"><code>${lineContent}</code></pre>`;
@@ -39,6 +40,10 @@ class Snippet extends React.Component {
     return _.includes(this.props.highlightLineNumbers, lineNumber);
   }
 
+  componentDidUpdate() {
+    this.elToScrollTo.scrollIntoView({behavior: "smooth"});
+  }
+
   render() {
     return (
       <div className="code-snippet">
@@ -47,11 +52,18 @@ class Snippet extends React.Component {
           <div className="line-numbers">
             {
               _.map(this.getCodeLines(), (codeLine, index) => {
+                const lineNumber = index + 1;
                 return (
                   <pre
-                    className={this.shouldHighlight(index) ? "line-highlight line-number": "line-number"}
-                    key={index}>
-                    {index}
+                    ref={(el) => {
+                      // 3 line offset so we don't scroll to the very top
+                      if (lineNumber === _.min(this.props.highlightLineNumbers) - 3) {
+                        this.elToScrollTo = el;
+                      }
+                    }}
+                    className={this.shouldHighlight(lineNumber) ? "line-highlight line-number": "line-number"}
+                    key={lineNumber}>
+                    {lineNumber}
                   </pre>
                 );
               })

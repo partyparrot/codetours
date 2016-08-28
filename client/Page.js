@@ -18,11 +18,9 @@ class Page extends React.Component {
   }
 
   onSelect(section) {
-    console.log('section', section);
     this.setState({
       highlightLineNumbers: _.range(parseInt(section.lineStart), parseInt(section.lineEnd) + 1)
     });
-    console.log(this.state);
   }
 
   render() {
@@ -31,24 +29,22 @@ class Page extends React.Component {
     }
 
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12 col-md-8">
-            <div>URL: {this.props.page.codeURL}</div>
-            <div>Commit: {this.props.page.commit}</div>
-            <Snippet
-              code={this.props.page.code}
-              highlightLineNumbers={this.state.highlightLineNumbers}/>
-          </div>
-          <div className="col-xs-12 col-md-4">
-            {
-              _.map(this.props.page.content, (section, index) => {
-                return (
-                  <Section key={index} section={section} onSelect={this.onSelect.bind(this, section)} />
-                );
-              })
-            }
-          </div>
+      <div>
+        <div className="left">
+          <div>URL: {this.props.page.codeUrl}</div>
+          <div>Commit: {this.props.page.commit}</div>
+          <Snippet
+            code={this.props.page.code}
+            highlightLineNumbers={this.state.highlightLineNumbers}/>
+        </div>
+        <div className="right">
+          {
+            _.map(this.props.page.content, (section, index) => {
+              return (
+                <Section key={index} section={section} onSelect={this.onSelect.bind(this, section)} />
+              );
+            })
+          }
         </div>
       </div>
     );
@@ -58,7 +54,7 @@ class Page extends React.Component {
 
 const PageContainer = createContainer(({ params }) => {
   return {
-    page: Pages.findOne()
+    page: Pages.findOne({slug: "connector.md"})
   }
 }, Page);
 
