@@ -34,6 +34,18 @@ class Frontpage extends React.Component {
     });
   }
 
+  handleImportSubmit(event) {
+    event.preventDefault();
+    const tourRepository = event.target.tourRepository.value;
+    Meteor.call('importTour', tourRepository, (err, res) => {
+      if (err) {
+        alert(err.message);
+      } else {
+        browserHistory.push(`/tour/${tourRepository}`);
+      }
+    });
+  }
+
   render() {
     return (
       <div>
@@ -67,12 +79,12 @@ class Frontpage extends React.Component {
                 <li>Edit the config file, content, and code links</li>
                 <li>Import your code tour below:</li>
               </ol>
-              <div className="input-group">
-                <input type="text" className="form-control" placeholder="Your repository name here" />
+              <form className="input-group" onSubmit={this.handleImportSubmit}>
+                <input type="text" name="tourRepository" className="form-control" placeholder="Your repository name here" />
                 <span className="input-group-btn">
-                  <button className="btn btn-success" type="button">Go!</button>
+                  <input type="submit" className="btn btn-success" value="Go!" />
                 </span>
-              </div>
+              </form>
             </div>
           </div>
           <div className="footer">
