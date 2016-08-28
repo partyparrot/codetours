@@ -49,11 +49,23 @@ class Frontpage extends React.Component {
   }
 
   render() {
+    const brandNameStyle = {
+      fontFamily: "'Pacifico', cursive"
+    }
+
+    const heroStyle = {
+      backgroundImage: 'url("/background.jpeg")',
+      backgroundSize: "100%",
+      color: "white"
+    };
+
     return (
       <div>
-        <div className="jumbotron text-center">
+        <div className="jumbotron text-center" style={heroStyle}>
           <div className="container">
-            <h1>CodeTours!</h1>
+            <div style={brandNameStyle}>
+              <h1>CodeTours</h1>
+            </div>
             <p>Introduce yourself to new and exciting open source codebases.</p>
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
@@ -74,8 +86,15 @@ class Frontpage extends React.Component {
               <RecentTours search={this.state.search}/>
             </div>
             <div className="col-sm-4">
-              <h3>Create a tour</h3>
-              <p>{"Help explain your project, or someone else's."}</p>
+              <h3>What's a CodeTour?</h3>
+              <p>{"A CodeTour is a way for you to introduce new developers to your codebase by giving them a guided tour."}</p>
+
+              <h3>Who makes CodeTours?</h3>
+              <p>{"You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase."}</p>
+              <p>{"You are the maintainer of a large open source project, and you want to make it super easy for people to understand how it works and contribute."}</p>
+              <p>{"You are building out a GitHub portfolio, and want to be able to highlight important parts of your projects."}</p>
+
+              <h3>How do I make a CodeTour?</h3>
               <ol>
                 <li>{"Fork the starter kit, or someone else's tour"}</li>
                 <li>Edit the config file, content, and code links</li>
