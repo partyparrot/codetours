@@ -10,7 +10,7 @@ class Section extends React.Component {
 
   renderViewCodeButton() {
     if (this.props.section.lineStart && this.props.section.lineEnd) {
-      return <button onClick={this.props.onSelect}>View Code Snippet</button>;
+      return <button onClick={this.props.onSelect}>See code</button>;
     }
   }
 
