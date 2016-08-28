@@ -106,6 +106,9 @@ Meteor.methods({
 
         Steps.insert(step);
       }).catch((e) => {
+        // Remove tour if it failed to import
+        Tours.update({ repository: tourRepository, failed: true });
+
         if (e.statusCode === 404) {
           throw new Meteor.Error('not-found', `Could not find file with path ${stepPath} in repository. Check your .codetour.json file.`);
         } else if (e instanceof Meteor.Error) {

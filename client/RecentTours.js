@@ -15,6 +15,8 @@ class RecentTours extends React.Component {
 
 export default createContainer(({ search }) => {
   return {
-    tours: Tours.find({ targetRepository: { $regex: new RegExp(search, 'i') } }, {sort: { createdAt: - 1} }).fetch(),
+    tours: Tours.find({ targetRepository: { $regex: new RegExp(search, 'i') } }, {sort: { createdAt: - 1} })
+      .fetch()
+      .filter((tour) => !tour.failed),
   };
 }, RecentTours);
