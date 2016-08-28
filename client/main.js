@@ -74,7 +74,7 @@ class Frontpage extends React.Component {
             <div style={brandNameStyle}>
               <h1>CodeTours</h1>
             </div>
-            <p style={taglineStyle}>Introduce yourself to new and exciting open source codebases.</p>
+            <p style={taglineStyle}>Take a tour of new and exciting open source codebases.</p>
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
                 <input
