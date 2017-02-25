@@ -8,6 +8,7 @@ import { Link, browserHistory } from 'react-router';
 
 import Snippet from './Snippet';
 import Section from './Section';
+import Loading from './Loading';
 
 class Step extends React.Component {
 
@@ -134,7 +135,7 @@ class Step extends React.Component {
 
   render() {
     if (!this.props.step) {
-      return <div>Loading...</div>
+      return <Loading big />
     }
 
     return (

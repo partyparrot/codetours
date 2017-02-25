@@ -188,3 +188,44 @@
     }
   }
 }
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .loading-parrot {
+    margin-bottom: 5px;
+  }
+  
+  .loading-title {
+    font-size: 18px;
+    background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+}
+
+.loading--big {
+  .loading-parrot {
+    width: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .loading-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}

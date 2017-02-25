@@ -1,5 +1,6 @@
 import React from 'react';
 import TourBadge from './TourBadge';
+import Loading from './Loading';
 import { createContainer } from 'meteor/react-meteor-data';
 
 class RecentTours extends React.Component {
@@ -7,7 +8,7 @@ class RecentTours extends React.Component {
     return (
       <div>
         <h3>{ this.props.search ? "Search results" : "Recently added tours" }</h3>
-        { this.props.tours.map(tour => <TourBadge tour={tour} key={tour.repository} /> ) }
+        { !this.props.tour ? <Loading /> : this.props.tours.map(tour => <TourBadge tour={tour} key={tour.repository} />) }
       </div>
     )
   }

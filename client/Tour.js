@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 import TourBadge from './TourBadge';
 import Navbar from './Navbar';
+import Loading from './Loading';
 
 import _ from 'lodash';
 
@@ -41,7 +42,7 @@ class Tour extends React.Component {
 
   render() {
     if (!this.props.stepsLoaded) {
-      return <div>Loading...</div>
+      return <Loading big />
     }
     return (
       <div>
