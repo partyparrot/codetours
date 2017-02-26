@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 
+// hardcoded list of available statuses
 const statusList = [
   { id: 'loading', gif: 'triplets', caption: 'Loading...' },
   { id: 'not-found', gif: 'confused', caption: 'No tour found!' },
 ];
 
-export default ParrotSays = ({ big = false, statusId = 'loading' }) => {
+export default ParrotSays = ({ statusId = 'loading', big = false }) => {
   
   const { gif, caption } = statusList.find(status => status.id === statusId);
   
@@ -20,6 +21,6 @@ export default ParrotSays = ({ big = false, statusId = 'loading' }) => {
 };
 
 ParrotSays.propTypes = {
+  statusId: PropTypes.oneOf(statusList.map(status => status.id)).isRequired,
   big: PropTypes.bool,
-  status: PropTypes.oneOf(['loading', 'not-found']),
 };

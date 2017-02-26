@@ -1,6 +1,7 @@
 import React from 'react';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
 
+import { Tours } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import TourBadge from './TourBadge';
