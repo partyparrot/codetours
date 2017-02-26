@@ -1,14 +1,15 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-
+import { pure, branch, renderComponent, withProps, compose } from 'recompose';
+import { Link, browserHistory } from 'react-router';
 import _ from "lodash";
+
 import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Link, browserHistory } from 'react-router';
 
 import Snippet from './Snippet';
 import Section from './Section';
-import Loading from './Loading';
+import ParrotSays from './ParrotSays';
 
 class Step extends React.Component {
 
@@ -134,10 +135,6 @@ class Step extends React.Component {
   }
 
   render() {
-    if (!this.props.step) {
-      return <Loading big />
-    }
-
     return (
       <div>
         <div className="left">
@@ -183,21 +180,31 @@ class Step extends React.Component {
   }
 }
 
-const StepContainer = createContainer(({ params }) => {
-  const tourName = `${params.user}/${params.repoName}`;
-  Meteor.subscribe('steps', tourName);
+const loadMeteorData = Component => createContainer(({ params: { user, repoName, stepSlug } }) => {
+  const tourName = `${user}/${repoName}`;
+  const handleSteps = Meteor.subscribe('steps', tourName);
+  const handleTours = Meteor.subscribe('tours');
   return {
-    step: Steps.findOne(
-      {
-        tourName,
-        slug: params.stepSlug
-      }
-    ),
-    tour: Tours.findOne({
-      repository: tourName
-    })
-  }
-}, Step);
+    step: Steps.findOne({ tourName, slug: stepSlug }),
+    tour: Tours.findOne({ repository: tourName }),
+    stepLoaded: handleSteps.ready(),
+    toursLoaded: handleTours.ready(),
+  };
+}, Component);
 
+const displayLoadingState = branch(
+  props => !props.toursLoaded && !props.stepsLoaded,
+  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays)),
+);
 
-export default StepContainer;
+const displayErrorState = branch(
+  props => !props.step,
+  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays)),
+);
+
+export default compose(
+  loadMeteorData,
+  displayLoadingState,
+  displayErrorState,
+  pure,
+)(Step);

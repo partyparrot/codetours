@@ -1,15 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
-import StepContainer from './Step';
-import TourContainer from './Tour';
 import { Router, Route, Link, browserHistory } from 'react-router';
-import RecentTours from './RecentTours';
 import marked from 'marked';
 
-Meteor.startup(() => {
-  Meteor.subscribe('tours');
+import StepContainer from './Step';
+import TourContainer from './Tour';
+import RecentTours from './RecentTours';
 
-  render((
+Meteor.startup(() => render((
     <Router history={browserHistory}>
       <Route path="/" component={Frontpage} />
       <Route path="/tour/:user/:repoName" component={TourContainer} />
@@ -17,7 +15,7 @@ Meteor.startup(() => {
       <Route path="/tour/:user/:repoName/:stepSlug/:sectionIndex" component={StepContainer} />
     </Router>
   ), document.getElementById('root'))
-});
+);
 
 browserHistory.listen(() => {
   ga('send', 'pageview', window.location.pathname);

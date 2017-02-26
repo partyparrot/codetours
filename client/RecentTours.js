@@ -1,23 +1,39 @@
 import React from 'react';
-import TourBadge from './TourBadge';
-import Loading from './Loading';
+import { pure, branch, renderComponent, withProps, compose } from 'recompose';
+
 import { createContainer } from 'meteor/react-meteor-data';
 
-class RecentTours extends React.Component {
-  render() {
-    return (
-      <div>
-        <h3>{ this.props.search ? "Search results" : "Recently added tours" }</h3>
-        { !this.props.tour ? <Loading /> : this.props.tours.map(tour => <TourBadge tour={tour} key={tour.repository} />) }
-      </div>
-    )
-  }
-}
+import TourBadge from './TourBadge';
+import ParrotSays from './ParrotSays';
 
-export default createContainer(({ search }) => {
+const RecentTours = ({ search, tours, toursLoaded }) => (
+  <div>
+    <h3>{ search ? "Search results" : "Recently added tours" }</h3>
+    { tours.map(tour => <TourBadge tour={tour} key={tour.repository} />) }
+  </div>
+);
+
+const loadMeteorData = Component => createContainer(({ search }) => {
+  const handleTours = Meteor.subscribe('tours');
   return {
-    tours: Tours.find({ targetRepository: { $regex: new RegExp(search, 'i') } }, {sort: { createdAt: - 1} })
-      .fetch()
-      .filter((tour) => !tour.failed),
+    tours: Tours.find({ failed: {$ne: true}, targetRepository: { $regex: new RegExp(search, 'i') } }, {sort: { createdAt: - 1} }).fetch(),
+    toursLoaded: handleTours.ready(),
   };
-}, RecentTours);
+}, Component);
+
+const displayLoadingState = branch(
+  props => !props.toursLoaded,
+  renderComponent(withProps(() => ({ statusId: 'loading' }))(ParrotSays)),
+);
+
+const displayErrorState = branch(
+  props => !props.tours,
+  renderComponent(withProps(() => ({ statusId: 'not-found' }))(ParrotSays)),
+);
+
+export default compose(
+  loadMeteorData,
+  displayLoadingState,
+  displayErrorState,
+  pure
+)(RecentTours);

@@ -1,12 +1,15 @@
 import React from 'react';
+import { pure, branch, renderComponent, withProps, compose } from 'recompose';
+import { Link } from 'react-router';
+import _ from 'lodash';
+
 import { Tours } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Link } from 'react-router';
+
 import TourBadge from './TourBadge';
 import Navbar from './Navbar';
-import Loading from './Loading';
+import ParrotSays from './ParrotSays';
 
-import _ from 'lodash';
 
 class Tour extends React.Component {
   constructor(props) {
@@ -41,9 +44,7 @@ class Tour extends React.Component {
   }
 
   render() {
-    if (!this.props.stepsLoaded) {
-      return <Loading big />
-    }
+    debugger
     return (
       <div>
         <Navbar />
@@ -76,21 +77,23 @@ class Tour extends React.Component {
                 </button>
               </Link>
               {
-                _.map(this.props.tour.steps, (slug, index) => {
-                  return (
-                    <div key={slug}>
-                      <Link to={this.getStepLink(slug)}>
-                        <div className="row" style={{marginTop: "10px"}}>
-                          <div className="col-sm-3 col-xs-3 number-circle">{index + 1}</div>
-                          <div
-                            className="col-sm-7 col-xs-7"
-                            style={{textAlign: "middle", lineHeight: "50px", fontSize: "20px", padding: "6px"}}>
-                            {this.getStepObject(slug).title}</div>
-                        </div>
-                      </Link>
-                    </div>
-                  );
-                })
+                this.props.stepsLoaded
+                  ? _.map(this.props.tour.steps, (slug, index) => {
+                    return (
+                      <div key={slug}>
+                        <Link to={this.getStepLink(slug)}>
+                          <div className="row" style={{marginTop: "10px"}}>
+                            <div className="col-sm-3 col-xs-3 number-circle">{index + 1}</div>
+                            <div
+                              className="col-sm-7 col-xs-7"
+                              style={{textAlign: "middle", lineHeight: "50px", fontSize: "20px", padding: "6px"}}>
+                              {this.getStepObject(slug) && this.getStepObject(slug).title}</div>
+                          </div>
+                        </Link>
+                      </div>
+                    );
+                  })
+                : <ParrotSays statusId="loading" big />
               }
             </div>
 
@@ -120,21 +123,31 @@ class Tour extends React.Component {
   }
 }
 
-const TourContainer = createContainer(({ params }) => {
+const loadMeteorData = Component => createContainer(({ params }) => {
   const repository = `${params.user}/${params.repoName}`;
-  const handle = Meteor.subscribe('steps', repository);
+  const handleTours = Meteor.subscribe('tours');
+  const handleSteps = Meteor.subscribe('steps', repository);
   return {
-    tour: Tours.findOne(
-      {
-        repository: repository
-      }
-    ),
-    steps: Steps.find({
-      tourName: repository
-    }).fetch(),
-    stepsLoaded: handle.ready(),
+    tour: Tours.findOne({ repository: repository }),
+    toursLoaded: handleTours.ready(),
+    steps: Steps.find({ tourName: repository }).fetch(),
+    stepsLoaded: handleSteps.ready(),
   }
-}, Tour);
+}, Component);
 
+const displayLoadingState = branch(
+  props => !props.toursLoaded,
+  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays)),
+);
 
-export default TourContainer;
+const displayErrorState = branch(
+  props => !props.tour,
+  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays)),
+);
+
+export default compose(
+  loadMeteorData,
+  displayLoadingState,
+  displayErrorState,
+  pure
+)(Tour);
