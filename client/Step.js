@@ -180,31 +180,34 @@ class Step extends React.Component {
   }
 }
 
+// load 1 tour & 1 step
 const loadMeteorData = Component => createContainer(({ params: { user, repoName, stepSlug } }) => {
   const tourName = `${user}/${repoName}`;
-  const handleSteps = Meteor.subscribe('steps', tourName);
-  const handleTours = Meteor.subscribe('tours');
+  const handleStep = Meteor.subscribe('steps', tourName);
+  const handleTour = Meteor.subscribe('tours');
   return {
-    step: Steps.findOne({ tourName, slug: stepSlug }),
     tour: Tours.findOne({ repository: tourName }),
-    stepLoaded: handleSteps.ready(),
-    toursLoaded: handleTours.ready(),
+    tourLoaded: handleTour.ready(),
+    step: Steps.findOne({ tourName, slug: stepSlug }),
+    stepLoaded: handleStep.ready(),
   };
 }, Component);
 
+// show loading component if the tour & step data are loading
 const displayLoadingState = branch(
-  props => !props.toursLoaded && !props.stepsLoaded,
+  props => !props.tourLoaded || !props.stepLoaded,
   renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays)),
 );
 
-const displayErrorState = branch(
-  props => !props.step,
+// show not found component if no tour/step found
+const displayNotFoundState = branch(
+  props => !props.tour || !props.step,
   renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays)),
 );
 
 export default compose(
   loadMeteorData,
   displayLoadingState,
-  displayErrorState,
+  displayNotFoundState,
   pure,
 )(Step);

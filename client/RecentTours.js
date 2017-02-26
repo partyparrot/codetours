@@ -13,27 +13,30 @@ const RecentTours = ({ search, tours, toursLoaded }) => (
   </div>
 );
 
+// load 1+ tours
 const loadMeteorData = Component => createContainer(({ search }) => {
   const handleTours = Meteor.subscribe('tours');
   return {
-    tours: Tours.find({ failed: {$ne: true}, targetRepository: { $regex: new RegExp(search, 'i') } }, {sort: { createdAt: - 1} }).fetch(),
+    tours: Tours.find({ failed: { $ne: true }, targetRepository: { $regex: new RegExp(search, 'i') } }, { sort: { createdAt: - 1} }).fetch(),
     toursLoaded: handleTours.ready(),
   };
 }, Component);
 
+// show loading component if the tours data are loading
 const displayLoadingState = branch(
   props => !props.toursLoaded,
   renderComponent(withProps(() => ({ statusId: 'loading' }))(ParrotSays)),
 );
 
-const displayErrorState = branch(
-  props => !props.tours,
+// show not found component if no tours found with the current query
+const displayNotFoundState = branch(
+  props => !props.tours.length,
   renderComponent(withProps(() => ({ statusId: 'not-found' }))(ParrotSays)),
 );
 
 export default compose(
   loadMeteorData,
   displayLoadingState,
-  displayErrorState,
+  displayNotFoundState,
   pure
 )(RecentTours);
