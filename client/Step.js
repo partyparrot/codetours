@@ -1,13 +1,15 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-
+import { pure, branch, renderComponent, withProps, compose } from 'recompose';
+import { Link, browserHistory } from 'react-router';
 import _ from "lodash";
+
 import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Link, browserHistory } from 'react-router';
 
 import Snippet from './Snippet';
 import Section from './Section';
+import ParrotSays from './ParrotSays';
 
 class Step extends React.Component {
 
@@ -133,10 +135,6 @@ class Step extends React.Component {
   }
 
   render() {
-    if (!this.props.step) {
-      return <div>Loading...</div>
-    }
-
     return (
       <div>
         <div className="left">
@@ -182,21 +180,34 @@ class Step extends React.Component {
   }
 }
 
-const StepContainer = createContainer(({ params }) => {
-  const tourName = `${params.user}/${params.repoName}`;
-  Meteor.subscribe('steps', tourName);
+// load 1 tour & 1 step
+const loadMeteorData = Component => createContainer(({ params: { user, repoName, stepSlug } }) => {
+  const tourName = `${user}/${repoName}`;
+  const handleStep = Meteor.subscribe('steps', tourName);
+  const handleTour = Meteor.subscribe('tours');
   return {
-    step: Steps.findOne(
-      {
-        tourName,
-        slug: params.stepSlug
-      }
-    ),
-    tour: Tours.findOne({
-      repository: tourName
-    })
-  }
-}, Step);
+    tour: Tours.findOne({ repository: tourName }),
+    tourLoaded: handleTour.ready(),
+    step: Steps.findOne({ tourName, slug: stepSlug }),
+    stepLoaded: handleStep.ready(),
+  };
+}, Component);
 
+// show loading component if the tour & step data are loading
+const displayLoadingState = branch(
+  props => !props.tourLoaded || !props.stepLoaded,
+  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays)),
+);
 
-export default StepContainer;
+// show not found component if no tour/step found
+const displayNotFoundState = branch(
+  props => !props.tour || !props.step,
+  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays)),
+);
+
+export default compose(
+  loadMeteorData,
+  displayLoadingState,
+  displayNotFoundState,
+  pure,
+)(Step);
