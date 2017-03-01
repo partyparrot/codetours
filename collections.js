@@ -4,19 +4,22 @@ import _ from 'lodash';
 
 Tours.helpers({
   getSteps() {
-    const allSteps = _.keyBy(Steps.find({
-      tourName: this.repository,
-    }).fetch(), 'slug');
+    const allSteps = _.keyBy(
+      Steps.find({
+        tourName: this.repository,
+      }).fetch(),
+      'slug'
+    );
 
     // Sort the steps we got by the array
     return this.steps.map(slug => allSteps[slug]);
-  }
-})
+  },
+});
 
 Steps.helpers({
   getTour() {
     return Tours.findOne({
-      repository: this.tourName
+      repository: this.tourName,
     });
   },
 
@@ -28,15 +31,15 @@ Steps.helpers({
   getPrevStep() {
     const tour = this.getTour();
     const index = _.indexOf(tour.steps, this.slug);
-    return Steps.findOne({slug: tour.steps[index - 1]});
+    return Steps.findOne({ slug: tour.steps[index - 1] });
   },
 
   getNextStep() {
     const tour = this.getTour();
     const index = _.indexOf(tour.steps, this.slug);
-    return Steps.findOne({slug: tour.steps[index + 1]});
-  }
-})
+    return Steps.findOne({ slug: tour.steps[index + 1] });
+  },
+});
 
 if (typeof window !== 'undefined') {
   window.Tours = Tours;
