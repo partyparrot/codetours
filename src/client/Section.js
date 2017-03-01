@@ -1,9 +1,7 @@
-import React from "react";
+import React from 'react';
 import marked from 'marked';
 
-
 class Section extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -11,7 +9,7 @@ class Section extends React.Component {
   }
 
   selectable() {
-    return this.props.section.lineStart && this.props.section.lineEnd
+    return this.props.section.lineStart && this.props.section.lineEnd;
   }
 
   onClick() {
@@ -34,11 +32,22 @@ class Section extends React.Component {
 
   render() {
     return (
-      <div className={"section" + (this.selectable() ? ' selectable' : '') + (this.props.selected ? ' selected' : '')} onClick={this.onClick}>
-        <div ref={(e) => {this.md = e}} dangerouslySetInnerHTML={{__html: marked(this.props.section.content.trim())}} />
+      <div
+        className={
+          'section' +
+            (this.selectable() ? ' selectable' : '') +
+            (this.props.selected ? ' selected' : '')
+        }
+        onClick={this.onClick}
+      >
+        <div
+          ref={e => {
+            this.md = e;
+          }}
+          dangerouslySetInnerHTML={{ __html: marked(this.props.section.content.trim()) }}
+        />
       </div>
     );
-
   }
 }
 

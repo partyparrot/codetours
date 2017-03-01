@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
 import { Link, browserHistory } from 'react-router';
-import _ from "lodash";
+import _ from 'lodash';
 
 import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -12,7 +12,6 @@ import Section from './Section';
 import ParrotSays from './ParrotSays';
 
 class Step extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -34,11 +33,9 @@ class Step extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-
     // this is required so that when we navigate to different step, we can
     // reset the highlight to the right section.
     if (newProps.step && this.state.slug !== newProps.step.slug) {
-
       if (this.props.params.sectionIndex) {
         this.setState({
           slug: newProps.step.slug,
@@ -46,27 +43,25 @@ class Step extends React.Component {
         });
 
         this.needsToScroll = true;
-
       } else {
         this.setState({
           slug: newProps.step.slug,
           selectedIndex: 0,
         });
       }
-
     }
   }
 
   componentDidMount() {
     if (this.needsToScroll && this.highlightedSection) {
-      this.highlightedSection.scrollIntoView({behavior: "smooth"});
+      this.highlightedSection.scrollIntoView({ behavior: 'smooth' });
       this.needsToScroll = false;
     }
   }
 
   componentDidUpdate() {
     if (this.needsToScroll && this.highlightedSection) {
-      this.highlightedSection.scrollIntoView({behavior: "smooth"});
+      this.highlightedSection.scrollIntoView({ behavior: 'smooth' });
       this.needsToScroll = false;
     }
   }
@@ -79,11 +74,12 @@ class Step extends React.Component {
   }
 
   getLineNumbersForCurrentSection() {
-    return this.props.step && this.getLineNumbersForSection(this.props.step.content[this.state.selectedIndex]);
+    return this.props.step &&
+      this.getLineNumbersForSection(this.props.step.content[this.state.selectedIndex]);
   }
 
   getLineNumbersForSection(section) {
-    if (! section) {
+    if (!section) {
       return [];
     }
     return _.range(parseInt(section.lineStart, 10), parseInt(section.lineEnd, 10) + 1);
@@ -108,17 +104,17 @@ class Step extends React.Component {
       return (
         <Link className="next-step btn btn-default" to={this.getStepLink(nextStep)}>
           {this.props.step.getNextStep().getFullTitle()}&nbsp;
-          <span className="glyphicon glyphicon-arrow-right"/>
+          <span className="glyphicon glyphicon-arrow-right" />
         </Link>
-        );
+      );
     } else {
-        return (
-          <Link className="next-step btn btn-default" to={this.getTourLink()}>
-            Back to Tour&nbsp;
-            <span className="glyphicon glyphicon-arrow-right"/>
-          </Link>
-          );
-      }
+      return (
+        <Link className="next-step btn btn-default" to={this.getTourLink()}>
+          Back to Tour&nbsp;
+          <span className="glyphicon glyphicon-arrow-right" />
+        </Link>
+      );
+    }
   }
 
   getPrevStepLink() {
@@ -127,10 +123,10 @@ class Step extends React.Component {
     if (prevStep) {
       return (
         <Link to={this.getStepLink(prevStep)} className="btn btn-default">
-          <span className="glyphicon glyphicon-arrow-left"/>&nbsp;
+          <span className="glyphicon glyphicon-arrow-left" />&nbsp;
           {this.props.step.getPrevStep().getFullTitle()}
         </Link>
-        );
+      );
     }
   }
 
@@ -138,11 +134,16 @@ class Step extends React.Component {
     return (
       <div>
         <div className="left">
-          <div className="source-link"><a href={this.props.step.codeUrl}>{this.props.step.fullRepoName}/<strong>{this.props.step.filePath}</strong></a></div>
+          <div className="source-link">
+            <a href={this.props.step.codeUrl}>
+              {this.props.step.fullRepoName}/<strong>{this.props.step.filePath}</strong>
+            </a>
+          </div>
           <Snippet
             code={this.props.step.code}
             filePath={this.props.step.filePath}
-            highlightLineNumbers={this.getLineNumbersForCurrentSection()}/>
+            highlightLineNumbers={this.getLineNumbersForCurrentSection()}
+          />
         </div>
         <div className="right">
           <Link to={'/'} className="tiny-logo">CodeTours</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -152,23 +153,21 @@ class Step extends React.Component {
             {this.getPrevStepLink()}
             {this.getNextStepLink()}
           </div>
-          {
-            _.map(this.props.step.content, (section, index) => {
-              return (
-                <Section
-                  key={index}
-                  section={section}
-                  onSelect={this.onSelect.bind(this, index)}
-                  selected={index === this.state.selectedIndex}
-                  ref={(component) => {
-                    if (index === parseInt(this.props.params.sectionIndex, 10)) {
-                      this.highlightedSection = ReactDOM.findDOMNode(component);
-                    }
-                  }}
-                />
-              );
-            })
-          }
+          {_.map(this.props.step.content, (section, index) => {
+            return (
+              <Section
+                key={index}
+                section={section}
+                onSelect={this.onSelect.bind(this, index)}
+                selected={index === this.state.selectedIndex}
+                ref={component => {
+                  if (index === parseInt(this.props.params.sectionIndex, 10)) {
+                    this.highlightedSection = ReactDOM.findDOMNode(component);
+                  }
+                }}
+              />
+            );
+          })}
           <div className="step-nav">
             {this.getPrevStepLink()}
             {this.getNextStepLink()}
@@ -176,38 +175,35 @@ class Step extends React.Component {
         </div>
       </div>
     );
-
   }
 }
 
 // load 1 tour & 1 step
-const loadMeteorData = Component => createContainer(({ params: { user, repoName, stepSlug } }) => {
-  const tourName = `${user}/${repoName}`;
-  const handleStep = Meteor.subscribe('steps', tourName);
-  const handleTour = Meteor.subscribe('tours');
-  return {
-    tour: Tours.findOne({ repository: tourName }),
-    tourLoaded: handleTour.ready(),
-    step: Steps.findOne({ tourName, slug: stepSlug }),
-    stepLoaded: handleStep.ready(),
-  };
-}, Component);
+const loadMeteorData = Component => createContainer(
+  ({ params: { user, repoName, stepSlug } }) => {
+    const tourName = `${user}/${repoName}`;
+    const handleStep = Meteor.subscribe('steps', tourName);
+    const handleTour = Meteor.subscribe('tours');
+    return {
+      tour: Tours.findOne({ repository: tourName }),
+      tourLoaded: handleTour.ready(),
+      step: Steps.findOne({ tourName, slug: stepSlug }),
+      stepLoaded: handleStep.ready(),
+    };
+  },
+  Component
+);
 
 // show loading component if the tour & step data are loading
 const displayLoadingState = branch(
   props => !props.tourLoaded || !props.stepLoaded,
-  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays)),
+  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays))
 );
 
 // show not found component if no tour/step found
 const displayNotFoundState = branch(
   props => !props.tour || !props.step,
-  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays)),
+  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays))
 );
 
-export default compose(
-  loadMeteorData,
-  displayLoadingState,
-  displayNotFoundState,
-  pure,
-)(Step);
+export default compose(loadMeteorData, displayLoadingState, displayNotFoundState, pure)(Step);

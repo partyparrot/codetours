@@ -7,15 +7,15 @@ import StepContainer from './Step';
 import TourContainer from './Tour';
 import RecentTours from './RecentTours';
 
-Meteor.startup(() => render((
-    <Router history={browserHistory}>
-      <Route path="/" component={Frontpage} />
-      <Route path="/tour/:user/:repoName" component={TourContainer} />
-      <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} addHandlerKey={true} />
-      <Route path="/tour/:user/:repoName/:stepSlug/:sectionIndex" component={StepContainer} />
-    </Router>
-  ), document.getElementById('root'))
-);
+Meteor.startup(() => render(
+  <Router history={browserHistory}>
+    <Route path="/" component={Frontpage} />
+    <Route path="/tour/:user/:repoName" component={TourContainer} />
+    <Route path="/tour/:user/:repoName/:stepSlug" component={StepContainer} addHandlerKey={true} />
+    <Route path="/tour/:user/:repoName/:stepSlug/:sectionIndex" component={StepContainer} />
+  </Router>,
+  document.getElementById('root')
+));
 
 browserHistory.listen(() => {
   ga('send', 'pageview', window.location.pathname);
@@ -53,17 +53,17 @@ class Frontpage extends React.Component {
   render() {
     const brandNameStyle = {
       fontFamily: "'Pacifico', cursive",
-      textShadow: "black 0 0 5px",
-    }
+      textShadow: 'black 0 0 5px',
+    };
 
     const heroStyle = {
       backgroundImage: 'url("/background.jpeg")',
-      backgroundSize: "100%",
-      color: "white"
+      backgroundSize: '100%',
+      color: 'white',
     };
 
     const taglineStyle = {
-      textShadow: "black 0 0 5px",
+      textShadow: 'black 0 0 5px',
     };
 
     return (
@@ -90,33 +90,56 @@ class Frontpage extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-8">
-              <RecentTours search={this.state.search}/>
+              <RecentTours search={this.state.search} />
             </div>
             <div className="col-sm-4">
               <h3>What's a CodeTour?</h3>
-              <p>A CodeTour is a way for you to introduce new developers to a codebase by giving them a self-guided tour.</p>
+              <p>
+                A CodeTour is a way for you to introduce new developers to a codebase by giving them a self-guided tour.
+              </p>
 
               <h3>Why make a CodeTour?</h3>
-              <p>You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase.</p>
-              <p>You are the maintainer of a large open source project, and you want to make it super easy for people to understand how it works and contribute.</p>
-              <p>You are building out a GitHub portfolio, and want to be able to highlight important parts of your projects.</p>
-              <p>You are a good person and want to share and grow the world's knowledge by teaching other people how your favorite libraries and frameworks work.</p>
+              <p>
+                You are hiring like crazy, and you don't want to spend hours sitting down with each new hire and walking through your codebase.
+              </p>
+              <p>
+                You are the maintainer of a large open source project, and you want to make it super easy for people to understand how it works and contribute.
+              </p>
+              <p>
+                You are building out a GitHub portfolio, and want to be able to highlight important parts of your projects.
+              </p>
+              <p>
+                You are a good person and want to share and grow the world's knowledge by teaching other people how your favorite libraries and frameworks work.
+              </p>
               <h3>How do I make a CodeTour?</h3>
 
               <p>
-                <b>If this is your first time making a tour, take a few minutes to check out our <Link to="/tour/partyparrot/codetours-starter-kit">
-                  CodeTour for CodeTour
-                </Link></b> (it's meta, we know). We promise everything will make a lot more sense after taking this tour.
+                <b>
+                  If this is your first time making a tour, take a few minutes to check out our{' '}
+                  <Link to="/tour/partyparrot/codetours-starter-kit">
+                    CodeTour for CodeTour
+                  </Link>
+                </b>
+                {' '}(it's meta, we know). We promise everything will make a lot more sense after taking this tour.
               </p>
 
               <p>If you've done it before, here's the TL;DR in case you need a reminder:</p>
               <ol>
-                <li>Fork the <a href="https://github.com/partyparrot/codetours-starter-kit">starter kit</a>, or another existing tour</li>
+                <li>
+                  Fork the{' '}
+                  <a href="https://github.com/partyparrot/codetours-starter-kit">starter kit</a>
+                  , or another existing tour
+                </li>
                 <li>Edit the config file, content, and code links</li>
                 <li>Import your code tour here:</li>
               </ol>
               <form className="input-group" onSubmit={this.handleImportSubmit}>
-                <input type="text" name="tourRepository" className="form-control" placeholder="Your repository name here" />
+                <input
+                  type="text"
+                  name="tourRepository"
+                  className="form-control"
+                  placeholder="Your repository name here"
+                />
                 <span className="input-group-btn">
                   <input type="submit" className="btn btn-success" value="Go!" />
                 </span>
@@ -124,12 +147,18 @@ class Frontpage extends React.Component {
             </div>
           </div>
           <div className="footer">
-            <p dangerouslySetInnerHTML={{__html: marked(`
+            <p
+              dangerouslySetInnerHTML={{
+                __html: marked(
+                  `
 Made with ![Fiesta Parrot](/fiestaparrot.gif)
 by [Angela Zhang](https://github.com/zhangela) and
 [Sashko Stubailo](https://github.com/stubailo).
 [Contribute on GitHub.](https://github.com/partyparrot/codetours)
-            `)}} />
+            `
+                ),
+              }}
+            />
           </div>
         </div>
       </div>

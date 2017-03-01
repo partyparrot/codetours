@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default class TourBadge extends React.Component {
-
   getTourLink(tour) {
     return `/tour/${tour.repository}`;
   }
@@ -15,9 +14,10 @@ export default class TourBadge extends React.Component {
 
     return (
       <div className="tour-badge">
-        <img src={`https://github.com/${targetUsername}.png`}/>
+        <img src={`https://github.com/${targetUsername}.png`} />
         <Link to={this.getTourLink(tour)}>
-          <h4 className="target-repo">{targetRepo}
+          <h4 className="target-repo">
+            {targetRepo}
             <span className="text-muted"> by {authorUsername}</span>
           </h4>
         </Link>
@@ -26,6 +26,6 @@ export default class TourBadge extends React.Component {
           Contribute at <a href={`https://github.com/${tour.repository}`}>{tour.repository}</a>
         </p>
       </div>
-    )
+    );
   }
 }

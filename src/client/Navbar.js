@@ -1,23 +1,22 @@
-import React from "react";
-import { Link } from "react-router";
+import React from 'react';
+import { Link } from 'react-router';
 
 class Navbar extends React.Component {
-
   render() {
     const brandNameStyle = {
       fontFamily: "'Pacifico', cursive",
-      fontSize: "30px",
+      fontSize: '30px',
       // marginLeft: "10px",
-      color: "white",
+      color: 'white',
     };
 
     const logoStyle = {
-      width: "40px",
-      height: "40px",
-      marginTop: "-13px",
-      mixBlendMode: "multiply",
-      display: "inline-block"
-    }
+      width: '40px',
+      height: '40px',
+      marginTop: '-13px',
+      mixBlendMode: 'multiply',
+      display: 'inline-block',
+    };
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -34,7 +33,7 @@ class Navbar extends React.Component {
           </div>
         </div>
       </nav>
-    )
+    );
   }
 }
 
