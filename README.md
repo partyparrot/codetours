@@ -1,6 +1,13 @@
 # CodeTours
 
-## TL;DR: 
+[![Build Status](https://travis-ci.org/partyparrot/codetours.svg?branch=master)](https://travis-ci.org/partyparrot/codetours)
+
+[Go to the website at www.codetours.xyz!](https://www.codetours.xyz)
+
+### Running locally
+
+1. Install Meteor: `curl https://install.meteor.com/ | sh`
+2. Run the project: `meteor`
 
 ### What's a CodeTour?
 A CodeTour is a way for you to introduce new developers to a codebase by giving them a self-guided tour. All CodeTours are vieweable and searchable at https://www.codetours.xyz/. 
@@ -29,7 +36,6 @@ https://www.codetours.xyz/
 - Pull requests welcome & appreciated! 
 
 ## Full Design Doc: 
-
 
 ### Problem statement
 
