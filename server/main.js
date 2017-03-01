@@ -10,7 +10,7 @@ function getFile(connector, repoFullName, path, ref) {
     url += `?ref=${ref}`;
   }
 
-  return connector.get(url).then((data) => {
+  return connector.get(url).then(data => {
     return new Buffer(data.content, 'base64').toString();
   });
 }
@@ -21,8 +21,8 @@ Meteor.publish({
     return Tours.find();
   },
   steps(tourName) {
-    return Steps.find({tourName});
-  }
+    return Steps.find({ tourName });
+  },
 });
 
 function execOrThrow(re, str) {
@@ -39,11 +39,7 @@ Meteor.methods({
   async importTour(tourRepository) {
     if (tourRepository.indexOf('github.com') !== -1) {
       // This is a URL, parse out repo name
-      const [
-        url,
-        username,
-        repo,
-      ] = execOrThrow(/github\.com\/([^/]+)\/([^/]+)/, tourRepository);
+      const [url, username, repo] = execOrThrow(/github\.com\/([^/]+)\/([^/]+)/, tourRepository);
 
       tourRepository = `${username}/${repo}`;
     }
@@ -55,7 +51,10 @@ Meteor.methods({
       content = await getFile(connector, tourRepository, '.codetour.json');
     } catch (e) {
       if (e.statusCode === 404) {
-        throw new Meteor.Error('not-found', 'Could not find a .codetour.json file in the repository.');
+        throw new Meteor.Error(
+          'not-found',
+          'Could not find a .codetour.json file in the repository.'
+        );
       } else {
         console.log(e);
         throw new Meteor.Error('error', 'Error fetching data from GitHub.');
@@ -68,12 +67,17 @@ Meteor.methods({
       throw new Meteor.Error('json', '.codetour.json file is not a valid JSON file.');
     }
 
-    if (! Match.test(tour, {
-      targetRepository: String,
-      description: String,
-      steps: [String],
-    })) {
-      throw new Meteor.Error('invalid-config', `Found an invalid configuration option in .codetour.json.`);
+    if (
+      !Match.test(tour, {
+        targetRepository: String,
+        description: String,
+        steps: [String],
+      })
+    ) {
+      throw new Meteor.Error(
+        'invalid-config',
+        `Found an invalid configuration option in .codetour.json.`
+      );
     }
 
     tour.repository = tourRepository;
@@ -90,43 +94,50 @@ Meteor.methods({
 
     Tours.insert(tour);
 
-    await Promise.all(tour.steps.map((stepPath) => {
-      let step;
+    await Promise.all(
+      tour.steps.map(stepPath => {
+        let step;
 
-      return getFile(connector, tour.repository, stepPath).then((content) => {
-        step = {
-          ...parseMD(content),
-          tourName: tour.repository,
-          slug: stepPath,
-        };
+        return getFile(connector, tour.repository, stepPath)
+          .then(content => {
+            step = {
+              ...parseMD(content),
+              tourName: tour.repository,
+              slug: stepPath,
+            };
 
-        return getFile(connector, step.fullRepoName, step.filePath, step.commit);
-      }).then((content) => {
+            return getFile(connector, step.fullRepoName, step.filePath, step.commit);
+          })
+          .then(content => {
+            step = {
+              ...step,
+              code: content,
+            };
 
-        step = {
-          ...step,
-          code: content,
-        };
+            Steps.insert(step);
+          })
+          .catch(e => {
+            // Remove tour if it failed to import
+            Tours.update({ repository: tourRepository, failed: true });
 
-        Steps.insert(step);
-      }).catch((e) => {
-        // Remove tour if it failed to import
-        Tours.update({ repository: tourRepository, failed: true });
-
-        if (e.statusCode === 404) {
-          throw new Meteor.Error('not-found', `Could not find file with path ${stepPath} in repository. Check your .codetour.json file.`);
-        } else if (e instanceof Meteor.Error) {
-          throw e;
-        } else {
-          console.log(e);
-          throw new Meteor.Error('error', 'Error fetching data from GitHub.');
-        }
-      });
-    }));
+            if (e.statusCode === 404) {
+              throw new Meteor.Error(
+                'not-found',
+                `Could not find file with path ${stepPath} in repository. Check your .codetour.json file.`
+              );
+            } else if (e instanceof Meteor.Error) {
+              throw e;
+            } else {
+              console.log(e);
+              throw new Meteor.Error('error', 'Error fetching data from GitHub.');
+            }
+          });
+      })
+    );
 
     return tourRepository;
-  }
-})
+  },
+});
 
 function parseMD(md) {
   const {
@@ -150,17 +161,10 @@ function parseMD(md) {
 function parseGitHubURL(url) {
   // XXX this regex fails when there is only one line selected
   const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)(-L(\d+))?)?/;
-  const [
-    str,
-    user,
-    repoName,
-    commit,
-    filePath,
-    unused,
-    lineStart,
-    unused2,
-    lineEnd,
-  ] = execOrThrow(re, url);
+  const [str, user, repoName, commit, filePath, unused, lineStart, unused2, lineEnd] = execOrThrow(
+    re,
+    url
+  );
 
   const fileUrl = url.split('#')[0];
 
@@ -188,7 +192,7 @@ function parseContentBlocks(content, metadata) {
     content: '',
   };
 
-  lines.forEach((line) => {
+  lines.forEach(line => {
     if (line.indexOf(metadata.fileUrl) === -1) {
       currSegment.content += line + '\n';
       return;
@@ -200,17 +204,10 @@ function parseContentBlocks(content, metadata) {
     const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)(-L(\d+))?)?/;
 
     // This line contains a GitHub URL that points to the same file
-    let [
-      str,
-      user,
-      repoName,
-      commit,
-      filePath,
-      unused,
-      lineStart,
-      unused2,
-      lineEnd,
-    ] = execOrThrow(re, line);
+    let [str, user, repoName, commit, filePath, unused, lineStart, unused2, lineEnd] = execOrThrow(
+      re,
+      line
+    );
 
     if (!lineEnd) {
       lineEnd = lineStart;

@@ -44,20 +44,22 @@ export class GitHubConnector {
       this.rp({
         uri: url,
         ...options,
-      }).then((response) => {
-        const body = response.body;
-        eTagCache[url] = {
-          result: body,
-          eTag: response.headers.etag,
-        };
-        resolve(body);
-      }).catch((err) => {
-        if (err.statusCode === 304) {
-          resolve(cachedRes.result);
-        } else {
-          reject(err);
-        }
-      });
+      })
+        .then(response => {
+          const body = response.body;
+          eTagCache[url] = {
+            result: body,
+            eTag: response.headers.etag,
+          };
+          resolve(body);
+        })
+        .catch(err => {
+          if (err.statusCode === 304) {
+            resolve(cachedRes.result);
+          } else {
+            reject(err);
+          }
+        });
     });
   }
 }
