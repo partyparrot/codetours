@@ -120,7 +120,8 @@ class Frontpage extends React.Component {
                     CodeTour for CodeTour
                   </Link>
                 </b>
-                {' '}(it's meta, we know). We promise everything will make a lot more sense after taking this tour.
+                {' '}
+                (it's meta, we know). We promise everything will make a lot more sense after taking this tour.
               </p>
 
               <p>If you've done it before, here's the TL;DR in case you need a reminder:</p>

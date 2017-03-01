@@ -11,12 +11,7 @@
     "allowImportExportEverywhere": true
   },
   "plugins": [
-    "meteor",
-    "react"
-  ],
-  "extends": [
-    "airbnb",
-    "plugin:meteor/recommended"
+    "prettier"
   ],
   "settings": {
     "import/resolver": "meteor"
@@ -26,15 +21,6 @@
     "$": true
   },
   "rules": {
-    "global-require": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": 0,
-    "max-len": [1, 120],
-    "new-cap": 1,
-    "no-underscore-dangle": 0,
-    "one-var": 0,
-    "one-var-declaration-per-line": 0,
-    "react/prefer-stateless-function": 1,
-    "react/jsx-boolean-value": [2, "always"]
+    "prettier/prettier": "error"
   }
 }
