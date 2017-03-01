@@ -26,7 +26,7 @@ class Frontpage extends React.Component {
     super(props);
 
     this.state = {
-      search: "",
+      search: '',
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
