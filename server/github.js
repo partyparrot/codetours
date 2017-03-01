@@ -6,7 +6,7 @@ const eTagCache = {};
 const GITHUB_API_ROOT = 'https://api.github.com';
 
 export class GitHubConnector {
-  constructor({ clientId, clientSecret } = {}) {
+  constructor() {
     this.clientId = process.env.GITHUB_CLIENT_ID;
     this.clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
