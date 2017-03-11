@@ -44,30 +44,13 @@ const Headtags = ({ pathname } = { pathname: '/' }) => {
   // generate the twitter meta tags
   const meta = [
     { name: 'twitter:card', content: 'summary' },
+    // from the relevant tags names, create twitter meta in "helmet-shape"
     ...Object.keys(headTags).map(tagName => ({
       name: `twitter:${tagName}`,
       content: headTags[tagName],
     })),
   ];
 
-  // plug default link tags to the head
-  // const link = [
-  //   {
-  //     rel: 'stylesheet',
-  //     href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/github-gist.min.css',
-  //   },
-  //   {
-  //     rel: 'stylesheet',
-  //     href: 'https://fonts.googleapis.com/css?family=Pacifico',
-  //   },
-  //   {
-  //     rel: 'stylesheet',
-  //     href: 'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css',
-  //   },
-  //   { rel: 'icon', href: '/icon.png' },
-  // ];
-
-  // note: could be some nice loading component, or the page itself?
   return <Helmet title={headTags.title} meta={meta} />;
 };
 
