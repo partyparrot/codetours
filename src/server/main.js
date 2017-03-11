@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import './head';
+import './server-rendering';
 import { GitHubConnector } from './github';
 import { Tours, Steps } from '../collections';
 import { parseMD } from './parse';

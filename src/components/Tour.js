@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { Tours } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import Headtags from './Headtags';
 import TourBadge from './TourBadge';
 import Navbar from './Navbar';
 import ParrotSays from './ParrotSays';
@@ -45,6 +46,7 @@ class Tour extends React.Component {
   render() {
     return (
       <div>
+        <Headtags pathname={this.props.location.pathname} />
         <Navbar />
         <div className="container" style={{ marginTop: '40px' }}>
 
