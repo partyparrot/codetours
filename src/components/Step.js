@@ -7,6 +7,7 @@ import _ from 'lodash';
 import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import Headtags from './Headtags';
 import Snippet from './Snippet';
 import Section from './Section';
 import ParrotSays from './ParrotSays';
@@ -133,6 +134,7 @@ class Step extends React.Component {
   render() {
     return (
       <div>
+        <Headtags pathname={this.props.location.pathname} />
         <div className="left">
           <div className="source-link">
             <a href={this.props.step.codeUrl}>

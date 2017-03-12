@@ -24,7 +24,7 @@ export class GitHubConnector {
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'user-agent': 'GitHunt',
+        'user-agent': 'CodeTours',
       },
     };
 
