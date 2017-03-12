@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Match } from 'meteor/check';
 import './server-rendering';
 import { GitHubConnector } from './github';
 import { Tours, Steps } from '../collections';
@@ -17,31 +18,11 @@ function getFile(connector, repoFullName, path, ref) {
   });
 }
 
-Meteor.publish({
-  tours() {
-    // just publish all tours
-    return Tours.find();
-  },
-  steps(tourName) {
-    return Steps.find({ tourName });
-  },
-});
-
-function execRegexOrThrow(re, str) {
-  const result = re.exec(str);
-
-  if (!result) {
-    throw new Meteor.Error('format', `${str} didn't match required format: ${re}`);
-  }
-
-  return result;
-}
-
 Meteor.methods({
   async importTour(tourRepository) {
     if (tourRepository.indexOf('github.com') !== -1) {
       // This is a URL, parse out repo name
-      const [url, username, repo] = execRegexOrThrow(
+      const [_url, username, repo] = execRegexOrThrow(
         /github\.com\/([^/]+)\/([^/]+)/,
         tourRepository
       );
@@ -61,11 +42,12 @@ Meteor.methods({
           'Could not find a .codetour.json file in the repository.'
         );
       } else {
-        console.log(e);
+        console.log(e); // eslint-disable-line no-console
         throw new Meteor.Error('error', 'Error fetching data from GitHub.');
       }
     }
 
+    let tour;
     try {
       tour = JSON.parse(content);
     } catch (e) {
@@ -133,7 +115,7 @@ Meteor.methods({
             } else if (e instanceof Meteor.Error) {
               throw e;
             } else {
-              console.log(e);
+              console.log(e); // eslint-disable-line no-console
               throw new Meteor.Error('error', 'Error fetching data from GitHub.');
             }
           });

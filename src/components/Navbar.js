@@ -10,13 +10,13 @@ class Navbar extends React.Component {
       color: 'white',
     };
 
-    const logoStyle = {
-      width: '40px',
-      height: '40px',
-      marginTop: '-13px',
-      mixBlendMode: 'multiply',
-      display: 'inline-block',
-    };
+    // const logoStyle = {
+    //   width: '40px',
+    //   height: '40px',
+    //   marginTop: '-13px',
+    //   mixBlendMode: 'multiply',
+    //   display: 'inline-block',
+    // };
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Meteor } from 'meteor/meteor';
 import Helmet from 'react-helmet';
 import { Tours } from '../collections';
 

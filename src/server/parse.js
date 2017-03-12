@@ -24,14 +24,14 @@ function parseGitHubURL(url) {
   // XXX this regex fails when there is only one line selected
   const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)(-L(\d+))?)?/;
   const [
-    str,
+    _str,
     user,
     repoName,
     commit,
     filePath,
-    unused,
+    _unused,
     lineStart,
-    unused2,
+    _unused2,
     lineEnd,
   ] = execRegexOrThrow(re, url);
 
@@ -74,14 +74,14 @@ function parseContentBlocks(content, metadata) {
 
     // This line contains a GitHub URL that points to the same file
     let [
-      str,
-      user,
-      repoName,
-      commit,
-      filePath,
-      unused,
+      _str,
+      _user,
+      _repoName,
+      _commit,
+      _filePath,
+      _unused,
       lineStart,
-      unused2,
+      _unused2,
       lineEnd,
     ] = execRegexOrThrow(re, line);
 

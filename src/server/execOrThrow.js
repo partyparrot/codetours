@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 export default function execRegexOrThrow(re, str) {
   const result = re.exec(str);
 

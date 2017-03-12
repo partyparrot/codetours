@@ -1,13 +1,13 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
-import { Link } from 'react-router';
 import _ from 'lodash';
+import { Link } from 'react-router';
 
-import { Tours } from '../collections';
+import { Tours, Steps } from '../collections';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import Headtags from './Headtags';
-import TourBadge from './TourBadge';
 import Navbar from './Navbar';
 import ParrotSays from './ParrotSays';
 
@@ -36,7 +36,7 @@ class Tour extends React.Component {
   reImportTour() {
     event.preventDefault();
     const tourRepository = this.props.tour.repository;
-    Meteor.call('importTour', tourRepository, (err, res) => {
+    Meteor.call('importTour', tourRepository, err => {
       if (err) {
         alert(err.reason);
       }

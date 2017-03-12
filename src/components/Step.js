@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
 import { Link, browserHistory } from 'react-router';
@@ -23,7 +24,7 @@ class Step extends React.Component {
     // this is required so that when we navigate to different step, we can
     // reset the highlight to the right section.
     if (this.props.step) {
-      const section = this.props.step.content[0];
+      // const section = this.props.step.content[0];
       this.state.slug = this.props.step.slug;
       this.state.selectedIndex = 0;
     }

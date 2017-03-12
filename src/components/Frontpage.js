@@ -1,6 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Link } from 'react-router';
 import marked from 'marked';
+import { browserHistory, Link } from 'react-router';
 import RecentTours from './RecentTours';
 import Headtags from '../components/Headtags';
 

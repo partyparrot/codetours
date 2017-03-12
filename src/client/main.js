@@ -1,4 +1,5 @@
-import React from 'react';
+/* globals ga */
+import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import { browserHistory } from 'react-router';
 

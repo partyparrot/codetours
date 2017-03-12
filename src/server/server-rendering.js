@@ -1,13 +1,9 @@
-import { Meteor } from 'meteor/meteor';
 import { WebApp } from 'meteor/webapp';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
 import Helmet from 'react-helmet';
 
-import routes from '../routes';
 import Headtags from '../components/Headtags';
-import ParrotSays from '../components/ParrotSays';
 
 // request middleware to server-side render the head tags
 const serverRendering = (req, res, next) => {

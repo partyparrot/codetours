@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
 
 import { Tours } from '../collections';
@@ -7,7 +8,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import TourBadge from './TourBadge';
 import ParrotSays from './ParrotSays';
 
-const RecentTours = ({ search, tours, toursLoaded }) => (
+const RecentTours = ({ search, tours }) => (
   <div>
     <h3>{search ? 'Search results' : 'Recently added tours'}</h3>
     {tours.map(tour => <TourBadge tour={tour} key={tour.repository} />)}

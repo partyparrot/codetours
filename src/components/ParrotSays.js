@@ -6,7 +6,7 @@ const statusList = [
   { id: 'not-found', gif: 'confused', caption: 'No tour found!' },
 ];
 
-export default (ParrotSays = ({ statusId = 'loading', big = false }) => {
+const ParrotSays = ({ statusId = 'loading', big = false }) => {
   const { gif, caption } = statusList.find(status => status.id === statusId);
 
   return (
@@ -17,9 +17,11 @@ export default (ParrotSays = ({ statusId = 'loading', big = false }) => {
       </div>
     </div>
   );
-});
+};
 
 ParrotSays.propTypes = {
   statusId: PropTypes.oneOf(statusList.map(status => status.id)).isRequired,
   big: PropTypes.bool,
 };
+
+export default ParrotSays;
