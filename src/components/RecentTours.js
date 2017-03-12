@@ -8,6 +8,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import TourBadge from './TourBadge';
 import ParrotSays from './ParrotSays';
 
+import printTime from '../printTime';
+
 const RecentTours = ({ search, tours }) => (
   <div>
     <h3>{search ? 'Search results' : 'Recently added tours'}</h3>
@@ -18,7 +20,14 @@ const RecentTours = ({ search, tours }) => (
 // load 1+ tours
 const loadMeteorData = Component => createContainer(
   ({ search }) => {
+    printTime('createContainer callback running');
+
     const handleTours = Meteor.subscribe('tours');
+
+    if (handleTours.ready()) {
+      printTime('subscription ready');
+    }
+
     return {
       tours: Tours.find(
         { failed: { $ne: true }, targetRepository: { $regex: new RegExp(search, 'i') } },

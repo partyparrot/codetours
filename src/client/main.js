@@ -2,10 +2,17 @@
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import { browserHistory } from 'react-router';
+import printTime from '../printTime';
 
 import routes from '../routes';
 
-Meteor.startup(() => render(routes, document.getElementById('root')));
+printTime('main.js');
+
+Meteor.startup(() => {
+  printTime('Meteor startup fired');
+  render(routes, document.getElementById('root'));
+  printTime('after render');
+});
 
 browserHistory.listen(() => {
   ga('send', 'pageview', window.location.pathname);
