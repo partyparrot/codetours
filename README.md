@@ -7,7 +7,8 @@
 ### Running locally
 
 1. Install Meteor: `curl https://install.meteor.com/ | sh`
-2. Run the project: `meteor`
+2. `meteor npm install`
+3. Run the project: `meteor`
 
 ### What's a CodeTour?
 A CodeTour is a way for you to introduce new developers to a codebase by giving them a self-guided tour. All CodeTours are vieweable and searchable at https://www.codetours.xyz/. 
