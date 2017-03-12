@@ -13,6 +13,10 @@ import Snippet from './Snippet';
 import Section from './Section';
 import ParrotSays from './ParrotSays';
 
+import printTime from '../printTime';
+
+printTime('step evaluating');
+
 class Step extends React.Component {
   constructor(props) {
     super(props);
