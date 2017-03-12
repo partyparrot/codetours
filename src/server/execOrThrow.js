@@ -1,4 +1,4 @@
-export default function execOrThrow(re, str) {
+export default function execRegexOrThrow(re, str) {
   const result = re.exec(str);
 
   if (!result) {

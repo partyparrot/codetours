@@ -1,5 +1,5 @@
 import { loadFront } from 'yaml-front-matter';
-import execOrThrow from './execOrThrow';
+import execRegexOrThrow from './execRegexOrThrow';
 
 export function parseMD(md) {
   const {
@@ -23,10 +23,17 @@ export function parseMD(md) {
 function parseGitHubURL(url) {
   // XXX this regex fails when there is only one line selected
   const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)(-L(\d+))?)?/;
-  const [str, user, repoName, commit, filePath, unused, lineStart, unused2, lineEnd] = execOrThrow(
-    re,
-    url
-  );
+  const [
+    str,
+    user,
+    repoName,
+    commit,
+    filePath,
+    unused,
+    lineStart,
+    unused2,
+    lineEnd,
+  ] = execRegexOrThrow(re, url);
 
   const fileUrl = url.split('#')[0];
 
@@ -66,10 +73,17 @@ function parseContentBlocks(content, metadata) {
     const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)(-L(\d+))?)?/;
 
     // This line contains a GitHub URL that points to the same file
-    let [str, user, repoName, commit, filePath, unused, lineStart, unused2, lineEnd] = execOrThrow(
-      re,
-      line
-    );
+    let [
+      str,
+      user,
+      repoName,
+      commit,
+      filePath,
+      unused,
+      lineStart,
+      unused2,
+      lineEnd,
+    ] = execRegexOrThrow(re, line);
 
     if (!lineEnd) {
       lineEnd = lineStart;
@@ -77,7 +91,7 @@ function parseContentBlocks(content, metadata) {
 
     const anchorId = /id="([^"]+)"/.exec(line);
     const slug = (anchorId && anchorId[1]) || `section-${segments.length + 1}`;
-    const contentWithoutAnchorTag = execOrThrow(/<a[^>]+>(.+)<\/a>/, line)[1] + '\n';
+    const contentWithoutAnchorTag = execRegexOrThrow(/<a[^>]+>(.+)<\/a>/, line)[1] + '\n';
 
     currSegment = {
       slug,

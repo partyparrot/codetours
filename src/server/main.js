@@ -3,7 +3,7 @@ import './server-rendering';
 import { GitHubConnector } from './github';
 import { Tours, Steps } from '../collections';
 import { parseMD } from './parse';
-import execOrThrow from './execOrThrow';
+import execRegexOrThrow from './execRegexOrThrow';
 
 function getFile(connector, repoFullName, path, ref) {
   let url = `/repos/${repoFullName}/contents/${path}`;
@@ -27,7 +27,7 @@ Meteor.publish({
   },
 });
 
-function execOrThrow(re, str) {
+function execRegexOrThrow(re, str) {
   const result = re.exec(str);
 
   if (!result) {
@@ -41,7 +41,10 @@ Meteor.methods({
   async importTour(tourRepository) {
     if (tourRepository.indexOf('github.com') !== -1) {
       // This is a URL, parse out repo name
-      const [url, username, repo] = execOrThrow(/github\.com\/([^/]+)\/([^/]+)/, tourRepository);
+      const [url, username, repo] = execRegexOrThrow(
+        /github\.com\/([^/]+)\/([^/]+)/,
+        tourRepository
+      );
 
       tourRepository = `${username}/${repo}`;
     }
