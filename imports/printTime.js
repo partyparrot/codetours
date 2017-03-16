@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 const stagesPrinted = {};
 
 export default function printTime(stage) {
-  if (! Meteor.isClient || stagesPrinted[stage]) {
+  if (!Meteor.isClient || stagesPrinted[stage]) {
     return;
   }
 
