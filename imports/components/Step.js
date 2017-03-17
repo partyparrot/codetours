@@ -1,12 +1,9 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
 import { Link, browserHistory } from 'react-router';
 import _ from 'lodash';
-
-import { Tours, Steps } from '../collections';
-import { createContainer } from 'meteor/react-meteor-data';
+import { graphql, gql } from 'react-apollo';
 
 import Headtags from './Headtags';
 import Snippet from './Snippet';
@@ -185,25 +182,49 @@ class Step extends React.Component {
   }
 }
 
-// load 1 tour & 1 step
-const loadMeteorData = Component => createContainer(
-  ({ params: { user, repoName, stepSlug } }) => {
-    const tourName = `${user}/${repoName}`;
-    const handleStep = Meteor.subscribe('steps', tourName);
-    const handleTour = Meteor.subscribe('tours');
-    return {
-      tour: Tours.findOne({ repository: tourName }),
-      tourLoaded: handleTour.ready(),
-      step: Steps.findOne({ tourName, slug: stepSlug }),
-      stepLoaded: handleStep.ready(),
-    };
-  },
-  Component
+const loadStepWithTour = graphql(
+  gql`
+  query getStepWithTour($tourRepository: String!, $slug: String!) {
+    step(tourRepository: $tourRepository, slug: $slug) {
+      _id
+      title
+      slug
+      codeUrl
+      sections {
+        slug
+        lineStart
+        lineEnd
+        content
+      }
+      # asking the tour from the step leverage the cache?
+      tour {
+        _id
+        repository
+        targetRepository
+      }
+    }
+  }
+`,
+  {
+    options: ({ params: { user, repoName, stepSlug } }) => ({
+      variables: {
+        tourRepository: `${user}/${repoName}`,
+        slug: stepSlug,
+      },
+    }),
+    props: ({ data: { loading, step }, ownProps: params }) => ({
+      loading,
+      step,
+      // patch for the time being
+      tour: step && step.tour,
+      params,
+    }),
+  }
 );
 
 // show loading component if the tour & step data are loading
 const displayLoadingState = branch(
-  props => !props.tourLoaded || !props.stepLoaded,
+  props => props.loading,
   renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays))
 );
 
@@ -213,4 +234,4 @@ const displayNotFoundState = branch(
   renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays))
 );
 
-export default compose(loadMeteorData, displayLoadingState, displayNotFoundState, pure)(Step);
+export default compose(loadStepWithTour, displayLoadingState, displayNotFoundState, pure)(Step);

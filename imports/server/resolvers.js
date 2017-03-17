@@ -4,7 +4,7 @@ import importTour from './methods';
 const resolvers = {
   Date: GraphQLDate,
   Query: {
-    async getTours(root, { search, limit = 0 }, context) {
+    async tours(root, { search, limit = 0 }, context) {
       return await context.Tours
         .find(
           { failed: { $ne: true }, targetRepository: { $regex: new RegExp(search, 'i') } },
@@ -13,15 +13,15 @@ const resolvers = {
         )
         .fetch();
     },
-    async getTour(root, { tourRepository }, context) {
+    async tour(root, { tourRepository }, context) {
       return await context.Tours.findOne({
         repository: tourRepository,
       });
     },
-    async getSteps(root, { tourRepository }, context) {
+    async steps(root, { tourRepository }, context) {
       return await context.Steps.find({ tourName: tourRepository }).fetch();
     },
-    async getStep(root, { tourRepository, slug }, context) {
+    async step(root, { tourRepository, slug }, context) {
       return await context.Steps.findOne({
         tourName: tourRepository,
         slug,

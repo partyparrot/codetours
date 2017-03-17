@@ -3,9 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { pure, branch, renderComponent, withProps, compose } from 'recompose';
 import _ from 'lodash';
 import { Link } from 'react-router';
-
-import { Tours, Steps } from '../collections';
-import { createContainer } from 'meteor/react-meteor-data';
+import { graphql, gql } from 'react-apollo';
 
 import Headtags from './Headtags';
 import Navbar from './Navbar';
@@ -27,10 +25,6 @@ class Tour extends React.Component {
 
   getStepLink(step) {
     return `/tour/${this.props.tour.repository}/${step}`;
-  }
-
-  getStepObject(slug) {
-    return _.find(this.props.steps, { slug: slug });
   }
 
   reImportTour() {
@@ -84,10 +78,10 @@ class Tour extends React.Component {
                   Start CodeTour
                 </button>
               </Link>
-              {_.map(this.props.tour.steps, (slug, index) => {
+              {_.map(this.props.tour.steps, (step, index) => {
                 return (
-                  <div key={slug}>
-                    <Link to={this.getStepLink(slug)}>
+                  <div key={step._id}>
+                    <Link to={this.getStepLink(step.slug)}>
                       <div className="row" style={{ marginTop: '10px' }}>
                         <div className="col-sm-3 col-xs-3 number-circle">{index + 1}</div>
                         <div
@@ -99,7 +93,7 @@ class Tour extends React.Component {
                             padding: '6px',
                           }}
                         >
-                          {this.getStepObject(slug).title}
+                          {step.title}
                         </div>
                       </div>
                     </Link>
@@ -149,32 +143,40 @@ class Tour extends React.Component {
   }
 }
 
-// load 1 tour & 1+ steps
-const loadMeteorData = Component => createContainer(
-  ({ params: { user, repoName } }) => {
-    const repository = `${user}/${repoName}`;
-    const handleTour = Meteor.subscribe('tours');
-    const handleSteps = Meteor.subscribe('steps', repository);
-    return {
-      tour: Tours.findOne({ repository: repository }),
-      tourLoaded: handleTour.ready(),
-      steps: Steps.find({ tourName: repository }).fetch(),
-      stepsLoaded: handleSteps.ready(),
-    };
-  },
-  Component
+const loadTourWithSteps = graphql(
+  gql`
+  query getTourWithSteps($tourRepository: String!) {
+    tour(tourRepository: $tourRepository) {
+      _id
+      targetRepository
+      description
+      repository
+      steps {
+        _id
+        title
+        slug
+      }
+    }
+  }
+`,
+  {
+    options: ({ params: { user, repoName } }) => ({
+      variables: { tourRepository: `${user}/${repoName}` },
+    }),
+    props: ({ data: { loading, tour }, ownProps: { location } }) => ({ loading, tour, location }),
+  }
 );
 
 // show loading component if the tour & steps data are loading
 const displayLoadingState = branch(
-  props => !props.tourLoaded || !props.stepsLoaded,
+  props => props.loading,
   renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays))
 );
 
 // show not found component if no tour found or no steps found for this tour
 const displayNotFoundState = branch(
-  props => !props.tour || !props.steps.length,
+  props => !props.tour || !props.tour.steps.length,
   renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays))
 );
 
-export default compose(loadMeteorData, displayLoadingState, displayNotFoundState, pure)(Tour);
+export default compose(loadTourWithSteps, displayLoadingState, displayNotFoundState, pure)(Tour);

@@ -23,7 +23,6 @@
     "marked": "^0.3.6",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.1",
-    "react-addons-pure-render-mixin": "^15.3.1",
     "react-apollo": "^1.0.0-rc.2",
     "react-dom": "^15.3.1",
     "react-helmet": "^4.0.0",

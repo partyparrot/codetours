@@ -4,10 +4,10 @@ const typeDefs = [
   
   type Query {
     # implement cursor style pagination?
-    getTours(search: String, limit: Float): [Tour]
-    getTour(tourRepository: String!): Tour
-    getSteps(tourRepository: String!): [Step]
-    getStep(tourRepository: String!, slug: String!): Step
+    tours(search: String, limit: Float): [Tour]
+    tour(tourRepository: String!): Tour
+    steps(tourRepository: String!): [Step]
+    step(tourRepository: String!, slug: String!): Step
   }
   
   type Mutation {

@@ -11,7 +11,7 @@ const lazyStep = lazyEvalComponent(() => require('./components/Step'));
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={Frontpage} />
-    <Route path="/tour/:user/:repoName" component={TourContainer} />
+    <Route path="/tour/:user/:repoName" component={props => <TourContainer {...props} />} />
     <Route path="/tour/:user/:repoName/:stepSlug" component={lazyStep} addHandlerKey={true} />
     <Route path="/tour/:user/:repoName/:stepSlug/:sectionIndex" component={lazyStep} />
   </Router>
