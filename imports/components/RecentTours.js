@@ -7,7 +7,7 @@ import ParrotSays from './ParrotSays';
 
 // import printTime from '../printTime';
 
-const RecentTours = ({ search, data: { tours } }) => (
+const RecentTours = ({ search, tours }) => (
   <div>
     <h3>{search ? 'Search results' : 'Recently added tours'}</h3>
     {tours.map(tour => <TourBadge tour={tour} key={tour.repository} />)}
@@ -27,18 +27,19 @@ const loadTours = graphql(
 `,
   {
     options: ({ search }) => ({ variables: { search } }),
+    props: ({ data: { loading, tours } }) => ({ loading, tours }),
   }
 );
 
 // show loading component if the tours data are loading
 const displayLoadingState = branch(
-  props => props.data.loading,
+  props => props.loading,
   renderComponent(withProps(() => ({ statusId: 'loading' }))(ParrotSays))
 );
 
 // show not found component if no tours found with the current query
 const displayNotFoundState = branch(
-  props => !props.data.tours.length,
+  props => !props.tours.length,
   renderComponent(withProps(() => ({ statusId: 'not-found' }))(ParrotSays))
 );
 
