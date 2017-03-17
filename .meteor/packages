@@ -16,8 +16,8 @@ ecmascript@0.6.3              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.2            # Server-side component of the `meteor shell` command
 
 static-html
-react-meteor-data
 less@2.7.9
 dburles:collection-helpers
 check@1.2.4
 force-ssl@1.0.13
+apollo
