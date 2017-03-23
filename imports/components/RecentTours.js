@@ -34,13 +34,13 @@ const loadTours = graphql(
 // show loading component if the tours data are loading
 const displayLoadingState = branch(
   props => props.loading,
-  renderComponent(withProps(() => ({ statusId: 'loading' }))(ParrotSays))
+  renderComponent(() => <ParrotSays statusId="loading" />)
 );
 
 // show not found component if no tours found with the current query
 const displayNotFoundState = branch(
-  props => !props.tours.length,
-  renderComponent(withProps(() => ({ statusId: 'not-found' }))(ParrotSays))
+  props => !props.tours || !props.tours.length,
+  renderComponent(() => <ParrotSays statusId="not-found" />)
 );
 
 export default compose(loadTours, displayLoadingState, displayNotFoundState, pure)(RecentTours);
