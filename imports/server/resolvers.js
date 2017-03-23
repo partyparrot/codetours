@@ -1,5 +1,5 @@
 import GraphQLDate from 'graphql-date';
-import importTour from './methods';
+import importTour from './mutations';
 
 const resolvers = {
   Date: GraphQLDate,
@@ -30,7 +30,7 @@ const resolvers = {
   },
   Mutation: {
     async importTour(root, { tourRepository }, context) {
-      await importTour(tourRepository);
+      await importTour(tourRepository, context);
       return await context.Tours.findOne({ repository: tourRepository });
     },
   },

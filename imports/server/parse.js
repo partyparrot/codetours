@@ -12,11 +12,15 @@ export function parseMD(md) {
 
   const contentBlocks = parseContentBlocks(content, metadata);
 
+  // these lines have already been used to create the introduction step,
+  // remove them from the step root
+  const { lineStart, lineEnd, ...cleanMetadata } = metadata;
+
   return {
     title,
     codeUrl: code,
     content: contentBlocks,
-    ...metadata,
+    ...cleanMetadata,
   };
 }
 
@@ -54,10 +58,11 @@ function parseContentBlocks(content, metadata) {
 
   const segments = [];
 
+  // init the introduction segment with the step's metadata
   let currSegment = {
-    slug: null,
-    lineStart: parseInt(metadata.lineStart, 10),
-    lineEnd: parseInt(metadata.lineEnd, 10),
+    slug: 'section-1',
+    lineStart: parseInt(metadata.lineStart, 10) || null,
+    lineEnd: parseInt(metadata.lineEnd, 10) || null,
     content: '',
   };
 
@@ -95,8 +100,8 @@ function parseContentBlocks(content, metadata) {
 
     currSegment = {
       slug,
-      lineStart: parseInt(lineStart, 10) || undefined,
-      lineEnd: parseInt(lineEnd, 10) || undefined,
+      lineStart: parseInt(lineStart, 10) || null,
+      lineEnd: parseInt(lineEnd, 10) || null,
       content: contentWithoutAnchorTag,
     };
   });

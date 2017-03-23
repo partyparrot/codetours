@@ -42,8 +42,3 @@ Steps.helpers({
     return Steps.findOne({ slug: tour.steps[index + 1] });
   },
 });
-
-if (typeof window !== 'undefined') {
-  window.Tours = Tours;
-  window.Steps = Steps;
-}

@@ -3,7 +3,6 @@ const typeDefs = [
   scalar Date
   
   type Query {
-    # implement cursor style pagination?
     tours(search: String, limit: Float): [Tour]
     tour(tourRepository: String!): Tour
     steps(tourRepository: String!): [Step]
@@ -46,7 +45,8 @@ const typeDefs = [
   type Section {
     slug: String
     lineStart: Float!
-    lineEnd: Float!
+    # it may be just a one line highlight
+    lineEnd: Float 
     content: String!
   }
 `,

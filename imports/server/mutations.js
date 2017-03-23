@@ -1,7 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Match } from 'meteor/check';
-import { GitHubConnector } from './github';
-import { Tours, Steps } from '../collections';
 import { parseMD } from './parse';
 import execRegexOrThrow from './execRegexOrThrow';
 
@@ -17,9 +15,7 @@ function getFile(connector, repoFullName, path, ref) {
   });
 }
 
-// TODO collections used here should come from the context (connectors)
-
-const importTour = async tourRepository => {
+const importTour = async (tourRepository, context) => {
   if (tourRepository.indexOf('github.com') !== -1) {
     // This is a URL, parse out repo name
     const [_url, username, repo] = execRegexOrThrow(
@@ -30,7 +26,7 @@ const importTour = async tourRepository => {
     tourRepository = `${username}/${repo}`;
   }
 
-  const connector = new GitHubConnector();
+  const connector = context.github;
 
   let content;
   try {
@@ -69,17 +65,17 @@ const importTour = async tourRepository => {
 
   tour.repository = tourRepository;
 
-  const existingTour = Tours.findOne({ repository: tourRepository });
+  const existingTour = context.Tours.findOne({ repository: tourRepository });
   if (existingTour && existingTour.createdAt) {
     tour.createdAt = existingTour.createdAt;
   } else {
     tour.createdAt = new Date();
   }
 
-  Tours.remove({ repository: tourRepository });
-  Steps.remove({ tourName: tourRepository });
+  context.Tours.remove({ repository: tourRepository });
+  context.Steps.remove({ tourName: tourRepository });
 
-  Tours.insert(tour);
+  context.Tours.insert(tour);
 
   await Promise.all(
     tour.steps.map(stepPath => {
@@ -101,11 +97,11 @@ const importTour = async tourRepository => {
             code: content,
           };
 
-          Steps.insert(step);
+          context.Steps.insert(step);
         })
         .catch(e => {
           // Remove tour if it failed to import
-          Tours.update(tour._id, { repository: tourRepository, failed: true });
+          context.Tours.update(tour._id, { repository: tourRepository, failed: true });
 
           if (e.statusCode === 404) {
             throw new Meteor.Error(

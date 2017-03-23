@@ -1,11 +1,12 @@
 import { createApolloServer } from 'meteor/apollo';
 import { makeExecutableSchema } from 'graphql-tools';
-
 import './server-rendering';
 
 import typeDefs from './schema';
 import resolvers from './resolvers';
-import * as connectors from './connectors';
+
+import { Tours, Steps } from '../collections';
+import { GitHubConnector } from './github';
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -14,5 +15,9 @@ const schema = makeExecutableSchema({
 
 createApolloServer({
   schema,
-  context: connectors,
+  context: {
+    github: new GitHubConnector(),
+    Tours,
+    Steps,
+  },
 });
