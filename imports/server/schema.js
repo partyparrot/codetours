@@ -29,6 +29,7 @@ const typeDefs = [
     title: String!
     slug: String!
     codeUrl: String!
+    index: Int!
     # aka content
     sections: [Section!]
     user: String!
@@ -44,9 +45,8 @@ const typeDefs = [
   
   type Section {
     slug: String
-    lineStart: Float!
-    # it may be just a one line highlight
-    lineEnd: Float 
+    lineStart: Int
+    lineEnd: Int 
     content: String!
   }
 `,

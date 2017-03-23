@@ -60,7 +60,7 @@ class Tour extends React.Component {
 
           <div className="row" style={{ marginTop: '20px' }}>
             <div className="col-md-8">
-              <Link to={this.getStepLink(tour.steps[0])} style={{ textDecoration: 'none' }}>
+              <Link to={this.getStepLink(tour.steps[0].slug)} style={{ textDecoration: 'none' }}>
                 <button
                   type="button"
                   className="btn btn-success btn-lg btn-block"

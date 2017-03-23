@@ -78,7 +78,7 @@ const importTour = async (tourRepository, context) => {
   context.Tours.insert(tour);
 
   await Promise.all(
-    tour.steps.map(stepPath => {
+    tour.steps.map((stepPath, stepIndex) => {
       let step;
 
       return getFile(connector, tour.repository, stepPath)
@@ -87,6 +87,7 @@ const importTour = async (tourRepository, context) => {
             ...parseMD(content),
             tourName: tour.repository,
             slug: stepPath,
+            index: stepIndex,
           };
 
           return getFile(connector, step.fullRepoName, step.filePath, step.commit);

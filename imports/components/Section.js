@@ -18,18 +18,6 @@ class Section extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.cleanDOM();
-  }
-
-  componentDidUpdate() {
-    this.cleanDOM();
-  }
-
-  cleanDOM() {
-    $(this.md).find(':empty').remove();
-  }
-
   render() {
     return (
       <div
