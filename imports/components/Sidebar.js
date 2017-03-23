@@ -90,9 +90,7 @@ export default compose(
     handleTourSubmit: ({ tourRepository, importTour }) => async event => {
       event.preventDefault();
       try {
-        const { data: { importTour: { repository: { repository } } } } = await importTour(
-          tourRepository
-        );
+        const { data: { importTour: { repository } } } = await importTour(tourRepository);
         browserHistory.push(`/tour/${repository}`);
         // note: we don't care about cleaning the input, we are changing route
       } catch (error) {

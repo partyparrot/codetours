@@ -11,7 +11,11 @@ import routes from '../routes';
 
 printTime('main.js');
 
-const client = new ApolloClient(meteorClientConfig());
+const client = new ApolloClient(
+  meteorClientConfig({
+    initialState: window.__APOLLO_STATE__,
+  })
+);
 
 Meteor.startup(() => {
   printTime('Meteor startup fired');

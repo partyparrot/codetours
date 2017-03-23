@@ -28,13 +28,13 @@ class Tour extends React.Component {
   }
 
   render() {
-    const { location, tour } = this.props;
+    const { tour } = this.props;
 
     const [tourAuthor] = tour.repository.split('/');
 
     return (
       <div>
-        <Headtags pathname={location.pathname} />
+        <Headtags tour={tour} />
         <Navbar />
         <div className="container" style={{ marginTop: '40px' }}>
 

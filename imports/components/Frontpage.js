@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import marked from 'marked';
 import Headtags from './Headtags';
@@ -40,7 +39,7 @@ export default class Frontpage extends React.Component {
 
     return (
       <div>
-        <Headtags pathname={this.props.location.pathname} />
+        <Headtags />
         <div className="jumbotron text-center" style={heroStyle}>
           <div className="container">
             <div style={brandNameStyle}>

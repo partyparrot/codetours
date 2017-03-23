@@ -1,5 +1,5 @@
 import React from 'react';
-import { pure, branch, renderComponent, withProps, compose } from 'recompose';
+import { pure, branch, renderComponent, compose } from 'recompose';
 import { graphql, gql } from 'react-apollo';
 
 import TourBadge from './TourBadge';
