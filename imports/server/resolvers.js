@@ -53,6 +53,12 @@ const resolvers = {
     async tour({ repository }, args, context) {
       return await context.Tours.findOne({ repository });
     },
+    async previous({ repository, index }, args, context) {
+      return index === 0 ? null : await context.Steps.findOne({ repository, index: index - 1 });
+    },
+    async next({ repository, index }, args, context) {
+      return await context.Steps.findOne({ repository, index: index + 1 });
+    },
   },
 };
 

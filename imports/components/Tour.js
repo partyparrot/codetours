@@ -68,11 +68,11 @@ class Tour extends React.Component {
                   Start CodeTour
                 </button>
               </Link>
-              {tour.steps.map((step, index) => (
+              {tour.steps.map(step => (
                 <div key={step._id}>
                   <Link to={this.getStepLink(step.slug)}>
                     <div className="row" style={{ marginTop: '10px' }}>
-                      <div className="col-sm-3 col-xs-3 number-circle">{index + 1}</div>
+                      <div className="col-sm-3 col-xs-3 number-circle">{step.index + 1}</div>
                       <div
                         className="col-sm-7 col-xs-7"
                         style={{
@@ -139,6 +139,7 @@ const withTour = graphql(
       repository
       steps {
         _id
+        index
         title
         slug
       }

@@ -37,6 +37,8 @@ const typeDefs = [
     fileUrl: String!
     code: String!
     commit: String
+    previous: Step
+    next: Step
   }
   
   type Section {

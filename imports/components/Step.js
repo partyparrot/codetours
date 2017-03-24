@@ -87,58 +87,55 @@ class Step extends React.Component {
     return _.range(parseInt(section.lineStart, 10), parseInt(section.lineEnd, 10) + 1);
   }
 
-  getStepLink(step) {
-    return `/tour/${this.props.tour.repository}/${step}`;
+  getStepLink(slug) {
+    return `/tour/${this.props.step.tour.repository}/${slug}`;
   }
 
   getTourLink() {
-    return `/tour/${this.props.tour.repository}`;
+    return `/tour/${this.props.step.tour.repository}`;
   }
 
   getNextStepLink() {
-    // const curIndex = _.indexOf(this.props.tour.steps, this.props.step.slug);
-    // const nextStep = this.props.tour.steps[curIndex + 1];
-    // if (nextStep) {
-    //   return (
-    //     <Link className="next-step btn btn-default" to={this.getStepLink(nextStep)}>
-    //       {this.props.step.getNextStep().getFullTitle()}&nbsp;
-    //       <span className="glyphicon glyphicon-arrow-right" />
-    //     </Link>
-    //   );
-    // } else {
-    //   return (
-    //     <Link className="next-step btn btn-default" to={this.getTourLink()}>
-    //       Back to Tour&nbsp;
-    //       <span className="glyphicon glyphicon-arrow-right" />
-    //     </Link>
-    //   );
-    // }
+    const { step: { next: nextStep } } = this.props;
 
-    return null;
+    if (nextStep) {
+      return (
+        <Link className="next-step btn btn-default" to={this.getStepLink(nextStep.slug)}>
+          {nextStep.index + 1}. {nextStep.title}&nbsp;
+          <span className="glyphicon glyphicon-arrow-right" />
+        </Link>
+      );
+    }
+
+    return (
+      <Link className="next-step btn btn-default" to={this.getTourLink()}>
+        Back to Tour&nbsp;
+        <span className="glyphicon glyphicon-arrow-right" />
+      </Link>
+    );
   }
 
   getPrevStepLink() {
-    // const curIndex = _.indexOf(this.props.tour.steps, this.props.step.slug);
-    // const prevStep = this.props.tour.steps[curIndex - 1];
-    // if (prevStep) {
-    //   return (
-    //     <Link to={this.getStepLink(prevStep)} className="btn btn-default">
-    //       <span className="glyphicon glyphicon-arrow-left" />&nbsp;
-    //       {/* {this.props.step.getPrevStep().getFullTitle()} */}
-    //       {this.props.step.index - 1}
-    //     </Link>
-    //   );
-    // }
+    const { step: { previous: previousStep } } = this.props;
+
+    if (previousStep) {
+      return (
+        <Link to={this.getStepLink(previousStep.slug)} className="btn btn-default">
+          <span className="glyphicon glyphicon-arrow-left" />&nbsp;
+          {previousStep.index + 1}. {previousStep.title}
+        </Link>
+      );
+    }
 
     return null;
   }
 
   render() {
-    const { step, tour, params } = this.props;
+    const { step, params } = this.props;
 
     return (
       <div>
-        <Headtags tour={tour} />
+        <Headtags tour={step.tour} />
         <div className="left">
           <div className="source-link">
             <a href={step.codeUrl}>
@@ -153,7 +150,7 @@ class Step extends React.Component {
         </div>
         <div className="right">
           <Link to={'/'} className="tiny-logo">CodeTours</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-          <Link to={this.getTourLink()}>Tour of {tour.targetRepository}</Link>
+          <Link to={this.getTourLink()}>Tour of {step.tour.targetRepository}</Link>
           <h1 className="step-title">
             {step.index + 1}. {step.title}
           </h1>
@@ -207,6 +204,18 @@ const loadStepWithTour = graphql(
         targetRepository
         description
       }
+      previous {
+        _id
+        title
+        slug
+        index
+      }
+      next {
+        _id
+        title
+        slug
+        index
+      }
     }
   }
 `,
@@ -220,8 +229,6 @@ const loadStepWithTour = graphql(
     props: ({ data: { loading, step }, ownProps: params }) => ({
       loading,
       step,
-      // patch for the time being
-      tour: step && step.tour,
       params,
     }),
   }
@@ -235,7 +242,7 @@ const displayLoadingState = branch(
 
 // show not found component if no tour/step found
 const displayNotFoundState = branch(
-  props => !props.tour || !props.step,
+  props => !props.step,
   renderComponent(() => <ParrotSays statusId="not-found" big />)
 );
 
