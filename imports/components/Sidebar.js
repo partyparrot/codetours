@@ -50,6 +50,7 @@ const Sidebar = ({ tour, handleTourChange, handleTourSubmit }) => (
     <form className="input-group" onSubmit={handleTourSubmit}>
       <input
         type="text"
+        name="tour"
         className="form-control"
         placeholder="Your repository name here"
         onChange={handleTourChange}

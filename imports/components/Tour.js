@@ -1,6 +1,5 @@
 import React from 'react';
-import { pure, branch, renderComponent, withProps, compose } from 'recompose';
-import _ from 'lodash';
+import { pure, branch, renderComponent, compose } from 'recompose';
 import { Link } from 'react-router';
 import { graphql, gql } from 'react-apollo';
 
@@ -157,13 +156,13 @@ const withTour = graphql(
 // show loading component if the tour & steps data are loading
 const displayLoadingState = branch(
   props => props.loading,
-  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays))
+  renderComponent(() => <ParrotSays statusId="loading" big />)
 );
 
 // show not found component if no tour found or no steps found for this tour
 const displayNotFoundState = branch(
   props => !props.tour || !props.tour.steps.length,
-  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays))
+  renderComponent(() => <ParrotSays statusId="not-found" big />)
 );
 
 // add mutation hoc after the other hoc: the tour is actually there

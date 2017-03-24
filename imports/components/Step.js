@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { pure, branch, renderComponent, withProps, compose } from 'recompose';
+import { pure, branch, renderComponent, compose } from 'recompose';
 import { Link, browserHistory } from 'react-router';
 import _ from 'lodash';
 import { graphql, gql } from 'react-apollo';
@@ -155,7 +155,7 @@ class Step extends React.Component {
           <Link to={'/'} className="tiny-logo">CodeTours</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
           <Link to={this.getTourLink()}>Tour of {tour.targetRepository}</Link>
           <h1 className="step-title">
-            {step.index}. {step.title}
+            {step.index + 1}. {step.title}
           </h1>
           <div className="step-nav">
             {this.getPrevStepLink()}
@@ -163,7 +163,7 @@ class Step extends React.Component {
           </div>
           {step.sections.map((section, index) => (
             <Section
-              key={index}
+              key={`${step._id}-${index}`}
               section={section}
               onSelect={this.onSelect.bind(this, index)}
               selected={index === this.state.selectedIndex}
@@ -230,13 +230,13 @@ const loadStepWithTour = graphql(
 // show loading component if the tour & step data are loading
 const displayLoadingState = branch(
   props => props.loading,
-  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays))
+  renderComponent(() => <ParrotSays statusId="loading" big />)
 );
 
 // show not found component if no tour/step found
 const displayNotFoundState = branch(
   props => !props.tour || !props.step,
-  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays))
+  renderComponent(() => <ParrotSays statusId="not-found" big />)
 );
 
 export default compose(loadStepWithTour, displayLoadingState, displayNotFoundState, pure)(Step);
