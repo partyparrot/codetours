@@ -61,7 +61,7 @@ const serverRendering = (req, res, next) => match({ routes, location: req.origin
 
       next();
     } catch (error) {
-      console.error('Server-rendering error', error); // eslint-disable-line no-console
+      console.error('[server-rendering error]', error.stack); // eslint-disable-line no-console
       res.writeHead(500);
       res.write('Server-rendering error');
       res.end();
