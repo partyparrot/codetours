@@ -1,5 +1,6 @@
 import { createApolloServer } from 'meteor/apollo';
 import { makeExecutableSchema } from 'graphql-tools';
+import OpticsAgent from 'optics-agent';
 
 import typeDefs from './schema';
 import resolvers from './resolvers';
@@ -12,11 +13,21 @@ const schema = makeExecutableSchema({
   resolvers,
 });
 
-createApolloServer({
-  schema,
-  context: {
-    github: new GitHubConnector(),
-    Tours,
-    Steps,
-  },
-});
+OpticsAgent.instrumentSchema(schema);
+
+createApolloServer(
+  req => ({
+    schema,
+    context: {
+      github: new GitHubConnector(),
+      Tours,
+      Steps,
+      opticsContext: OpticsAgent.context(req),
+    },
+  }),
+  {
+    configServer: server => {
+      server.use('/graphql', OpticsAgent.middleware());
+    },
+  }
+);
