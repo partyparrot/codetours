@@ -2,57 +2,56 @@ import GraphQLDate from 'graphql-date';
 import importTour from './mutations';
 
 const resolvers = {
+  /*
+   * Custom scalar
+   */
   Date: GraphQLDate,
+
+  /*
+   * Root queries
+   */
   Query: {
     async tours(root, { search, limit = 0 }, context) {
       return await context.Tours
         .find(
           { failed: { $ne: true }, targetRepository: { $regex: new RegExp(search, 'i') } },
           { sort: { createdAt: -1 }, limit }
-          // TODO no need of fetch if using a connector?
         )
         .fetch();
     },
-    async tour(root, { tourRepository }, context) {
-      return await context.Tours.findOne({
-        repository: tourRepository,
-      });
+    async tour(root, { tourRepository: repository }, context) {
+      return await context.Tours.findOne({ repository });
     },
-    async steps(root, { tourRepository }, context) {
-      return await context.Steps.find({ tourName: tourRepository }).fetch();
+    async steps(root, { tourRepository: repository }, context) {
+      return await context.Steps.find({ repository }).fetch();
     },
-    async step(root, { tourRepository, slug }, context) {
-      return await context.Steps.findOne({
-        tourName: tourRepository,
-        slug,
-      });
+    async step(root, { tourRepository: repository, slug }, context) {
+      return await context.Steps.findOne({ repository, slug });
     },
   },
+
+  /*
+   * Root mutations
+   */
   Mutation: {
-    async importTour(root, { tourRepository }, context) {
-      await importTour(tourRepository, context);
-      return await context.Tours.findOne({ repository: tourRepository });
+    async importTour(root, { tourRepository: repository }, context) {
+      await importTour(repository, context);
+      return await context.Tours.findOne({ repository });
     },
   },
+
+  /*
+   * Types resolvers
+   */
   Tour: {
-    async steps(tour, args, context) {
-      // note: doing like this return steps without the original order
-      // return await context.Steps.find({ tourName: tour.repository }).fetch();
-
-      // TODO inconsistency here on slugs / steps
-      const stepsData = tour.steps.map(slug => context.Steps.findOne({ slug }));
-
-      return await Promise.all(stepsData);
+    async steps({ steps }, args, context) {
+      // note: we preserve the steps order as registered in the tour
+      return await Promise.all(steps.map(slug => context.Steps.findOne({ slug })));
     },
   },
   Step: {
-    async tour(step, args, context) {
-      // TODO inconsistency here on tour name
-      return await context.Tours.findOne({ repository: step.tourName });
-    },
-    sections(step) {
-      // TODO inconsistency here on field name
-      return step.content;
+    async tour({ repository }, args, context) {
+      return await context.Tours.findOne({ repository });
     },
   },
 };

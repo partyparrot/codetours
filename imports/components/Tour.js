@@ -187,10 +187,6 @@ const withMutation = graphql(
     props: ({ ownProps: { tour: { repository } }, mutate }) => ({
       importTour: () => mutate({
         variables: { tourRepository: repository },
-        // basic *forced* update, we shouldn't do that normally (automatic update)
-        // note: tried without, it's not really updating the ui, maybe it's because
-        // of how we are doing our mutation?
-        refetchQueries: ['getTourWithSteps'],
       }),
     }),
   }

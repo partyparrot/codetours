@@ -72,10 +72,8 @@ const importTour = async (tourRepository, context) => {
     tour.createdAt = new Date();
   }
 
-  context.Tours.remove({ repository: tourRepository });
-  context.Steps.remove({ tourName: tourRepository });
-
-  context.Tours.insert(tour);
+  // update, or insert if needed, the tour
+  context.Tours.upsert({ repository: tourRepository }, tour);
 
   await Promise.all(
     tour.steps.map((stepPath, stepIndex) => {
@@ -85,7 +83,7 @@ const importTour = async (tourRepository, context) => {
         .then(content => {
           step = {
             ...parseMD(content),
-            tourName: tour.repository,
+            repository: tour.repository,
             slug: stepPath,
             index: stepIndex,
           };
@@ -98,7 +96,7 @@ const importTour = async (tourRepository, context) => {
             code: content,
           };
 
-          context.Steps.insert(step);
+          context.Steps.upsert({ slug: step.slug }, step);
         })
         .catch(e => {
           // Remove tour if it failed to import

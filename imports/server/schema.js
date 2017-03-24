@@ -17,7 +17,6 @@ const typeDefs = [
     _id: String!
     targetRepository: String!
     description: String!
-    # slugs in Mongo, list of markdown filenames
     steps: [Step!]
     repository: String!
     createdAt: Date!
@@ -30,16 +29,13 @@ const typeDefs = [
     slug: String!
     codeUrl: String!
     index: Int!
-    # aka content
     sections: [Section!]
     user: String!
-    # = tour repository, aka repoName
     tour: Tour!
     fullRepoName: String!
     filePath: String!
     fileUrl: String!
     code: String!
-    # do we care about this one?
     commit: String
   }
   

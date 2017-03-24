@@ -78,8 +78,12 @@ export default compose(
       props: ({ mutate }) => ({
         importTour: tourRepository => mutate({
           variables: { tourRepository },
-          // 'basic' update
-          refetchQueries: ['getRecentTours'],
+          updateQueries: {
+            getRecentTours: (previousData, { mutationResult }) => ({
+              ...previousData,
+              tours: [mutationResult.data.importTour, ...previousData.tours],
+            }),
+          },
         }),
       }),
     }

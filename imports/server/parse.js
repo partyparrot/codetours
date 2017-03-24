@@ -5,12 +5,12 @@ export function parseMD(md) {
   const {
     title,
     code,
-    __content: content,
+    __content: step,
   } = loadFront(md);
 
   const metadata = parseGitHubURL(code);
 
-  const contentBlocks = parseContentBlocks(content, metadata);
+  const sectionBlocks = parseSectionBlocks(step, metadata);
 
   // these lines have already been used to create the introduction step,
   // remove them from the step root
@@ -19,7 +19,7 @@ export function parseMD(md) {
   return {
     title,
     codeUrl: code,
-    content: contentBlocks,
+    sections: sectionBlocks,
     ...cleanMetadata,
   };
 }
@@ -53,13 +53,13 @@ function parseGitHubURL(url) {
   };
 }
 
-function parseContentBlocks(content, metadata) {
-  const lines = content.split('\n');
+function parseSectionBlocks(step, metadata) {
+  const lines = step.split('\n');
 
-  const segments = [];
+  const sections = [];
 
   // init the introduction segment with the step's metadata
-  let currSegment = {
+  let currentSection = {
     slug: 'section-1',
     lineStart: parseInt(metadata.lineStart, 10) || null,
     lineEnd: parseInt(metadata.lineEnd, 10) || null,
@@ -68,12 +68,12 @@ function parseContentBlocks(content, metadata) {
 
   lines.forEach(line => {
     if (line.indexOf(metadata.fileUrl) === -1) {
-      currSegment.content += line + '\n';
+      currentSection.content += line + '\n';
       return;
     }
 
     // Close off current segment
-    segments.push(currSegment);
+    sections.push(currentSection);
 
     const re = /github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/([^#]+)(#L(\d+)(-L(\d+))?)?/;
 
@@ -95,10 +95,10 @@ function parseContentBlocks(content, metadata) {
     }
 
     const anchorId = /id="([^"]+)"/.exec(line);
-    const slug = (anchorId && anchorId[1]) || `section-${segments.length + 1}`;
+    const slug = (anchorId && anchorId[1]) || `section-${sections.length + 1}`;
     const contentWithoutAnchorTag = execRegexOrThrow(/<a[^>]+>(.+)<\/a>/, line)[1] + '\n';
 
-    currSegment = {
+    currentSection = {
       slug,
       lineStart: parseInt(lineStart, 10) || null,
       lineEnd: parseInt(lineEnd, 10) || null,
@@ -106,7 +106,7 @@ function parseContentBlocks(content, metadata) {
     };
   });
 
-  segments.push(currSegment);
+  sections.push(currentSection);
 
-  return segments;
+  return sections;
 }
