@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import { pure, branch, renderComponent, compose } from 'recompose';
 import { Link, browserHistory } from 'react-router';
 import _ from 'lodash';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
 import Headtags from './Headtags';
 import Snippet from './Snippet';
 import Section from './Section';
 import ParrotSays from './ParrotSays';
 
+import STEP_QUERY from '../graphql/Step.graphql';
 import printTime from '../printTime';
 
 printTime('step evaluating');
@@ -181,58 +182,19 @@ class Step extends React.Component {
   }
 }
 
-const loadStepWithTour = graphql(
-  gql`
-  query getStepWithTour($tourRepository: String!, $slug: String!) {
-    step(tourRepository: $tourRepository, slug: $slug) {
-      _id
-      title
-      slug
-      index
-      codeUrl
-      code
-      filePath
-      sections {
-        slug
-        lineStart
-        lineEnd
-        content
-      }
-      tour {
-        _id
-        repository
-        targetRepository
-        description
-      }
-      previous {
-        _id
-        title
-        slug
-        index
-      }
-      next {
-        _id
-        title
-        slug
-        index
-      }
-    }
-  }
-`,
-  {
-    options: ({ params: { user, repoName, stepSlug } }) => ({
-      variables: {
-        tourRepository: `${user}/${repoName}`,
-        slug: stepSlug,
-      },
-    }),
-    props: ({ data: { loading, step }, ownProps: params }) => ({
-      loading,
-      step,
-      params,
-    }),
-  }
-);
+const withStep = graphql(STEP_QUERY, {
+  options: ({ params: { user, repoName, stepSlug } }) => ({
+    variables: {
+      tourRepository: `${user}/${repoName}`,
+      slug: stepSlug,
+    },
+  }),
+  props: ({ data: { loading, step }, ownProps: params }) => ({
+    loading,
+    step,
+    params,
+  }),
+});
 
 // show loading component if the tour & step data are loading
 const displayLoadingState = branch(
@@ -246,4 +208,4 @@ const displayNotFoundState = branch(
   renderComponent(() => <ParrotSays statusId="not-found" big />)
 );
 
-export default compose(loadStepWithTour, displayLoadingState, displayNotFoundState, pure)(Step);
+export default compose(withStep, displayLoadingState, displayNotFoundState, pure)(Step);

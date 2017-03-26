@@ -1,0 +1,7 @@
+#import "./TourFragments.graphql"
+
+mutation importTour($tourRepository: String!) {
+  importTour(tourRepository: $tourRepository) {
+    ...TourInfo
+  }
+}

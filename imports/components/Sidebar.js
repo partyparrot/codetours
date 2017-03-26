@@ -1,7 +1,9 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { compose, withState, withHandlers, pure } from 'recompose';
+
+import TOUR_MUTATION from '../graphql/ImportTour.graphql';
 
 const Sidebar = ({ tour, handleTourChange, handleTourSubmit }) => (
   <div className="col-sm-4">
@@ -64,31 +66,19 @@ const Sidebar = ({ tour, handleTourChange, handleTourSubmit }) => (
 );
 
 export default compose(
-  graphql(
-    gql`
-    mutation importTour($tourRepository: String!) {
-      importTour(tourRepository: $tourRepository) {
-        _id
-        targetRepository
-        description
-        repository
-      }
-    }
-  `,
-    {
-      props: ({ mutate }) => ({
-        importTour: tourRepository => mutate({
-          variables: { tourRepository },
-          updateQueries: {
-            getRecentTours: (previousData, { mutationResult }) => ({
-              ...previousData,
-              tours: [mutationResult.data.importTour, ...previousData.tours],
-            }),
-          },
-        }),
+  graphql(TOUR_MUTATION, {
+    props: ({ mutate }) => ({
+      importTour: tourRepository => mutate({
+        variables: { tourRepository },
+        updateQueries: {
+          getRecentTours: (previousData, { mutationResult }) => ({
+            ...previousData,
+            tours: [mutationResult.data.importTour, ...previousData.tours],
+          }),
+        },
       }),
-    }
-  ),
+    }),
+  }),
   withState('tourRepository', 'updateTourInput', ''),
   withHandlers({
     handleTourChange: ({ updateTourInput }) => event => updateTourInput(event.target.value),

@@ -1,11 +1,14 @@
 import React from 'react';
 import { pure, branch, renderComponent, compose } from 'recompose';
 import { Link } from 'react-router';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
 import Headtags from './Headtags';
 import Navbar from './Navbar';
 import ParrotSays from './ParrotSays';
+
+import TOUR_QUERY from '../graphql/Tour.graphql';
+import TOUR_MUTATION from '../graphql/ImportTour.graphql';
 
 class Tour extends React.Component {
   constructor(props) {
@@ -129,30 +132,12 @@ class Tour extends React.Component {
   }
 }
 
-const withTour = graphql(
-  gql`
-  query getTourWithSteps($tourRepository: String!) {
-    tour(tourRepository: $tourRepository) {
-      _id
-      targetRepository
-      description
-      repository
-      steps {
-        _id
-        index
-        title
-        slug
-      }
-    }
-  }
-`,
-  {
-    options: ({ params: { user, repoName } }) => ({
-      variables: { tourRepository: `${user}/${repoName}` },
-    }),
-    props: ({ data: { loading, tour }, ownProps: { location } }) => ({ loading, tour, location }),
-  }
-);
+const withTour = graphql(TOUR_QUERY, {
+  options: ({ params: { user, repoName } }) => ({
+    variables: { tourRepository: `${user}/${repoName}` },
+  }),
+  props: ({ data: { loading, tour }, ownProps: { location } }) => ({ loading, tour, location }),
+});
 
 // show loading component if the tour & steps data are loading
 const displayLoadingState = branch(
@@ -167,30 +152,13 @@ const displayNotFoundState = branch(
 );
 
 // add mutation hoc after the other hoc: the tour is actually there
-const withMutation = graphql(
-  gql`
-  mutation importTour($tourRepository: String!) {
-    importTour(tourRepository: $tourRepository) {
-      _id
-      targetRepository
-      description
-      repository
-      steps {
-        _id
-        title
-        slug
-      }
-    }
-  }
-`,
-  {
-    props: ({ ownProps: { tour: { repository } }, mutate }) => ({
-      importTour: () => mutate({
-        variables: { tourRepository: repository },
-      }),
+const withMutation = graphql(TOUR_MUTATION, {
+  props: ({ ownProps: { tour: { repository } }, mutate }) => ({
+    importTour: () => mutate({
+      variables: { tourRepository: repository },
     }),
-  }
-);
+  }),
+});
 
 export default compose(withTour, displayLoadingState, displayNotFoundState, withMutation, pure)(
   Tour

@@ -21,3 +21,4 @@ dburles:collection-helpers
 check@1.2.4
 force-ssl@1.0.13
 apollo
+swydo:graphql

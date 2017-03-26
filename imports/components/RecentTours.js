@@ -1,11 +1,11 @@
 import React from 'react';
 import { pure, branch, renderComponent, compose } from 'recompose';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
 import TourBadge from './TourBadge';
 import ParrotSays from './ParrotSays';
 
-// import printTime from '../printTime';
+import RECENT_TOURS_QUERY from '../graphql/RecentTours.graphql';
 
 const RecentTours = ({ search, tours }) => (
   <div>
@@ -14,22 +14,10 @@ const RecentTours = ({ search, tours }) => (
   </div>
 );
 
-const loadTours = graphql(
-  gql`
-  query getRecentTours($search: String) {
-    tours(search: $search) {
-      _id
-      targetRepository
-      description
-      repository
-    }
-  }
-`,
-  {
-    options: ({ search }) => ({ variables: { search } }),
-    props: ({ data: { loading, tours } }) => ({ loading, tours }),
-  }
-);
+const withTours = graphql(RECENT_TOURS_QUERY, {
+  options: ({ search }) => ({ variables: { search } }),
+  props: ({ data: { loading, tours } }) => ({ loading, tours }),
+});
 
 // show loading component if the tours data are loading
 const displayLoadingState = branch(
@@ -43,4 +31,4 @@ const displayNotFoundState = branch(
   renderComponent(() => <ParrotSays statusId="not-found" />)
 );
 
-export default compose(loadTours, displayLoadingState, displayNotFoundState, pure)(RecentTours);
+export default compose(withTours, displayLoadingState, displayNotFoundState, pure)(RecentTours);

@@ -1,0 +1,6 @@
+fragment TourInfo on Tour {
+  _id
+  repository
+  targetRepository
+  description
+}

@@ -67,6 +67,7 @@ spacebars-compiler@1.1.0
 standard-minifier-css@1.3.3
 standard-minifier-js@1.2.3
 static-html@1.2.0
+swydo:graphql@0.0.2
 templating-tools@1.1.0
 tmeasday:check-npm-versions@0.3.1
 tracker@1.1.2
