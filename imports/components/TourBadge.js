@@ -1,31 +1,78 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router';
 
-export default class TourBadge extends React.Component {
-  getTourLink(tour) {
-    return `/tour/${tour.repository}`;
-  }
+import { getTourLink, getTourUsernames } from '../helpers';
 
-  render() {
-    const { tour } = this.props;
-    const targetRepo = tour.targetRepository;
-    const authorUsername = tour.repository.split('/')[0];
-    const targetUsername = targetRepo.split('/')[0];
+const TourBadge = props => {
+  const { tour, big } = props;
+  const { authorUsername, targetUsername } = getTourUsernames(tour);
+  const tourLink = getTourLink(tour);
 
-    return (
-      <div className="tour-badge">
-        <img src={`https://github.com/${targetUsername}.png`} />
-        <Link to={this.getTourLink(tour)}>
-          <h4 className="target-repo">
-            {targetRepo}
-            <span className="text-muted"> by {authorUsername}</span>
-          </h4>
+  return (
+    <TourWrapper>
+      <TourImage src={`https://github.com/${targetUsername}.png`} big={big} />
+      <TourContent>
+        <TourTitle
+          tourLink={tourLink}
+          tourTitle={tour.targetRepository}
+          tourAuthor={authorUsername}
+          big={big}
+        />
+        <TourParagraph big={big}>{tour.description}</TourParagraph>
+        {!big &&
+          <TourParagraph>
+            <SecondaryText>Contribute at </SecondaryText>
+            <a href={`https://github.com/${tour.repository}`}>
+              {tour.repository}
+            </a>
+          </TourParagraph>}
+      </TourContent>
+    </TourWrapper>
+  );
+};
+
+const TourWrapper = styled.div`
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+`;
+
+const TourImage = styled.img`
+  ${props => props.big ? 'max-width: 132px' : 'width: 70px'};
+  ${props => props.big ? 'max-height: 132px' : 'height: 70px'};
+  margin-right: ${props => props.big ? 60 : 20}px;
+`;
+
+const TourContent = styled.div``;
+
+const TourTitle = ({ tourLink, tourAuthor, tourTitle, big }) => {
+  const Title = styled[big ? 'h1' : 'h4']``;
+
+  return big
+    ? <Title>
+        <SecondaryText>Tour of </SecondaryText>
+        {tourTitle}
+        <SecondaryText>
+          , led by <a href={`https://github.com/${tourAuthor}`}>{tourAuthor}</a>
+        </SecondaryText>
+      </Title>
+    : <Title>
+        <Link to={tourLink}>
+          {tourTitle}
+          <SecondaryText> by {tourAuthor}</SecondaryText>
         </Link>
-        <p className="tour-title">{tour.description}</p>
-        <p className="tour-credits">
-          Contribute at <a href={`https://github.com/${tour.repository}`}>{tour.repository}</a>
-        </p>
-      </div>
-    );
-  }
-}
+      </Title>;
+};
+
+const SecondaryText = styled.span`
+  color: ${props => props.theme.muted};
+  font-weight: normal;
+`;
+
+const TourParagraph = styled.p`
+  font-size: ${props => props.big ? '20px' : '1em'};
+  margin: 10px 0 0 0;
+`;
+
+export default TourBadge;

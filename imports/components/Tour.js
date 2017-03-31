@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo';
 
 import Headtags from './Headtags';
 import Navbar from './Navbar';
+import TourBadge from './TourBadge';
 import ParrotSays from './ParrotSays';
 
 import TOUR_QUERY from '../graphql/Tour.graphql';
@@ -40,25 +41,7 @@ class Tour extends React.Component {
         <Navbar />
         <div className="container" style={{ marginTop: '40px' }}>
 
-          <div className="row" style={{ marginTop: '40px' }}>
-            <div className="col-md-2 col-xs-2">
-              <img
-                style={{ maxWidth: '80%' }}
-                src={`https://github.com/${tour.targetRepository.split('/')[0]}.png`}
-              />
-            </div>
-            <div className="col-md-10 col-xs-10">
-              <h1 className="target-repo">
-                <span className="text-muted" style={{ fontWeight: 'normal' }}>Tour of </span>
-                {tour.targetRepository}
-                <span className="text-muted" style={{ fontWeight: 'normal' }}>
-                  , led by&nbsp;
-                  <a href={`https://github.com/${tourAuthor}`}>{tourAuthor}</a>
-                </span>
-              </h1>
-              <p style={{ fontSize: '20px' }}>{tour.description}</p>
-            </div>
-          </div>
+          <TourBadge tour={tour} big />
 
           <div className="row" style={{ marginTop: '20px' }}>
             <div className="col-md-8">
