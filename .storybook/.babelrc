@@ -1,4 +1,3 @@
-// used by jest (storyshots)
 {
   "presets": ["es2015", "es2016", "react", "stage-1"]
 }
