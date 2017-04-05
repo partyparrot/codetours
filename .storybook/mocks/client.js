@@ -2,10 +2,10 @@ import ApolloClient from 'apollo-client';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import { mockNetworkInterfaceWithSchema } from 'apollo-test-utils';
 import typeDefs from '../../imports/server/schema';
-import mockedData from './mockedData';
+import mocks from './mocks';
 
 const schema = makeExecutableSchema({ typeDefs });
-addMockFunctionsToSchema({ schema, mockedData });
+addMockFunctionsToSchema({ schema, mocks });
 
 const mockNetworkInterface = mockNetworkInterfaceWithSchema({ schema });
 

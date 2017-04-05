@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots RecentTours with specific search 1`] = `
+<div
+  className="parrot false"
+>
+  <img
+    className="parrot-gif"
+    src="/tripletsparrot.gif"
+  />
+  <div
+    className="parrot-title"
+  >
+    Loading...
+  </div>
+</div>
+`;
+
+exports[`Storyshots RecentTours with tours 1`] = `
+<div
+  className="parrot false"
+>
+  <img
+    className="parrot-gif"
+    src="/tripletsparrot.gif"
+  />
+  <div
+    className="parrot-title"
+  >
+    Loading...
+  </div>
+</div>
+`;
+
 exports[`Storyshots TourBadge on tour page 1`] = `
 <div
   className="dsUieB"
@@ -15,13 +47,13 @@ exports[`Storyshots TourBadge on tour page 1`] = `
       className="a"
     >
       <span
-        className="faJydw"
+        className="jpDMXu"
       >
         Tour of 
       </span>
       partyparrot/codetours-starter-kit
       <span
-        className="faJydw"
+        className="jpDMXu"
       >
         , led by 
         <a
@@ -60,7 +92,7 @@ exports[`Storyshots TourBadge on tours list 1`] = `
       >
         partyparrot/codetours-starter-kit
         <span
-          className="faJydw"
+          className="jpDMXu"
         >
            by 
           partyparrot
@@ -76,7 +108,7 @@ exports[`Storyshots TourBadge on tours list 1`] = `
       className="ejEdzr"
     >
       <span
-        className="faJydw"
+        className="jpDMXu"
       >
         Contribute at 
       </span>

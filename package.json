@@ -56,12 +56,14 @@
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^6.10.0",
     "jest": "^19.0.2",
+    "jest-transform-graphql": "^1.0.0",
     "prettier": "^0.20.0",
     "storyshots": "^3.2.2"
   },
   "jest": {
     "testEnvironment": "node",
     "transform": {
+      "\\.(gql|graphql)$": "<rootDir>/.storybook/jestGraphql.js",
       "^.+\\.js$": "<rootDir>/.storybook/jestTransform.js"
     }
   }
