@@ -7,7 +7,7 @@
     "lint": "eslint --quiet --ext .js,.jsx .",
     "prettier": "prettier --write \"imports/**/*.js\" \"main/**/*.js\" --single-quote=true --trailing-comma=es5 --print-width=100",
     "pretest": "npm run lint",
-    "test": "jest --watch --no-cache",
+    "test": "jest --no-cache",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook"
   },
@@ -20,7 +20,7 @@
     "graphql-date": "^1.0.3",
     "graphql-server-express": "^0.6.0",
     "graphql-tag": "^2.0.0",
-    "graphql-tools": "^0.10.1",
+    "graphql-tools": "^0.11.0",
     "highlight.js": "^9.6.0",
     "lodash": "^4.15.0",
     "marked": "^0.3.6",
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@kadira/storybook": "^2.21.0",
+    "apollo-test-utils": "^0.3.0",
     "babel-eslint": "^6.1.2",
     "babel-jest": "^19.0.0",
     "babel-preset-es2015": "^6.9.0",
@@ -61,7 +62,7 @@
   "jest": {
     "testEnvironment": "node",
     "transform": {
-      "^.+\\.js$": "<rootDir>/imports/jestTransform.js"
+      "^.+\\.js$": "<rootDir>/.storybook/jestTransform.js"
     }
   }
 }
