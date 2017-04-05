@@ -71,7 +71,7 @@ export default compose(
       importTour: tourRepository => mutate({
         variables: { tourRepository },
         updateQueries: {
-          getRecentTours: (previousData, { mutationResult }) => ({
+          RecentTours: (previousData, { mutationResult }) => ({
             ...previousData,
             tours: [mutationResult.data.importTour, ...previousData.tours],
           }),
