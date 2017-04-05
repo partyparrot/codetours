@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots TourBadge on tour page 1`] = `
+<div
+  className="dsUieB"
+>
+  <img
+    className="dUriSk"
+    src="https://github.com/partyparrot.png"
+  />
+  <div
+    className="a"
+  >
+    <h1
+      className="a"
+    >
+      <span
+        className="faJydw"
+      >
+        Tour of 
+      </span>
+      partyparrot/codetours-starter-kit
+      <span
+        className="faJydw"
+      >
+        , led by 
+        <a
+          href="https://github.com/partyparrot"
+        >
+          partyparrot
+        </a>
+      </span>
+    </h1>
+    <p
+      className="fDVTwR"
+    >
+      Start here when you're making a code tour!
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Storyshots TourBadge on tours list 1`] = `
+<div
+  className="dsUieB"
+>
+  <img
+    className="bOaFwr"
+    src="https://github.com/partyparrot.png"
+  />
+  <div
+    className="a"
+  >
+    <h4
+      className="a"
+    >
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        partyparrot/codetours-starter-kit
+        <span
+          className="faJydw"
+        >
+           by 
+          partyparrot
+        </span>
+      </a>
+    </h4>
+    <p
+      className="ejEdzr"
+    >
+      Start here when you're making a code tour!
+    </p>
+    <p
+      className="ejEdzr"
+    >
+      <span
+        className="faJydw"
+      >
+        Contribute at 
+      </span>
+      <a
+        href="https://github.com/partyparrot/codetours-starter-kit"
+      >
+        partyparrot/codetours-starter-kit
+      </a>
+    </p>
+  </div>
+</div>
+`;
