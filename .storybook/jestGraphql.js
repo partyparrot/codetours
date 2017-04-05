@@ -2,6 +2,7 @@
 // `jest-transform-graphql` is obsolete at the moment
 // once we figure out how to use graphql-tag/loader correctly with jest
 // we'll open a PR on the transform package :)
+'use strict';
 
 const gql = require('graphql-tag');
 
