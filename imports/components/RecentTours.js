@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { pure, branch, renderComponent, compose } from 'recompose';
 import { graphql } from 'react-apollo';
 
@@ -9,10 +10,14 @@ import RECENT_TOURS_QUERY from '../graphql/RecentTours.graphql';
 
 const RecentTours = ({ search, tours }) => (
   <div>
-    <h3>{search ? 'Search results' : 'Recently added tours'}</h3>
+    <Title>{search ? 'Search results' : 'Recently added tours'}</Title>
     {tours.map(tour => <TourBadge tour={tour} key={tour.repository} />)}
   </div>
 );
+
+const Title = styled.h1`
+  margin-bottom: 4rem;
+`;
 
 const withTours = graphql(RECENT_TOURS_QUERY, {
   options: ({ search }) => ({ variables: { search } }),

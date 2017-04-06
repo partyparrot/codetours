@@ -8,24 +8,23 @@ const theme = {
 };
 
 injectGlobal`
-  
-  *, *:before, *:after {
-    box-sizing: border-box;
+  html {
+    font-size: 62.5%; /* 1 rem is now 10px \o/ */
   }
   
-  body, p {
+  body {
+    font-size: 1.4rem; 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
   }
   
   a {
-    color: ${theme.blue};
+    color: ${theme.blue} !important; /* overwrite reboot a:not([href]) */
     text-decoration: none;
+    cursor: pointer;
     
     &:hover, &:active {
-      color: ${theme.darkerBlue};
+      color: ${theme.darkerBlue} !important; /* overwrite reboot a:not([href]) */
+      text-decoration: none;
     }
   }
 `;

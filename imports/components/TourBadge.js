@@ -33,15 +33,14 @@ const TourBadge = props => {
 };
 
 const TourWrapper = styled.div`
-  margin-top: 40px;
+  margin-bottom: 4rem;
   display: flex;
   align-items: center;
 `;
 
 const TourImage = styled.img`
-  ${props => props.big ? 'max-width: 132px' : 'width: 70px'};
-  ${props => props.big ? 'max-height: 132px' : 'height: 70px'};
-  margin-right: ${props => props.big ? 60 : 20}px;
+  ${props => props.big ? 'max-height: 13.2rem' : 'height: 7rem'};
+  margin-right: ${props => props.big ? 6 : 2}rem;
 `;
 
 const TourContent = styled.div``;
@@ -71,8 +70,7 @@ const SecondaryText = styled.span`
 `;
 
 const TourParagraph = styled.p`
-  font-size: ${props => props.big ? '20px' : '1em'};
-  margin: 10px 0 0 0;
+  ${props => props.big && 'font-size: 2rem'};
 `;
 
 export default TourBadge;
