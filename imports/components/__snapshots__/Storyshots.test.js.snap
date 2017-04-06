@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Placeloader square of 100x100 pixels 1`] = `
+<div
+  className="dbxGLb"
+  height="10rem"
+  width="10rem"
+/>
+`;
+
 exports[`Storyshots RecentTours with specific search 1`] = `
 <div
   className="parrot false"
@@ -32,6 +40,37 @@ exports[`Storyshots RecentTours with tours 1`] = `
 </div>
 `;
 
+exports[`Storyshots TourBadge loading 1`] = `
+<div
+  className="BhtJE"
+>
+  <div
+    className="iQBIEi"
+    height="7rem"
+    width="7rem"
+  />
+  <div
+    className="kdupfl"
+  >
+    <div
+      className="jnkzqA"
+      height="1rem"
+      width="30rem"
+    />
+    <div
+      className="eJgPBp"
+      height="1rem"
+      width="20rem"
+    />
+    <div
+      className="jnkzqA"
+      height="1rem"
+      width="30rem"
+    />
+  </div>
+</div>
+`;
+
 exports[`Storyshots TourBadge on tour page 1`] = `
 <div
   className="BhtJE"
@@ -41,7 +80,7 @@ exports[`Storyshots TourBadge on tour page 1`] = `
     src="https://github.com/partyparrot.png"
   />
   <div
-    className="YpVaf"
+    className="kdupfl"
   >
     <h1
       className="a"
@@ -81,7 +120,7 @@ exports[`Storyshots TourBadge on tours list 1`] = `
     src="https://github.com/partyparrot.png"
   />
   <div
-    className="YpVaf"
+    className="kdupfl"
   >
     <h4
       className="a"

@@ -10,4 +10,5 @@ const mockedTour = mocks.Tour();
 storiesOf('TourBadge', module)
   .addDecorator(globalDecoratorPatch)
   .add('on tours list', () => <TourBadge tour={mockedTour} />)
-  .add('on tour page', () => <TourBadge tour={mockedTour} big />);
+  .add('on tour page', () => <TourBadge tour={mockedTour} big />)
+  .add('loading', () => <TourBadge loading />);
