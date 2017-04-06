@@ -43,7 +43,15 @@ const TourImage = styled.img`
   margin-right: ${props => props.big ? 6 : 2}rem;
 `;
 
-const TourContent = styled.div``;
+const TourContent = styled.div`
+  /* 
+    give a consistent alignment between the tour image and the content,
+    as the TourWrapper is a flex container centering on the cross axis
+  */
+  p:last-child {
+    margin: 0; 
+  }
+`;
 
 const TourTitle = ({ tourLink, tourAuthor, tourTitle, big }) => {
   const Title = styled[big ? 'h1' : 'h4']``;

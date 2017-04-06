@@ -34,14 +34,14 @@ exports[`Storyshots RecentTours with tours 1`] = `
 
 exports[`Storyshots TourBadge on tour page 1`] = `
 <div
-  className="dsUieB"
+  className="BhtJE"
 >
   <img
-    className="dUriSk"
+    className="jZleRd"
     src="https://github.com/partyparrot.png"
   />
   <div
-    className="a"
+    className="YpVaf"
   >
     <h1
       className="a"
@@ -64,7 +64,7 @@ exports[`Storyshots TourBadge on tour page 1`] = `
       </span>
     </h1>
     <p
-      className="fDVTwR"
+      className="gyxudC"
     >
       Start here when you're making a code tour!
     </p>
@@ -74,14 +74,14 @@ exports[`Storyshots TourBadge on tour page 1`] = `
 
 exports[`Storyshots TourBadge on tours list 1`] = `
 <div
-  className="dsUieB"
+  className="BhtJE"
 >
   <img
-    className="bOaFwr"
+    className="duDXCA"
     src="https://github.com/partyparrot.png"
   />
   <div
-    className="a"
+    className="YpVaf"
   >
     <h4
       className="a"
@@ -100,12 +100,12 @@ exports[`Storyshots TourBadge on tours list 1`] = `
       </a>
     </h4>
     <p
-      className="ejEdzr"
+      className="kruepF"
     >
       Start here when you're making a code tour!
     </p>
     <p
-      className="ejEdzr"
+      className="kruepF"
     >
       <span
         className="jpDMXu"
