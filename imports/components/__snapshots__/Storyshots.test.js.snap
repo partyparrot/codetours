@@ -8,34 +8,154 @@ exports[`Storyshots Placeloader square of 100x100 pixels 1`] = `
 />
 `;
 
-exports[`Storyshots RecentTours with specific search 1`] = `
-<div
-  className="parrot false"
->
-  <img
-    className="parrot-gif"
-    src="/tripletsparrot.gif"
-  />
-  <div
-    className="parrot-title"
+exports[`Storyshots RecentTours with no search (loading) 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
   >
-    Loading...
+    Recently added tours
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
   </div>
 </div>
 `;
 
-exports[`Storyshots RecentTours with tours 1`] = `
-<div
-  className="parrot false"
->
-  <img
-    className="parrot-gif"
-    src="/tripletsparrot.gif"
-  />
-  <div
-    className="parrot-title"
+exports[`Storyshots RecentTours with no search 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
   >
-    Loading...
+    Recently added tours
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots RecentTours with specific search (loading) 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
+  >
+    Search results
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots RecentTours with specific search 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
+  >
+    Search results
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -58,12 +178,12 @@ exports[`Storyshots TourBadge loading 1`] = `
       width="30rem"
     />
     <div
-      className="eJgPBp"
+      className="ecFeOf"
       height="1rem"
       width="20rem"
     />
     <div
-      className="jnkzqA"
+      className="lcwQZc"
       height="1rem"
       width="30rem"
     />

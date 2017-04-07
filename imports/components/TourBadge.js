@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { compose, pure, branch, renderComponent } from 'recompose';
 import { Link } from 'react-router';
 
 import Placeloader from './lib/Placeloader';
@@ -87,25 +86,21 @@ const TourParagraph = styled.p`
   ${props => props.big && 'font-size: 2rem'};
 `;
 
+export default TourBadge;
+
 // This experiment could be abstracted in some kind of higher order component
-// that parses the styled component and copy the structure ?
-export default compose(
-  branch(
-    props => props.loading,
-    renderComponent(props => (
-      <TourWrapper>
-        <Placeloader
-          width={props.big ? '13.2rem' : '7rem'}
-          height={props.big ? '13.2rem' : '7rem'}
-          marginRight={props.big ? '6rem' : '2rem'}
-        />
-        <TourContent>
-          <Placeloader width="30rem" height={props.big ? '2.2rem' : '1rem'} marginBottom="1rem" />
-          <Placeloader width="20rem" height="1rem" />
-          <Placeloader width="30rem" height="1rem" marginBottom="1rem" />
-        </TourContent>
-      </TourWrapper>
-    ))
-  ),
-  pure
-)(TourBadge);
+// that parses the component and copy the structure ?
+export const TourBadgePlaceloader = ({ big }) => (
+  <TourWrapper>
+    <Placeloader
+      width={big ? '13.2rem' : '7rem'}
+      height={big ? '13.2rem' : '7rem'}
+      marginRight={big ? '6rem' : '2rem'}
+    />
+    <TourContent>
+      <Placeloader width="30rem" height={big ? '2.2rem' : '1rem'} marginBottom="1rem" />
+      <Placeloader width="20rem" height="1rem" marginBottom="1rem" />
+      {!big && <Placeloader width="30rem" height="1rem" />}
+    </TourContent>
+  </TourWrapper>
+);
