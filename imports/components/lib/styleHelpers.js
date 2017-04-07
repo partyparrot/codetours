@@ -15,7 +15,7 @@ export const medium = (...args) => css`
 `;
 
 export const mediumLarge = (...args) => css`
-  @media screen and (min-width: 60rem) {
+  @media screen and (min-width: 60.1rem) {
     ${css(...args)}
   }
 `;

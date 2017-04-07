@@ -1,8 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots ContentControllers left selected 1`] = `
+<div
+  className="gQHFKA"
+>
+  <button
+    className="khpVFu"
+    selected={true}
+  >
+    Show tours
+  </button>
+  <button
+    className="iVIKcQ"
+    selected={false}
+  >
+    What's that?
+  </button>
+</div>
+`;
+
+exports[`Storyshots ContentControllers right selected 1`] = `
+<div
+  className="gQHFKA"
+>
+  <button
+    className="iVIKcQ"
+    selected={false}
+  >
+    Show tours
+  </button>
+  <button
+    className="khpVFu"
+    selected={true}
+  >
+    What's that?
+  </button>
+</div>
+`;
+
 exports[`Storyshots Header with background image 1`] = `
 <div
-  className="cCRSiL"
+  className="hPvEAX"
 >
   <div
     className="dwfhlS"
@@ -26,7 +64,7 @@ exports[`Storyshots Header with background image 1`] = `
 
 exports[`Storyshots Header with radial gradient 1`] = `
 <div
-  className="YLThp"
+  className="dwUwMb"
 >
   <div
     className="dwfhlS"
@@ -244,7 +282,7 @@ exports[`Storyshots TourBadge on tour page 1`] = `
   className="BhtJE"
 >
   <img
-    className="jZleRd"
+    className="kYoZia"
     src="https://github.com/partyparrot.png"
   />
   <div
@@ -284,7 +322,7 @@ exports[`Storyshots TourBadge on tours list 1`] = `
   className="BhtJE"
 >
   <img
-    className="duDXCA"
+    className="cXwYQT"
     src="https://github.com/partyparrot.png"
   />
   <div

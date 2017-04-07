@@ -41,6 +41,7 @@ const TourWrapper = styled.div`
 
 const TourImage = styled.img`
   ${props => props.big ? 'max-height: 13.2rem' : 'height: 7rem'};
+  ${props => props.big ? 'max-width: 13.2rem' : 'width: 7rem'};
   margin-right: ${props => props.big ? 6 : 2}rem;
 `;
 

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Helmet from 'react-helmet';
-import { Meteor } from 'meteor/meteor';
+
+const absoluteUrl = path => process.env ? process.env.ROOT_URL + path : window.location.href + path;
 
 // get relevant head tags
 const getHeadTags = tour => {
@@ -8,7 +9,7 @@ const getHeadTags = tour => {
   const defaultHead = {
     title: 'CodeTours',
     description: 'Introduce yourself to new and exciting open source codebases.',
-    image: Meteor.absoluteUrl('background.jpeg'),
+    image: absoluteUrl('background.jpeg'),
   };
 
   // if the route isn't related to a tour, fallback to default head tags

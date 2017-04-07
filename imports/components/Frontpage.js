@@ -1,55 +1,44 @@
 import React from 'react';
+import styled from 'styled-components';
+import { compose, withHandlers, withState, pure } from 'recompose';
 import marked from 'marked';
+
 import Headtags from './Headtags';
 import Header from './Header';
 import RecentTours from './RecentTours';
 import Sidebar from './Sidebar';
 
-export default class Frontpage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      search: '',
-    };
-
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-  }
-
-  handleSearchChange(event) {
-    this.setState(() => ({
-      search: event.target.value,
-    }));
-  }
-
-  render() {
-    return (
-      <div>
-        <Headtags />
-        <Header handleSearchChange={this.handleSearchChange} search={this.state.search} />
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-8">
-              <RecentTours search={this.state.search} />
-            </div>
-            <Sidebar />
-          </div>
-          <div className="footer">
-            <p
-              dangerouslySetInnerHTML={{
-                __html: marked(
-                  `
+const Frontpage = ({ handleSearchChange, search }) => (
+  <div>
+    <Headtags />
+    <Header handleSearchChange={handleSearchChange} search={search} />
+    <PageContent>
+      <RecentTours search={search} />
+      <Sidebar />
+    </PageContent>
+    <p
+      dangerouslySetInnerHTML={{
+        __html: marked(
+          `
 Made with ![Fiesta Parrot](/fiestaparrot.gif)
 by [Angela Zhang](https://github.com/zhangela) and
 [Sashko Stubailo](https://github.com/stubailo).
 [Contribute on GitHub.](https://github.com/partyparrot/codetours)
-            `
-                ),
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+          `
+        ),
+      }}
+    />
+  </div>
+);
+
+export const PageContent = styled.div`
+  margin-bottom: 2rem;  
+`;
+
+export default compose(
+  withState('search', 'updateSearch', ''),
+  withHandlers({
+    handleSearchChange: ({ updateSearch }) => event => updateSearch(event.target.value),
+  }),
+  pure
+)(Frontpage);
