@@ -78,7 +78,7 @@ const TourTitle = ({ tourLink, tourAuthor, tourTitle, big }) => {
 };
 
 const SecondaryText = styled.span`
-  color: ${props => props.theme.muted};
+  color: ${props => props.theme.grey};
   font-weight: normal;
 `;
 

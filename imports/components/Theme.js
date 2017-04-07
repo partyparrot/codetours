@@ -2,9 +2,12 @@ import React from 'react';
 import { ThemeProvider, injectGlobal } from 'styled-components';
 
 const theme = {
-  muted: '#777',
-  blue: '#428bca',
+  dark: '#333',
+  grey: '#777',
+  light: '#fcfcfc',
   darkerBlue: '#2a6496',
+  blue: '#428bca',
+  flashBlue: '#0070D0',
 };
 
 injectGlobal`

@@ -1,5 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Header with background image 1`] = `
+<div
+  className="cCRSiL"
+>
+  <div
+    className="dwfhlS"
+  >
+    CodeTours
+  </div>
+  <div
+    className="KufGg"
+  >
+    Take a tour of new and exciting open source codebases.
+  </div>
+  <input
+    className="bSPHlJ"
+    onChange={undefined}
+    placeholder="Search for a repository"
+    type="text"
+    value={undefined}
+  />
+</div>
+`;
+
+exports[`Storyshots Header with radial gradient 1`] = `
+<div
+  className="YLThp"
+>
+  <div
+    className="dwfhlS"
+  >
+    CodeTours
+  </div>
+  <div
+    className="KufGg"
+  >
+    Take a tour of new and exciting open source codebases.
+  </div>
+  <input
+    className="bSPHlJ"
+    onChange={undefined}
+    placeholder="Search for a repository"
+    type="text"
+    value={undefined}
+  />
+</div>
+`;
+
 exports[`Storyshots Placeloader square of 100x100 pixels 1`] = `
 <div
   className="dbxGLb"

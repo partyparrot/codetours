@@ -1,6 +1,7 @@
 import React from 'react';
 import marked from 'marked';
 import Headtags from './Headtags';
+import Header from './Header';
 import RecentTours from './RecentTours';
 import Sidebar from './Sidebar';
 
@@ -16,49 +17,16 @@ export default class Frontpage extends React.Component {
   }
 
   handleSearchChange(event) {
-    this.setState({
+    this.setState(() => ({
       search: event.target.value,
-    });
+    }));
   }
 
   render() {
-    const brandNameStyle = {
-      fontFamily: "'Pacifico', cursive",
-      textShadow: 'black 0 0 5px',
-    };
-
-    const heroStyle = {
-      backgroundImage: 'url("/background.jpeg")',
-      backgroundSize: '100%',
-      color: 'white',
-    };
-
-    const taglineStyle = {
-      textShadow: 'black 0 0 5px',
-    };
-
     return (
       <div>
         <Headtags />
-        <div className="jumbotron text-center" style={heroStyle}>
-          <div className="container">
-            <div style={brandNameStyle}>
-              <h1>CodeTours</h1>
-            </div>
-            <p style={taglineStyle}>Take a tour of new and exciting open source codebases.</p>
-            <div className="row">
-              <div className="col-sm-6 col-sm-offset-3">
-                <input
-                  type="text"
-                  className="form-control input-lg"
-                  placeholder="Search for a repository"
-                  onChange={this.handleSearchChange}
-                  value={this.state.search}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header handleSearchChange={this.handleSearchChange} search={this.state.search} />
         <div className="container">
           <div className="row">
             <div className="col-sm-8">
