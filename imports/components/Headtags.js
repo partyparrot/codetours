@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
-import { Meteor } from 'meteor/meteor';
 import Helmet from 'react-helmet';
-import { Tours } from '../collections';
+import { Meteor } from 'meteor/meteor';
 
-// get relevant head tags from a pathname
-const getHeadTags = pathname => {
+// get relevant head tags
+const getHeadTags = tour => {
   // default head tags
   const defaultHead = {
     title: 'CodeTours',
@@ -13,23 +12,13 @@ const getHeadTags = pathname => {
   };
 
   // if the route isn't related to a tour, fallback to default head tags
-  if (!pathname.includes('/tour/')) {
-    return defaultHead;
-  }
-
-  // get the current tour data
-  // note: at the moment we always have all the tours
-  // (publish all tours or server-side with complete access to the db)
-  const tour = Tours.findOne({ repository: pathname.slice(6) });
-
-  // no tour found, return default head tags
   if (!tour) {
     return defaultHead;
   }
 
   // usernames of the author and the target repo
-  const authorUsername = tour.repository.split('/')[0];
-  const targetRepoUsername = tour.targetRepository.split('/')[0];
+  const [authorUsername] = tour.repository.split('/');
+  const [targetRepoUsername] = tour.targetRepository.split('/');
 
   // tour related head tags
   return {
@@ -39,8 +28,8 @@ const getHeadTags = pathname => {
   };
 };
 
-const Headtags = ({ pathname } = { pathname: '/' }) => {
-  const headTags = getHeadTags(pathname);
+const Headtags = ({ tour }) => {
+  const headTags = getHeadTags(tour);
 
   // generate the twitter meta tags
   const meta = [
@@ -56,7 +45,11 @@ const Headtags = ({ pathname } = { pathname: '/' }) => {
 };
 
 Headtags.propTypes = {
-  pathname: PropTypes.string,
+  tour: PropTypes.shape({
+    repository: PropTypes.string.isRequired,
+    targetRepository: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }),
 };
 
 export default Headtags;

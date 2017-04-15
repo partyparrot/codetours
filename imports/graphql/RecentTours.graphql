@@ -1,0 +1,7 @@
+#import "./TourFragments.graphql"
+
+query RecentTours($search: String) {
+  tours(search: $search) {
+    ...TourInfo
+  }
+}

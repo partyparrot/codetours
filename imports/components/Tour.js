@@ -1,15 +1,14 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { pure, branch, renderComponent, withProps, compose } from 'recompose';
-import _ from 'lodash';
+import { pure, branch, renderComponent, compose } from 'recompose';
 import { Link } from 'react-router';
-
-import { Tours, Steps } from '../collections';
-import { createContainer } from 'meteor/react-meteor-data';
+import { graphql } from 'react-apollo';
 
 import Headtags from './Headtags';
 import Navbar from './Navbar';
 import ParrotSays from './ParrotSays';
+
+import TOUR_QUERY from '../graphql/Tour.graphql';
+import TOUR_MUTATION from '../graphql/ImportTour.graphql';
 
 class Tour extends React.Component {
   constructor(props) {
@@ -17,36 +16,27 @@ class Tour extends React.Component {
     this.reImportTour = this.reImportTour.bind(this);
   }
 
-  getUser() {
-    return this.props.tour.repository.split('/')[0];
-  }
-
-  getRepoName() {
-    return this.props.tour.repository.split('/')[1];
-  }
-
   getStepLink(step) {
     return `/tour/${this.props.tour.repository}/${step}`;
   }
 
-  getStepObject(slug) {
-    return _.find(this.props.steps, { slug: slug });
-  }
-
-  reImportTour() {
+  async reImportTour() {
     event.preventDefault();
-    const tourRepository = this.props.tour.repository;
-    Meteor.call('importTour', tourRepository, err => {
-      if (err) {
-        alert(err.reason);
-      }
-    });
+    try {
+      await this.props.importTour();
+    } catch (error) {
+      alert(error);
+    }
   }
 
   render() {
+    const { tour } = this.props;
+
+    const [tourAuthor] = tour.repository.split('/');
+
     return (
       <div>
-        <Headtags pathname={this.props.location.pathname} />
+        <Headtags tour={tour} />
         <Navbar />
         <div className="container" style={{ marginTop: '40px' }}>
 
@@ -54,28 +44,25 @@ class Tour extends React.Component {
             <div className="col-md-2 col-xs-2">
               <img
                 style={{ maxWidth: '80%' }}
-                src={`https://github.com/${this.props.tour.targetRepository.split('/')[0]}.png`}
+                src={`https://github.com/${tour.targetRepository.split('/')[0]}.png`}
               />
             </div>
             <div className="col-md-10 col-xs-10">
               <h1 className="target-repo">
                 <span className="text-muted" style={{ fontWeight: 'normal' }}>Tour of </span>
-                {this.props.tour.targetRepository}
+                {tour.targetRepository}
                 <span className="text-muted" style={{ fontWeight: 'normal' }}>
                   , led by&nbsp;
-                  <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>
+                  <a href={`https://github.com/${tourAuthor}`}>{tourAuthor}</a>
                 </span>
               </h1>
-              <p style={{ fontSize: '20px' }}>{this.props.tour.description}</p>
+              <p style={{ fontSize: '20px' }}>{tour.description}</p>
             </div>
           </div>
 
           <div className="row" style={{ marginTop: '20px' }}>
             <div className="col-md-8">
-              <Link
-                to={this.getStepLink(this.props.tour.steps[0])}
-                style={{ textDecoration: 'none' }}
-              >
+              <Link to={this.getStepLink(tour.steps[0].slug)} style={{ textDecoration: 'none' }}>
                 <button
                   type="button"
                   className="btn btn-success btn-lg btn-block"
@@ -84,28 +71,26 @@ class Tour extends React.Component {
                   Start CodeTour
                 </button>
               </Link>
-              {_.map(this.props.tour.steps, (slug, index) => {
-                return (
-                  <div key={slug}>
-                    <Link to={this.getStepLink(slug)}>
-                      <div className="row" style={{ marginTop: '10px' }}>
-                        <div className="col-sm-3 col-xs-3 number-circle">{index + 1}</div>
-                        <div
-                          className="col-sm-7 col-xs-7"
-                          style={{
-                            textAlign: 'middle',
-                            lineHeight: '50px',
-                            fontSize: '20px',
-                            padding: '6px',
-                          }}
-                        >
-                          {this.getStepObject(slug).title}
-                        </div>
+              {tour.steps.map(step => (
+                <div key={step._id}>
+                  <Link to={this.getStepLink(step.slug)}>
+                    <div className="row" style={{ marginTop: '10px' }}>
+                      <div className="col-sm-3 col-xs-3 number-circle">{step.index + 1}</div>
+                      <div
+                        className="col-sm-7 col-xs-7"
+                        style={{
+                          textAlign: 'middle',
+                          lineHeight: '50px',
+                          fontSize: '20px',
+                          padding: '6px',
+                        }}
+                      >
+                        {step.title}
                       </div>
-                    </Link>
-                  </div>
-                );
-              })}
+                    </div>
+                  </Link>
+                </div>
+              ))}
             </div>
 
             <div
@@ -121,17 +106,15 @@ class Tour extends React.Component {
 
               <div style={{ fontSize: '16px', padding: '5px' }}>
                 <p>
-                  This is a tour of <a
-                    href={`https://github.com/${this.props.tour.targetRepository}`}
-                  >
-                    {this.props.tour.targetRepository}
+                  This is a tour of <a href={`https://github.com/${tour.targetRepository}`}>
+                    {tour.targetRepository}
                   </a>
                   , led by{' '}
-                  <a href={`https://github.com/${this.getUser()}`}>{this.getUser()}</a>
+                  <a href={`https://github.com/${tourAuthor}`}>{tourAuthor}</a>
                   .
                 </p>
                 <p>
-                  <a href={`https://github.com/${this.getUser()}/${this.getRepoName()}`}>
+                  <a href={`https://github.com/${tour.repository}`}>
                     Contribute, create a fork, or file issues on Github
                   </a>
                 </p>
@@ -149,32 +132,34 @@ class Tour extends React.Component {
   }
 }
 
-// load 1 tour & 1+ steps
-const loadMeteorData = Component => createContainer(
-  ({ params: { user, repoName } }) => {
-    const repository = `${user}/${repoName}`;
-    const handleTour = Meteor.subscribe('tours');
-    const handleSteps = Meteor.subscribe('steps', repository);
-    return {
-      tour: Tours.findOne({ repository: repository }),
-      tourLoaded: handleTour.ready(),
-      steps: Steps.find({ tourName: repository }).fetch(),
-      stepsLoaded: handleSteps.ready(),
-    };
-  },
-  Component
-);
+const withTour = graphql(TOUR_QUERY, {
+  options: ({ params: { user, repoName } }) => ({
+    variables: { tourRepository: `${user}/${repoName}` },
+  }),
+  props: ({ data: { loading, tour }, ownProps: { location } }) => ({ loading, tour, location }),
+});
 
 // show loading component if the tour & steps data are loading
 const displayLoadingState = branch(
-  props => !props.tourLoaded || !props.stepsLoaded,
-  renderComponent(withProps(() => ({ big: true, statusId: 'loading' }))(ParrotSays))
+  props => props.loading,
+  renderComponent(() => <ParrotSays statusId="loading" big />)
 );
 
 // show not found component if no tour found or no steps found for this tour
 const displayNotFoundState = branch(
-  props => !props.tour || !props.steps.length,
-  renderComponent(withProps(() => ({ big: true, statusId: 'not-found' }))(ParrotSays))
+  props => !props.tour || !props.tour.steps.length,
+  renderComponent(() => <ParrotSays statusId="not-found" big />)
 );
 
-export default compose(loadMeteorData, displayLoadingState, displayNotFoundState, pure)(Tour);
+// add mutation hoc after the other hoc: the tour is actually there
+const withMutation = graphql(TOUR_MUTATION, {
+  props: ({ ownProps: { tour: { repository } }, mutate }) => ({
+    importTour: () => mutate({
+      variables: { tourRepository: repository },
+    }),
+  }),
+});
+
+export default compose(withTour, displayLoadingState, displayNotFoundState, withMutation, pure)(
+  Tour
+);

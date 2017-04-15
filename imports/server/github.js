@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import rp from 'request-promise';
 
 // Keys are GitHub API URLs, values are { etag, result } objects
@@ -7,8 +8,8 @@ const GITHUB_API_ROOT = 'https://api.github.com';
 
 export class GitHubConnector {
   constructor() {
-    this.clientId = process.env.GITHUB_CLIENT_ID;
-    this.clientSecret = process.env.GITHUB_CLIENT_SECRET;
+    this.clientId = process.env.GITHUB_CLIENT_ID || Meteor.settings.GITHUB_CLIENT_ID;
+    this.clientSecret = process.env.GITHUB_CLIENT_SECRET || Meteor.settings.GITHUB_CLIENT_SECRET;
 
     // Allow mocking request promise for tests
     this.rp = rp;

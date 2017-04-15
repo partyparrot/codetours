@@ -1,0 +1,24 @@
+#import "./TourFragments.graphql"
+#import "./StepFragments.graphql"
+#import "./SectionFragments.graphql"
+
+query Step($tourRepository: String!, $slug: String!) {
+  step(tourRepository: $tourRepository, slug: $slug) {
+    ...StepInfo
+    codeUrl
+    code
+    filePath
+    sections {
+      ...SectionInfo
+    }
+    tour {
+      ...TourInfo
+    }
+    previous {
+      ...StepInfo
+    }
+    next {
+      ...StepInfo
+    }
+  }
+}

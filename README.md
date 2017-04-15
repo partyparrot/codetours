@@ -36,6 +36,18 @@ https://www.codetours.xyz/
 - If you want to file a bug, or have a feature request, hop on over to: https://github.com/partyparrot/codetours/issues
 - Pull requests welcome & appreciated! 
 
+In development mode, to avoid hit the rate limiting too quickly: 
+- [create a GitHub application](https://github.com/settings/applications/new) to get client ID & secret;
+- create a `settings.json` file;
+- add your credentials like following:
+```json
+{
+  "GITHUB_CLIENT_ID": "xxx",
+  "GITHUB_CLIENT_SECRET": "yyy"
+}
+```
+Happy hacking!
+
 ## Full Design Doc: 
 
 ### Problem statement

@@ -1,14 +1,11 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { pure, branch, renderComponent, withProps, compose } from 'recompose';
-
-import { Tours } from '../collections';
-import { createContainer } from 'meteor/react-meteor-data';
+import { pure, branch, renderComponent, compose } from 'recompose';
+import { graphql } from 'react-apollo';
 
 import TourBadge from './TourBadge';
 import ParrotSays from './ParrotSays';
 
-import printTime from '../printTime';
+import RECENT_TOURS_QUERY from '../graphql/RecentTours.graphql';
 
 const RecentTours = ({ search, tours }) => (
   <div>
@@ -17,40 +14,21 @@ const RecentTours = ({ search, tours }) => (
   </div>
 );
 
-// load 1+ tours
-const loadMeteorData = Component => createContainer(
-  ({ search }) => {
-    printTime('createContainer callback running');
-
-    const handleTours = Meteor.subscribe('tours');
-
-    if (handleTours.ready()) {
-      printTime('subscription ready');
-    }
-
-    return {
-      tours: Tours.find(
-        { failed: { $ne: true }, targetRepository: { $regex: new RegExp(search, 'i') } },
-        { sort: { createdAt: -1 } }
-      ).fetch(),
-      toursLoaded: handleTours.ready(),
-    };
-  },
-  Component
-);
+const withTours = graphql(RECENT_TOURS_QUERY, {
+  options: ({ search }) => ({ variables: { search } }),
+  props: ({ data: { loading, tours } }) => ({ loading, tours }),
+});
 
 // show loading component if the tours data are loading
 const displayLoadingState = branch(
-  props => !props.toursLoaded,
-  renderComponent(withProps(() => ({ statusId: 'loading' }))(ParrotSays))
+  props => props.loading,
+  renderComponent(() => <ParrotSays statusId="loading" />)
 );
 
 // show not found component if no tours found with the current query
 const displayNotFoundState = branch(
-  props => !props.tours.length,
-  renderComponent(withProps(() => ({ statusId: 'not-found' }))(ParrotSays))
+  props => !props.tours || !props.tours.length,
+  renderComponent(() => <ParrotSays statusId="not-found" />)
 );
 
-export default compose(loadMeteorData, displayLoadingState, displayNotFoundState, pure)(
-  RecentTours
-);
+export default compose(withTours, displayLoadingState, displayNotFoundState, pure)(RecentTours);
