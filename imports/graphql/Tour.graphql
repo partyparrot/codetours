@@ -1,5 +1,5 @@
-#import "./TourFragments.graphql"
-#import "./StepFragments.graphql"
+#import "./TourInfo.graphql"
+#import "./StepInfo.graphql"
 
 query Tour($tourRepository: String!) {
   tour(tourRepository: $tourRepository) {

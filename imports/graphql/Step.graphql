@@ -1,6 +1,6 @@
-#import "./TourFragments.graphql"
-#import "./StepFragments.graphql"
-#import "./SectionFragments.graphql"
+#import "./TourInfo.graphql"
+#import "./StepInfo.graphql"
+#import "./SectionInfo.graphql"
 
 query Step($tourRepository: String!, $slug: String!) {
   step(tourRepository: $tourRepository, slug: $slug) {

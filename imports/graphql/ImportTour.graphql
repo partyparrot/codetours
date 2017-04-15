@@ -1,4 +1,4 @@
-#import "./TourFragments.graphql"
+#import "./TourInfo.graphql"
 
 mutation importTour($tourRepository: String!) {
   importTour(tourRepository: $tourRepository) {
