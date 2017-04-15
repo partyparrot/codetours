@@ -72,8 +72,9 @@ export default class Frontpage extends React.Component {
                 __html: marked(
                   `
 Made with ![Fiesta Parrot](/fiestaparrot.gif)
-by [Angela Zhang](https://github.com/zhangela) and
-[Sashko Stubailo](https://github.com/stubailo).
+by [Xavier Cazalot](https://github.com/xavcz),
+[Angela Zhang](https://github.com/zhangela),
+and [Sashko Stubailo](https://github.com/stubailo).
 [Contribute on GitHub.](https://github.com/partyparrot/codetours)
             `
                 ),
