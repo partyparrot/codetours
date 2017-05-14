@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import { ApolloClient, ApolloProvider, renderToStringWithData } from 'react-apollo';
 import { match, RouterContext } from 'react-router';
+import styleSheet from 'styled-components/lib/models/StyleSheet';
 import 'isomorphic-fetch';
 
 import { Meteor } from 'meteor/meteor';
@@ -10,10 +11,16 @@ import { WebApp } from 'meteor/webapp';
 import { meteorClientConfig } from 'meteor/apollo';
 
 import routes from '../routes';
+import Theme from '../components/shared/Theme';
 
 const Body = ({ content, state }) => (
   <body>
     <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
+    <style
+      dangerouslySetInnerHTML={{
+        __html: styleSheet.rules().map(rule => rule.cssText).join('\n'),
+      }}
+    />
     <script
       dangerouslySetInnerHTML={{
         __html: `window.__APOLLO_STATE__=${JSON.stringify(state)};`,
@@ -37,9 +44,12 @@ const serverRendering = (req, res, next) => match({ routes, location: req.origin
 
     const component = (
       <ApolloProvider client={client}>
-        <RouterContext {...renderProps} />
+        <Theme>
+          <RouterContext {...renderProps} />
+        </Theme>
       </ApolloProvider>
     );
+
     try {
       const content = await renderToStringWithData(component);
       const initialState = { apollo: client.getInitialState() };
@@ -52,11 +62,11 @@ const serverRendering = (req, res, next) => match({ routes, location: req.origin
       // avoid memory link by rewinding head tags
       const head = Helmet.rewind();
 
-      // append the head tags to the head
+      // append the head tags to the heads
       req.dynamicHead = `
-      ${head.title.toString()}
-      ${head.meta.toString()}
-      ${head.link.toString()}
+        ${head.title.toString()}
+        ${head.meta.toString()}
+        ${head.link.toString()}
       `;
 
       next();

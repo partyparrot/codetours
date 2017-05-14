@@ -1,0 +1,372 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots ContentControllers left selected 1`] = `
+<div
+  className="gQHFKA"
+>
+  <button
+    className="jCLXuU"
+    onClick={[Function]}
+    selected={true}
+  >
+    Show tours
+  </button>
+  <button
+    className="jhpyfE"
+    onClick={[Function]}
+    selected={false}
+  >
+    What's that?
+  </button>
+</div>
+`;
+
+exports[`Storyshots ContentControllers right selected 1`] = `
+<div
+  className="gQHFKA"
+>
+  <button
+    className="jhpyfE"
+    onClick={[Function]}
+    selected={false}
+  >
+    Show tours
+  </button>
+  <button
+    className="jCLXuU"
+    onClick={[Function]}
+    selected={true}
+  >
+    What's that?
+  </button>
+</div>
+`;
+
+exports[`Storyshots Header with background image 1`] = `
+<div
+  className="hPvEAX"
+>
+  <div
+    className="dwfhlS"
+  >
+    CodeTours
+  </div>
+  <div
+    className="KufGg"
+  >
+    Take a tour of new and exciting open source codebases.
+  </div>
+  <input
+    className="bSPHlJ"
+    onChange={undefined}
+    placeholder="Search for a repository"
+    type="text"
+    value={undefined}
+  />
+</div>
+`;
+
+exports[`Storyshots Header with radial gradient 1`] = `
+<div
+  className="dwUwMb"
+>
+  <div
+    className="dwfhlS"
+  >
+    CodeTours
+  </div>
+  <div
+    className="KufGg"
+  >
+    Take a tour of new and exciting open source codebases.
+  </div>
+  <input
+    className="bSPHlJ"
+    onChange={undefined}
+    placeholder="Search for a repository"
+    type="text"
+    value={undefined}
+  />
+</div>
+`;
+
+exports[`Storyshots Placeloader square of 100x100 pixels 1`] = `
+<div
+  className="dbxGLb"
+  height="10rem"
+  width="10rem"
+/>
+`;
+
+exports[`Storyshots RecentTours with no search (loading) 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
+  >
+    Recently added tours
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots RecentTours with no search 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
+  >
+    Recently added tours
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots RecentTours with specific search (loading) 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
+  >
+    Search results
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots RecentTours with specific search 1`] = `
+<div>
+  <h1
+    className="kEpNFr"
+  >
+    Search results
+  </h1>
+  <div
+    className="BhtJE"
+  >
+    <div
+      className="iQBIEi"
+      height="7rem"
+      width="7rem"
+    />
+    <div
+      className="kdupfl"
+    >
+      <div
+        className="jnkzqA"
+        height="1rem"
+        width="30rem"
+      />
+      <div
+        className="ecFeOf"
+        height="1rem"
+        width="20rem"
+      />
+      <div
+        className="lcwQZc"
+        height="1rem"
+        width="30rem"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots TourBadge loading 1`] = `
+<div
+  className="BhtJE"
+>
+  <div
+    className="iQBIEi"
+    height="7rem"
+    width="7rem"
+  />
+  <div
+    className="kdupfl"
+  >
+    <div
+      className="jnkzqA"
+      height="1rem"
+      width="30rem"
+    />
+    <div
+      className="ecFeOf"
+      height="1rem"
+      width="20rem"
+    />
+    <div
+      className="lcwQZc"
+      height="1rem"
+      width="30rem"
+    />
+  </div>
+</div>
+`;
+
+exports[`Storyshots TourBadge on tour page 1`] = `
+<div
+  className="BhtJE"
+>
+  <img
+    className="kYoZia"
+    src="https://github.com/partyparrot.png"
+  />
+  <div
+    className="kdupfl"
+  >
+    <h1
+      className="a"
+    >
+      <span
+        className="jpDMXu"
+      >
+        Tour of 
+      </span>
+      partyparrot/codetours-starter-kit
+      <span
+        className="jpDMXu"
+      >
+        , led by 
+        <a
+          href="https://github.com/partyparrot"
+        >
+          partyparrot
+        </a>
+      </span>
+    </h1>
+    <p
+      className="gyxudC"
+    >
+      Start here when you're making a code tour!
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Storyshots TourBadge on tours list 1`] = `
+<div
+  className="BhtJE"
+>
+  <img
+    className="cXwYQT"
+    src="https://github.com/partyparrot.png"
+  />
+  <div
+    className="kdupfl"
+  >
+    <h4
+      className="a"
+    >
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        partyparrot/codetours-starter-kit
+        <span
+          className="jpDMXu"
+        >
+           by 
+          partyparrot
+        </span>
+      </a>
+    </h4>
+    <p
+      className="kruepF"
+    >
+      Start here when you're making a code tour!
+    </p>
+    <p
+      className="kruepF"
+    >
+      <span
+        className="jpDMXu"
+      >
+        Contribute at 
+      </span>
+      <a
+        href="https://github.com/partyparrot/codetours-starter-kit"
+      >
+        partyparrot/codetours-starter-kit
+      </a>
+    </p>
+  </div>
+</div>
+`;

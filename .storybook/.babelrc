@@ -1,0 +1,4 @@
+// this file is used by storybook to get the right babel presets
+{
+  "presets": ["es2015", "es2016", "react", "stage-1"]
+}

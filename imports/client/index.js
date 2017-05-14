@@ -8,6 +8,7 @@ import { meteorClientConfig } from 'meteor/apollo';
 import printTime from '../printTime';
 
 import routes from '../routes';
+import Theme from '../components/shared/Theme';
 
 printTime('main.js');
 
@@ -20,7 +21,9 @@ const client = new ApolloClient(
 Meteor.startup(() => {
   printTime('Meteor startup fired');
   render(
-    <ApolloProvider client={client}>{routes}</ApolloProvider>,
+    <ApolloProvider client={client}>
+      <Theme>{routes}</Theme>
+    </ApolloProvider>,
     document.getElementById('root')
   );
   printTime('after render');
