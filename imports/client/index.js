@@ -8,7 +8,7 @@ import { meteorClientConfig } from 'meteor/apollo';
 import printTime from '../printTime';
 
 import routes from '../routes';
-import Theme from '../components/Theme';
+import Theme from '../components/shared/Theme';
 
 printTime('main.js');
 

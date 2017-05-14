@@ -3,7 +3,7 @@ import { browserHistory, Link } from 'react-router';
 import { graphql } from 'react-apollo';
 import { compose, withState, withHandlers, pure } from 'recompose';
 
-import TOUR_MUTATION from '../graphql/ImportTour.graphql';
+import TOUR_MUTATION from '../../graphql/ImportTour.graphql';
 
 const Sidebar = ({ tour, handleTourChange, handleTourSubmit }) => (
   <div className="col-sm-4">
@@ -30,7 +30,8 @@ const Sidebar = ({ tour, handleTourChange, handleTourSubmit }) => (
 
     <p>
       <b>
-        If this is your first time making a tour, take a few minutes to check out our{' '}
+        If this is your first time making a tour, take a few minutes to check out our
+        {' '}
         <Link to="/tour/partyparrot/codetours-starter-kit">
           CodeTour for CodeTour
         </Link>
@@ -39,11 +40,15 @@ const Sidebar = ({ tour, handleTourChange, handleTourSubmit }) => (
       (it's meta, we know). We promise everything will make a lot more sense after taking this tour.
     </p>
 
-    <p>If you've done it before, here's the TL;DR in case you need a reminder:</p>
+    <p>
+      If you've done it before, here's the TL;DR in case you need a reminder:
+    </p>
     <ol>
       <li>
         Fork the{' '}
-        <a href="https://github.com/partyparrot/codetours-starter-kit">starter kit</a>
+        <a href="https://github.com/partyparrot/codetours-starter-kit">
+          starter kit
+        </a>
         , or another existing tour
       </li>
       <li>Edit the config file, content, and code links</li>

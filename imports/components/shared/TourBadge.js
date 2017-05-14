@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 
-import Placeloader from './lib/Placeloader';
-import { getTourLink, getTourUsernames } from '../helpers';
+import Placeloader from './Placeloader';
+import { getTourLink, getTourUsernames } from '../../helpers';
 
 const TourBadge = props => {
   const { tour, big } = props;

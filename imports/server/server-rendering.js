@@ -11,13 +11,15 @@ import { WebApp } from 'meteor/webapp';
 import { meteorClientConfig } from 'meteor/apollo';
 
 import routes from '../routes';
-import Theme from '../components/Theme';
+import Theme from '../components/shared/Theme';
 
 const Body = ({ content, state }) => (
   <body>
     <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
     <style
-      dangerouslySetInnerHTML={{ __html: styleSheet.rules().map(rule => rule.cssText).join('\n') }}
+      dangerouslySetInnerHTML={{
+        __html: styleSheet.rules().map(rule => rule.cssText).join('\n'),
+      }}
     />
     <script
       dangerouslySetInnerHTML={{

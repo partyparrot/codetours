@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import { lighten, radialGradient } from 'polished';
-import { small, mediumLarge } from './lib/styleHelpers';
+import { small, mediumLarge } from '../lib/styleHelpers';
 
 const Header = ({ withGradient, handleSearchChange, search }) => (
   <Hero withGradient={withGradient}>

@@ -1,18 +1,23 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
-import { small, mediumLarge } from './lib/styleHelpers';
+import { small, mediumLarge } from '../lib/styleHelpers';
 
 // note: provide invariant if somehow both are selected or none is selected
-const ContentControllers = ({ left, right }) => (
+const ContentControllers = ({ left, right, toggleController }) => (
   <Wrapper>
-    <Controller selected={left.selected}>{left.title}</Controller>
-    <Controller selected={right.selected}>{right.title}</Controller>
+    <Controller selected={left.selected} onClick={toggleController('left')}>
+      {left.title}
+    </Controller>
+    <Controller selected={right.selected} onClick={toggleController('right')}>
+      {right.title}
+    </Controller>
   </Wrapper>
 );
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 4rem;
   
   *:first-child {
     margin-right: 1rem;
@@ -35,9 +40,11 @@ const Controller = styled.button`
   font-weight: 700;
   border: 0;
   position: relative;
-  
+  cursor: pointer;
+  transition: all .15s ease-in-out;
+
   &:after {
-    transition: top 150ms ease-in-out;
+    transition: all .15s ease-in-out;
     content: '';
     display: block;
     position: absolute;

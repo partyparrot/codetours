@@ -5,13 +5,15 @@ exports[`Storyshots ContentControllers left selected 1`] = `
   className="gQHFKA"
 >
   <button
-    className="khpVFu"
+    className="jCLXuU"
+    onClick={[Function]}
     selected={true}
   >
     Show tours
   </button>
   <button
-    className="iVIKcQ"
+    className="jhpyfE"
+    onClick={[Function]}
     selected={false}
   >
     What's that?
@@ -24,13 +26,15 @@ exports[`Storyshots ContentControllers right selected 1`] = `
   className="gQHFKA"
 >
   <button
-    className="iVIKcQ"
+    className="jhpyfE"
+    onClick={[Function]}
     selected={false}
   >
     Show tours
   </button>
   <button
-    className="khpVFu"
+    className="jCLXuU"
+    onClick={[Function]}
     selected={true}
   >
     What's that?

@@ -5,13 +5,13 @@ import { Link, browserHistory } from 'react-router';
 import _ from 'lodash';
 import { graphql } from 'react-apollo';
 
-import Headtags from './Headtags';
+import Headtags from '../shared/Headtags';
+import ParrotSays from '../shared/ParrotSays';
 import Snippet from './Snippet';
 import Section from './Section';
-import ParrotSays from './ParrotSays';
 
-import STEP_QUERY from '../graphql/Step.graphql';
-import printTime from '../printTime';
+import STEP_QUERY from '../../graphql/Step.graphql';
+import printTime from '../../printTime';
 
 printTime('step evaluating');
 
@@ -150,8 +150,11 @@ class Step extends React.Component {
           />
         </div>
         <div className="right">
-          <Link to={'/'} className="tiny-logo">CodeTours</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-          <Link to={this.getTourLink()}>Tour of {step.tour.targetRepository}</Link>
+          <Link to={'/'} className="tiny-logo">CodeTours</Link>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <Link to={this.getTourLink()}>
+            Tour of {step.tour.targetRepository}
+          </Link>
           <h1 className="step-title">
             {step.index + 1}. {step.title}
           </h1>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import client from './mocks/client';
-import Theme from '../imports/components/Theme';
+import Theme from '../imports/components/shared/Theme';
 
 const globalDecoratorPatch = story => (
   <ApolloProvider client={client}>

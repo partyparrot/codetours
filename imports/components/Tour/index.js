@@ -3,13 +3,13 @@ import { pure, branch, renderComponent, compose } from 'recompose';
 import { Link } from 'react-router';
 import { graphql } from 'react-apollo';
 
-import Headtags from './Headtags';
+import Headtags from '../shared/Headtags';
+import TourBadge from '../shared/TourBadge';
+import ParrotSays from '../shared/ParrotSays';
 import Navbar from './Navbar';
-import TourBadge from './TourBadge';
-import ParrotSays from './ParrotSays';
 
-import TOUR_QUERY from '../graphql/Tour.graphql';
-import TOUR_MUTATION from '../graphql/ImportTour.graphql';
+import TOUR_QUERY from '../../graphql/Tour.graphql';
+import TOUR_MUTATION from '../../graphql/ImportTour.graphql';
 
 class Tour extends React.Component {
   constructor(props) {
@@ -58,7 +58,9 @@ class Tour extends React.Component {
                 <div key={step._id}>
                   <Link to={this.getStepLink(step.slug)}>
                     <div className="row" style={{ marginTop: '10px' }}>
-                      <div className="col-sm-3 col-xs-3 number-circle">{step.index + 1}</div>
+                      <div className="col-sm-3 col-xs-3 number-circle">
+                        {step.index + 1}
+                      </div>
                       <div
                         className="col-sm-7 col-xs-7"
                         style={{
@@ -119,7 +121,11 @@ const withTour = graphql(TOUR_QUERY, {
   options: ({ params: { user, repoName } }) => ({
     variables: { tourRepository: `${user}/${repoName}` },
   }),
-  props: ({ data: { loading, tour }, ownProps: { location } }) => ({ loading, tour, location }),
+  props: ({ data: { loading, tour }, ownProps: { location } }) => ({
+    loading,
+    tour,
+    location,
+  }),
 });
 
 // show loading component if the tour & steps data are loading

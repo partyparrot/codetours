@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import TourBadge, { TourBadgePlaceloader } from './TourBadge';
-import mocks from '../../.storybook/mocks/mocks';
+import mocks from '../../../.storybook/mocks/mocks';
 // patch for failing .addDecorator in storyshots config
-import globalDecoratorPatch from '../../.storybook/globalDecoratorPatch';
+import globalDecoratorPatch from '../../../.storybook/globalDecoratorPatch';
 
 const mockedTour = mocks.Tour();
 
