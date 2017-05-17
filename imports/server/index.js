@@ -1,6 +1,7 @@
 import { createApolloServer } from 'meteor/apollo';
 import { makeExecutableSchema } from 'graphql-tools';
 import OpticsAgent from 'optics-agent';
+import cors from 'cors';
 
 import typeDefs from './schema';
 import resolvers from './resolvers';
@@ -27,6 +28,7 @@ createApolloServer(
   }),
   {
     configServer: server => {
+      server.use(cors());
       server.use('/graphql', OpticsAgent.middleware());
     },
   }
