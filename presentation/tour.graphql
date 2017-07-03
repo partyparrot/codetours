@@ -1,0 +1,20 @@
+query tour($tourRepository: String!) {
+  tour(tourRepository: $tourRepository) {
+    # which one is which?
+    repository
+    targetRepository
+    steps {
+      title
+      # confusing step slug with section slug
+      slug
+      code
+      sections {
+        slug
+        lineStart
+        lineEnd
+        # We just show a title in notes at the moment
+        # content
+      }
+    }
+  }
+}
