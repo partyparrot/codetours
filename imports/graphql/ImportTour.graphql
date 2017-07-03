@@ -1,7 +1,0 @@
-#import "./TourInfo.graphql"
-
-mutation importTour($tourRepository: String!) {
-  importTour(tourRepository: $tourRepository) {
-    ...TourInfo
-  }
-}

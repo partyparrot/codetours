@@ -1,7 +1,0 @@
-#import "./TourInfo.graphql"
-
-query RecentTours($search: String) {
-  tours(search: $search) {
-    ...TourInfo
-  }
-}
