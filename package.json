@@ -1,20 +1,23 @@
 {
-  "name": "spectacle-boilerplate",
+  "name": "codetours",
   "version": "1.0.1",
   "description": "ReactJS Powered Presentation Framework",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js",
-    "lint": "eslint --ext .js,.jsx .",
+    "lint": "eslint --ext .js .",
     "deploy": "npm run clean & npm run build && surge -p .",
-    "start": "cross-env NODE_ENV=development node server.js"
+    "start": "cross-env NODE_ENV=development node server.js",
+    "test": "npm run lint"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "graphql-anywhere": "^3.1.0",
     "graphql-tag": "^2.1.0",
     "normalize.css": "3.0.3",
+    "prop-types": "^15.5.10",
     "react": "15.4.2",
     "react-apollo": "^1.2.0",
     "react-dom": "15.4.2",
@@ -46,6 +49,7 @@
     "eslint-plugin-filenames": "^1.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-react": "^7.0.1",
     "express": "^4.13.3",
     "file-loader": "^0.9.0",
@@ -53,6 +57,7 @@
     "is-buffer": "^1.1.1",
     "markdown-loader": "^0.1.7",
     "node-libs-browser": "^0.5.3",
+    "prettier": "^1.5.3",
     "raw-loader": "^0.5.1",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.4",
