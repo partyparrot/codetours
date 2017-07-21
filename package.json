@@ -14,14 +14,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "graphql-anywhere": "^3.1.0",
-    "graphql-tag": "^2.1.0",
+    "graphql-tag": "^2.4.2",
     "normalize.css": "3.0.3",
-    "prop-types": "^15.5.10",
-    "react": "15.4.2",
-    "react-apollo": "^1.2.0",
-    "react-dom": "15.4.2",
-    "spectacle": "^2.0.0",
+    "react": "^15.6.1",
+    "react-apollo": "^1.4.7",
+    "react-dom": "^15.6.1",
+    "spectacle": "^2.1.1",
     "spectacle-code-slide": "^0.4.0"
   },
   "devDependencies": {
