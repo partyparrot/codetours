@@ -1,6 +1,0 @@
-fragment SectionInfo on Section {
-  slug
-  lineStart
-  lineEnd
-  content
-}

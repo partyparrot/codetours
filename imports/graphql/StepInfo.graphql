@@ -1,6 +1,0 @@
-fragment StepInfo on Step {
-  _id
-  title
-  slug
-  index
-}
