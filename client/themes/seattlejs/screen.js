@@ -77,9 +77,7 @@ const customTheme = {
   fonts: fonts,
   global: {
     body: {
-      background: null,
-      backgroundImage:
-        'linear-gradient(to bottom, #1a58cc, #00bfa2, #28cc7d, #87e231)',
+      background: colors.primary,
       fontFamily: fonts.body,
       color: colors.primary,
     },
@@ -157,21 +155,13 @@ const customTheme = {
       },
     },
     image: {
-      margin: null,
-      marginTop: '0.5rem',
-      marginRight: 'auto',
-      marginBottom: '0.5rem',
-      marginLeft: 'auto',
+      margin: '0.5rem auto 0.5rem auto',
     },
     text: {
       color: colors.primary,
       fontSize: '2rem',
       fontFamily: fonts.body,
-      margin: null,
-      marginTop: '1.25rem',
-      marginRight: 'auto',
-      marginBottom: '1.25rem',
-      marginLeft: 'auto',
+      margin: '1.25rem auto 1.25rem auto',
     },
   },
 };
