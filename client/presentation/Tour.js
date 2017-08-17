@@ -31,15 +31,7 @@ export default class Tour extends React.Component {
     const { loading, tour } = this.props;
 
     if (loading) {
-      return (
-        <Deck transition={[]} transitionDuration={0} theme={theme}>
-          <Slide transition={['zoom']} bgColor="primary">
-            <Heading size={1} caps lineHeight={1} textColor="secondary">
-              Loading your tour...
-            </Heading>
-          </Slide>
-        </Deck>
-      );
+      return <div>Loading your tour...</div>;
     }
 
     const { targetRepository, repository, description, steps } = tour;
@@ -58,7 +50,7 @@ export default class Tour extends React.Component {
           <Heading size={3} lineHeight={1} textColor="secondary">
             {targetName}
           </Heading>
-          <Text margin="10px 0 0" textColor="tertiary" size={1} caps>
+          <Text textColor="tertiary" size={1} caps>
             {description}
           </Text>
         </Slide>
