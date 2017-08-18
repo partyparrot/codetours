@@ -110,7 +110,7 @@ const _parseSectionBlocks = (step, metadata) =>
         lineEnd = lineStart;
       }
       const [, sectionTitle] = _execRegexOrThrow(
-        /<a[^>]+><h4>(.+)<\/h4><\/a>/,
+        /<a[^>]+>(.+)<\/a>/,
         sectionHead
       );
 
