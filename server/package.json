@@ -1,5 +1,5 @@
 {
-  "name": "codetours_who_need_modules_when_you_can_put_everything_in_1_file",
+  "name": "codetours-api",
   "version": "0.1.0",
   "description": "",
   "main": "./src/server.js",

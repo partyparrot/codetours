@@ -3,7 +3,8 @@ import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { schema, rootValue, context } from './schema';
+import { schema } from './schema';
+import { context } from './context';
 
 const PORT = 8080;
 const server = express();
@@ -25,7 +26,6 @@ server.use(
   bodyParser.json(),
   graphqlExpress(request => ({
     schema,
-    rootValue,
     context: context(request.headers, process.env),
   }))
 );
