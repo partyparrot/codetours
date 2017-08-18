@@ -14,7 +14,7 @@ export const getFile = (connector, repoFullName, path, ref) => {
 };
 
 export const parseMD = md => {
-  const { title, code, __content: step } = loadFront(md);
+  const { title, code, note, __content: step } = loadFront(md);
 
   const metadata = _parseGitHubURL(code);
 
@@ -27,6 +27,7 @@ export const parseMD = md => {
   return {
     title,
     codeUrl: code,
+    speakerNotes: note,
     sections: sectionBlocks,
     ...cleanMetadata,
   };
@@ -115,10 +116,10 @@ const _parseSectionBlocks = (step, metadata) =>
       );
 
       return {
-        slug: sectionTitle,
+        note: sectionTitle,
         lineStart: parseInt(lineStart, 10) || null,
         lineEnd: parseInt(lineEnd, 10) || null,
-        content: rawContent.join('\n'),
+        speakerNotes: rawContent.join('\n'),
       };
     });
 

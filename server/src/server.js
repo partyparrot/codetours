@@ -36,16 +36,21 @@ server.use(
     endpointURL: '/graphql',
     query: `query tour($tourRepository: String!) {
   tour(tourRepository: $tourRepository) {
+    # which one is which?
     repository
     targetRepository
     description
     steps {
       title
+      speakerNotes
+      # filePath
+      # slug
+      # code
       sections {
-        slug
+        note
         lineStart
         lineEnd
-        content
+        speakerNotes
       }
     }
   }

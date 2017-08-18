@@ -6,15 +6,15 @@ query tour($tourRepository: String!) {
     description
     steps {
       title
-      # confusing step slug with section slug
+      speakerNotes
+      filePath
       slug
       code
       sections {
-        slug
+        note
         lineStart
         lineEnd
-        # We just show a title in notes at the moment
-        # content
+        speakerNotes
       }
     }
   }

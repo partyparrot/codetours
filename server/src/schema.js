@@ -23,6 +23,7 @@ const typeDefs = `
     title: String!
     slug: String!
     codeUrl: String!
+    speakerNotes: String
     index: Int!
     sections: [Section!]
     user: String!
@@ -37,10 +38,10 @@ const typeDefs = `
   }
   
   type Section {
-    slug: String
+    note: String
     lineStart: Int
     lineEnd: Int 
-    content: String!
+    speakerNotes: String
   }
 `;
 

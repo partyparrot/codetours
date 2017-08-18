@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Import Spectacle Core tags
-import { Deck, Heading, ListItem, List, Slide, Text } from 'spectacle';
+import { Deck, Heading, ListItem, List, Slide, Text, Appear } from 'spectacle';
 
 import CodeSlide from 'spectacle-code-slide';
 
@@ -68,7 +68,7 @@ export default class Tour extends React.Component {
           </List>
         </Slide>
         {/* for each step, add a code slide with the title & code sections */}
-        {steps.map(({ title, code, sections }) => [
+        {steps.map(({ title, speakerNotes, filePath, code, sections }) => [
           <CodeSlide
             key={`step-${title}`}
             transition={[]}
@@ -76,22 +76,30 @@ export default class Tour extends React.Component {
             code={code}
             bgColor="primary"
             ranges={[
-              { loc: [0, 1], title },
+              { loc: [0, 1], title, note: filePath },
               ...sections.map(section => ({
                 loc: [section.lineStart - 1, section.lineEnd],
                 note: section.slug,
+                speakerNotes: section.speakerNotes,
               })),
             ]}
+            speakerNotes={speakerNotes}
           />,
         ])}
         {/* conclusion slide */}
-        <Slide transition={['fade']} bgColor="primary">
-          <Heading size={3} textColor="secondary">
-            Thanks for taking this tour!
+        <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
+          <Heading size={6} textColor="secondary" caps>
+            Recap
           </Heading>
-          <Heading size={5} textColor="tertiary">
-            Tour made by {author}
-          </Heading>
+          <List ordered>
+            {steps.map(({ title }) =>
+              <Appear key={`recap-${title}`}>
+                <ListItem>
+                  {title}
+                </ListItem>
+              </Appear>
+            )}
+          </List>
         </Slide>
       </Deck>
     );
