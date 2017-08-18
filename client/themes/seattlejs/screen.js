@@ -1,24 +1,5 @@
 /*eslint-disable object-shorthand*/
 
-const brand = {
-  // grayscale
-  darkGray: '#373534',
-  white: '#f1f1f2',
-  // seattlejs style guide
-  navy: '#00002c',
-  blue: '#002f89',
-  teal: '#008f7b',
-  green: '#23955e',
-  yellow: '#7fc241',
-};
-
-// const colors = {
-//   primary: brand.navy,
-//   secondary: brand.blue,
-//   tertiary: brand.green,
-//   quartenary: brand.teal,
-//   white: brand.white
-// };
 const colors = {
   primary: '#122b45',
   secondary: '#fafafa',
