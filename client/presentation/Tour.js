@@ -80,10 +80,10 @@ export default class Tour extends React.Component {
               ...sections.map(section => ({
                 loc: [section.lineStart - 1, section.lineEnd],
                 note: section.slug,
-                speakerNotes: section.speakerNotes,
+                notes: section.speakerNotes,
               })),
             ]}
-            speakerNotes={speakerNotes}
+            notes={speakerNotes && speakerNotes+'?raw=true'}
           />,
         ])}
         {/* conclusion slide */}
