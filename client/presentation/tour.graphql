@@ -3,6 +3,7 @@ query tour($tourRepository: String!) {
     # which one is which?
     repository
     targetRepository
+    description
     steps {
       title
       # confusing step slug with section slug

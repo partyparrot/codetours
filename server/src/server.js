@@ -38,6 +38,7 @@ server.use(
   tour(tourRepository: $tourRepository) {
     repository
     targetRepository
+    description
     steps {
       title
       sections {
